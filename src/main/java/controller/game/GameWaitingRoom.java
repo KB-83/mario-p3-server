@@ -3,6 +3,7 @@ package controller.game;
 
 import controller.gamelogic.gamestatelogic.GameStateController;
 import controller.mapper.DTOCreator;
+import model.dto.entity.player.PlayerDTO;
 import model.dto.game.GameStateDTO;
 import model.main_model.Client;
 import model.main_model.gamestrucure.Game;
@@ -43,7 +44,7 @@ public class GameWaitingRoom {
             GameState gameState = new GameStateController().createGameState(game);
             Marathon marathon = new Marathon(marathonClients,gameState);
 //            marathons.add(marathon);
-            startAGame(marathonClients,DTOCreator.createGameStateDTO(gameState));
+            startAGame(marathonClients,DTOCreator.createGameStateDTO(gameState),gameState);
             marathon.start();
             marathonClients.clear();
             marathonTimer.stop();
@@ -67,16 +68,20 @@ public class GameWaitingRoom {
                 GameState gameState = new GameStateController().createGameState(game);
                 Marathon marathon = new Marathon(marathonClients,gameState);
 //                marathons.add(marathon);
-                startAGame(marathonClients, DTOCreator.createGameStateDTO(gameState));
+                startAGame(marathonClients, DTOCreator.createGameStateDTO(gameState),gameState);
                 marathon.start();
                 marathonClients.clear();
                 marathonTimer.stop();
             }
         });
     }
-    public void startAGame(ArrayList<Client> clients, GameStateDTO gameStateDTO) {
+    public void startAGame(ArrayList<Client> clients, GameStateDTO gameStateDTO,GameState gameState) {
         for (Client client : clients) {
-            client.getClientController().sendResponse(new GameStartResponse(gameStateDTO));
+            client.setCurrentGameStateDTO(gameStateDTO);
+            client.setCurrentGameState(gameState);
+            PlayerDTO playerDTO = DTOCreator.createPlayerDTO(client.getPlayer());
+            client.setPlayerDTO(playerDTO);
+            client.getClientController().sendResponse(new GameStartResponse(gameStateDTO,playerDTO));
         }
     }
 }

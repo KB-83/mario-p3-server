@@ -1,15 +1,17 @@
 package model.response;
 
+import controller.connection.ResponseVisitor;
 import model.dto.entity.player.PlayerDTO;
 import model.dto.game.GameStateDTO;
 
-public class GameStartResponse extends Response{
+public class GameStateStatusResponse extends Response{
     private GameStateDTO gameStateDTO;
     private PlayerDTO playerDTO;
-    public GameStartResponse() {
+
+    public GameStateStatusResponse() {
     }
 
-    public GameStartResponse(GameStateDTO gameStateDTO,PlayerDTO playerDTO) {
+    public GameStateStatusResponse(GameStateDTO gameStateDTO, PlayerDTO playerDTO) {
         this.gameStateDTO = gameStateDTO;
         this.playerDTO = playerDTO;
     }

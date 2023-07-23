@@ -6,17 +6,27 @@ import model.dto.backgroundobject.block.BlockDTO;
 import model.dto.backgroundobject.pipe.PipeDTO;
 import model.dto.entity.enemy.EnemyDTO;
 import model.dto.entity.item.ItemDTO;
+import model.dto.entity.player.PlayerDTO;
 import model.dto.game.GameStateDTO;
 import model.dto.game.SectionDTO;
+import model.main_model.entity.player.Player;
 import model.main_model.gamestrucure.GameState;
 
 public class DTOCreator {
     private DTOCreator(){}
-//    public MarioDTO retrunMarioDTO() {
-//        return null;
-//        //inke object dto ro hey new kone khoob nist, mitoonim yek DTOgamestate ro update konim
-//        //intori ke object haye oono meghdaresh ro taghir bede. im going to ask az gpt :  so yek game dto darim ke update mishe
-//    }
+    public static PlayerDTO createPlayerDTO(Player player) {
+        PlayerDTO dto = new PlayerDTO();
+        return updatePlayerDTO(player,dto);
+    }
+    public static PlayerDTO updatePlayerDTO(Player player,PlayerDTO dto) {
+        dto.setX(player.getWorldX());
+        dto.setCameraX(player.getCameraX());
+        dto.setY(player.getWorldY());
+        dto.setCameraY(player.getCameraY());
+        dto.setType(player.getClass().getSimpleName());
+        return dto;
+    }
+
     public static GameStateDTO createGameStateDTO(GameState gameState) {
         GameStateDTO dto = new GameStateDTO();
         dto.setCurrentSection(new SectionDTO());

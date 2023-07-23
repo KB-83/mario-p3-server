@@ -10,6 +10,7 @@ public interface RequestVisitor {
     void visit(LoginRequest request, ClientController clientController);
     void visit(SignInRequest request, ClientController clientController);
     void visit(MarathonRequest request, ClientController clientController);
+    void visit(GetGameStateRequest request, ClientController clientController);
 
 
 }

@@ -11,6 +11,7 @@ import controller.connection.RequestVisitor;
         @JsonSubTypes.Type(value = SignInRequest.class),
         @JsonSubTypes.Type(value = MakeFriend.class),
         @JsonSubTypes.Type(value = LoginRequest.class),
+        @JsonSubTypes.Type(value = GetGameStateRequest.class),
         @JsonSubTypes.Type(value = Room.class)
 })
 

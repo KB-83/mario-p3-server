@@ -31,7 +31,6 @@ public class GameStateController extends Thread{
 
     public void update(){
         //player updates
-        System.out.println("updating");
         if (gameState.isPaused()) {
             return;
         }
