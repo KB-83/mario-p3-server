@@ -11,6 +11,7 @@ public class Star extends Item{
     private Timer jumpTimer;
     private long jumpStartTime;
     public Star() {
+        super();
         setJumpTimer();
     }
     private void setJumpTimer() {

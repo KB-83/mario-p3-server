@@ -12,6 +12,7 @@ public abstract class Item extends Entity {
     public Item() {
         isLock = true;
         setOnTopOfBlock(true);
+        setItemController(new ItemController(this));
     }
 
     public ItemController getItemController() {

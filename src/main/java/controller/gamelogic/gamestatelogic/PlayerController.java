@@ -4,6 +4,7 @@ package controller.gamelogic.gamestatelogic;
 import controller.gamelogic.collisionlogic.PlayerCollisionHandler;
 import controller.gamelogic.playerlogic.PlayerLifeChecker;
 import controller.gamelogic.playerlogic.PlayerMovementHandler;
+import model.main_model.entity.player.Player;
 import model.main_model.gamestrucure.GameState;
 
 public class PlayerController {
@@ -11,10 +12,10 @@ public class PlayerController {
     private PlayerLifeChecker playerLifeChecker;
     private PlayerCollisionHandler playerCollisionHandler;
 
-    public PlayerController(GameState gameState) {
-        playerMovementHandler = new PlayerMovementHandler(gameState);
-        playerLifeChecker = new PlayerLifeChecker(gameState);
-        playerCollisionHandler = new PlayerCollisionHandler(gameState,playerLifeChecker);
+    public PlayerController(GameState gameState, Player player) {
+        playerMovementHandler = new PlayerMovementHandler(gameState,player);
+        playerLifeChecker = new PlayerLifeChecker(gameState,player);
+        playerCollisionHandler = new PlayerCollisionHandler(gameState,playerLifeChecker,player);
     }
     public void update(){
         playerCollisionHandler.applyCollisionEffects();

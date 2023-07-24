@@ -6,12 +6,9 @@ import model.dto.entity.player.PlayerDTO;
 import model.dto.game.GameStateDTO;
 import model.main_model.entity.player.Mario;
 import model.main_model.entity.player.Player;
-import model.main_model.gamestrucure.Game;
 import model.main_model.gamestrucure.GameState;
 
 public class Client {
-    @JsonIgnore
-    private Game currentGame;
     @JsonIgnore
     private GameState currentGameState;
     @JsonIgnore
@@ -24,12 +21,11 @@ public class Client {
     private ClientController clientController;
     private String username;
     private String password;
-    private Game[] games;
-    //todo : think about it (next-line)
-    private GameState[] savedGames;
-    private Player[] players;
-    private int coins;
+//    todo : maybe in feature going to add multiplie players
+//    private Player[] players;
+    private int coin;
     private int score;
+    private int diamond;
 
     public Client() {
         this.player = new Mario();
@@ -59,28 +55,13 @@ public class Client {
         this.password = password;
     }
 
-    public Game[] getGames() {
-        return games;
+
+    public int getCoin() {
+        return coin;
     }
 
-    public void setGames(Game[] games) {
-        this.games = games;
-    }
-
-    public Player[] getPlayers() {
-        return players;
-    }
-
-    public void setPlayers(Player[] players) {
-        this.players = players;
-    }
-
-    public int getCoins() {
-        return coins;
-    }
-
-    public void setCoins(int coins) {
-        this.coins = coins;
+    public void setCoin(int coin) {
+        this.coin = coin;
     }
 
     public int getScore() {
@@ -91,13 +72,6 @@ public class Client {
         this.score = score;
     }
 
-    public Game getCurrentGame() {
-        return currentGame;
-    }
-
-    public void setCurrentGame(Game currentGame) {
-        this.currentGame = currentGame;
-    }
 
     public GameState getCurrentGameState() {
         return currentGameState;
@@ -105,14 +79,6 @@ public class Client {
 
     public void setCurrentGameState(GameState currentGameState) {
         this.currentGameState = currentGameState;
-    }
-
-    public GameState[] getSavedGames() {
-        return savedGames;
-    }
-
-    public void setSavedGames(GameState[] savedGames) {
-        this.savedGames = savedGames;
     }
 
     public ClientController getClientController() {
@@ -146,4 +112,13 @@ public class Client {
     public void setPlayerDTO(PlayerDTO playerDTO) {
         this.playerDTO = playerDTO;
     }
+
+    public int getDiamond() {
+        return diamond;
+    }
+
+    public void setDiamond(int diamond) {
+        this.diamond = diamond;
+    }
+
 }

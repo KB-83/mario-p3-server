@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import controller.ClientController;
 import model.main_model.Client;
+import model.main_model.gamestrucure.Game;
 import model.response.SignInLoginResponse;
 
 import java.io.File;
@@ -37,7 +38,15 @@ public class Loader {
            clientController.sendResponse(new SignInLoginResponse(true,""));
         return client;
     }
-//    public Game LoadGame() {
-//        return null;
-//    } this is for giving user a game
+    public Game loadGame(String name) {
+        File file = new File("src/main/resources/game/"+name+".json");
+        Game game = null;
+        try {
+            game = objectMapper.readValue(file, Game.class);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        ;
+        return game;
+    }
 }

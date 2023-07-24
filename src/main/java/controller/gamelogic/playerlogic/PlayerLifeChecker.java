@@ -12,9 +12,11 @@ import java.util.ArrayList;
 public class PlayerLifeChecker {
     private GameState gameState;
     private long lastKickTimeByEnemy;
+    private Player player;
 //    private Sound sound;
-    public PlayerLifeChecker(GameState gameState) {
+    public PlayerLifeChecker(GameState gameState,Player player) {
         this.gameState = gameState;
+        this.player = player;//new
 //        sound = new Sound("HEART-LOOSE");
     }
     public void checkIfHurt() {

@@ -11,8 +11,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class PlantController extends EnemyController{
-    private EnemyCollisionHandler enemyCollisionHandler;
-    private EnemyMovementHandler enemyMovementHandler;
+//    private EnemyCollisionHandler enemyCollisionHandler;
+//    private EnemyMovementHandler enemyMovementHandler;
     private Plant plant;
     private Timer timer;
     private boolean timerStarted;
@@ -20,11 +20,9 @@ public class PlantController extends EnemyController{
     private long lastStand,lastSeat;
     private boolean isDuringStand;
 
-    public PlantController(GameState gameState , Enemy enemy){
-        super(gameState,enemy);
-        setEnemyLifeChecker(new PlantLifeChecker(gameState,(Plant) enemy));
-        enemyMovementHandler = new EnemyMovementHandler(gameState);
-        enemyCollisionHandler = new EnemyCollisionHandler(gameState,enemy);
+    public PlantController(Enemy enemy){
+        super(enemy);
+
         plant = (Plant) enemy;
         maxY = plant.getWorldY();
         minY = (plant.getWorldY() + 2* Constant.BACKGROUND_TILE_SIZE);
@@ -72,5 +70,12 @@ public class PlantController extends EnemyController{
             }
         });
         timer.start();
+    }
+    @Override
+    public void initGameState(GameState gameState) {
+        super.initGameState(gameState);
+        setEnemyLifeChecker(new PlantLifeChecker(gameState,plant));
+//        enemyMovementHandler = new EnemyMovementHandler(gameState);
+//        enemyCollisionHandler = new EnemyCollisionHandler(gameState,plant);
     }
 }

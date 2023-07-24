@@ -6,11 +6,9 @@ import model.main_model.gamestrucure.GameState;
 
 public class GoombaLifeChecker extends EnemyLifeChecker{
 //    private Sound sound = new Sound("KICK");
-    private GameState gameState;
     private Goomba goomba;
 
-    public GoombaLifeChecker(GameState gameState, Goomba goomba) {
-        this.gameState = gameState;
+    public GoombaLifeChecker(Goomba goomba) {
         this.goomba = goomba;
     }
 

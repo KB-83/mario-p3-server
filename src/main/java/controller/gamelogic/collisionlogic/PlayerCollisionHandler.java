@@ -37,12 +37,12 @@ public class PlayerCollisionHandler implements CollisionHandler{
     //todo: improve this too
     //too : test why blocks or pipes problem doesent apper
     private BlockUnlocker blockUnlocker;
-    public PlayerCollisionHandler(GameState gameState, PlayerLifeChecker playerLifeChecker) {
+    public PlayerCollisionHandler(GameState gameState, PlayerLifeChecker playerLifeChecker,Player player) {
         this.gameState = gameState;
-//        collisionChecker = new CollisionDetector(gameState.getMario());
+        collisionChecker = new CollisionDetector(gameState.getMario());
         this.playerLifeChecker = playerLifeChecker;
         playerItemEater = new PlayerItemEater(gameState);
-//        this.player = gameState.getMario();
+        this.player = player;//new
         blockUnlocker = new BlockUnlocker();
 
     }

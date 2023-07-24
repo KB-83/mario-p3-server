@@ -10,16 +10,25 @@ public class EnemyController {
     private EnemyMovementHandler enemyMovementHandler;
     private EnemyLifeChecker enemyLifeChecker;
     private Enemy enemy;
+    private GameState gameState;
 
-    public EnemyController(GameState gameState , Enemy enemy){
+    public EnemyController(Enemy enemy){
         this.enemy = enemy;
-        enemyMovementHandler = new EnemyMovementHandler(gameState);
-        enemyCollisionHandler = new EnemyCollisionHandler(gameState,enemy);
+
     }
     public void update() {
         enemyMovementHandler.updateEnemiesPosition();
         enemyCollisionHandler.applyCollisionEffects();
         enemyLifeChecker.checkLife(enemy);
+    }
+    public void initGameState(GameState gameState) {
+        this.gameState = gameState;
+        enemyMovementHandler = new EnemyMovementHandler(gameState);
+        enemyCollisionHandler = new EnemyCollisionHandler(gameState,enemy);
+    }
+
+    public GameState getGameState() {
+        return gameState;
     }
 
     public EnemyCollisionHandler getEnemyCollisionHandler() {

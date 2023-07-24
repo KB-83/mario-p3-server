@@ -1,19 +1,13 @@
 package controller.gamelogic.gamestatelogic;
 
 
-import controller.gamelogic.enemieslogic.*;
 import controller.gamelogic.gravitylogic.GravityEffectsHandler;
-import controller.gamelogic.itemlogic.ItemController;
 import controller.mapper.GameCloner;
-import model.main_model.backgroundobject.pipe.Pipe;
+import model.main_model.Client;
 import model.main_model.backgroundobject.pipe.SimpleTelePipe;
 import model.main_model.backgroundobject.pipe.TelePlantPipe;
 import model.main_model.entity.enemy.Enemy;
-import model.main_model.entity.enemy.Goomba;
-import model.main_model.entity.enemy.Koopa;
-import model.main_model.entity.enemy.Spiny;
 import model.main_model.entity.item.Item;
-import model.main_model.entity.player.Mario;
 import model.main_model.gamestrucure.Game;
 import model.main_model.gamestrucure.GameState;
 import model.main_model.levelstructure.Level;
@@ -21,12 +15,18 @@ import model.main_model.levelstructure.Section;
 import util.Constant;
 import util.Loop;
 
+import java.util.ArrayList;
+import java.util.List;
+//todo : enemy controllers and actually controllers are not clean. clean theme
+
 public class GameStateController extends Thread{
     private GameState gameState;
+    private ArrayList<Client> clients;
     private GravityEffectsHandler gravityEffectsHandler;
 
-    public GameStateController() {
 
+    public GameStateController(ArrayList<Client> clients) {
+        this.clients = clients;
     }
 
     public void update(){
@@ -42,6 +42,7 @@ public class GameStateController extends Thread{
         }
         //check collision
         //playerUpdates
+        // did it in marathon subclass maybe todo: have to bring clients arraylist here
 //        gameState.getMario().getPlayerController().update();
         // enemies update
         if(gameState.getCurrentSection().getEnemies() != null) {
@@ -100,17 +101,6 @@ public class GameStateController extends Thread{
         this.gameState = gameState;
         return gameState;
     }
-//    public GameState createGameState(GameState gameState, LogicManager logicManager) {
-//        gameState.setGameStateController(this);
-//        gameState.setDefaultDependencies();
-//        //todo : let player use its own selected player :)
-//        setGameStateDependencies(gameState,logicManager);
-//        setGameStateControllerDependencies(gameState);
-//        //todo : check if its good()
-//        startGameState(gameState,logicManager);
-//        this.gameState = gameState;
-//        return gameState;
-//    }
 
     public void startGameState(GameState gameState){
         //todo : doing gamestATE Timers run
@@ -123,285 +113,48 @@ public class GameStateController extends Thread{
 
     }
     private void setGameStateDependencies(Game game, GameState gameState) {
-//        gameState.setCurrentUser(logicManager.getUser());
         gameState.setLevels(game.getLevels());
         gameState.setName(game.getName());
-        Mario mario = new Mario();
-        mario.setWorldY(7 * 48);
-        mario.setCameraY(7 * 48);
-        mario.setImageAddress(game.getMarioState()+"Right1");
-        mario.setWidth(Constant.BACKGROUND_TILE_SIZE);
-        mario.setHeight(Constant.BACKGROUND_TILE_SIZE);
-        if (game.getMarioState() > 0) {
-            mario.setHeight(2 * mario.getHeight());
-            mario.setWorldY(mario.getWorldY() - 48);
-            mario.setCameraY(mario.getCameraY() - 48);
-            if (game.getMarioState() == 1) {
-                mario.setMega(true);
-            }
-            else {
-                mario.setFire(true);
-            }
-        }
-        //todo : sound test
-//        gameState.setSound(new Sound());
-//        gameState.getSound().setFile(0);
-//        gameState.getSound().play();
-        //
-//        todo : use it as a method
         for (Level level :gameState.getLevels()) {
             for (Section section : level.getSections()) {
-                if (section.getEnemies() != null) {
-                for (int i = 0; i < section.getEnemies().length; i++) {
-                    Enemy enemy = section.getEnemies()[i];
-                    String s = enemy.getClass().getSimpleName();
-                    switch (s){
-                        case "Koopa":
-                            ((Koopa)enemy).setEnemyController(new KoopaController(gameState, enemy));
-                            break;
-                        case "Goomba":
-                            ((Goomba)enemy).setEnemyController(new GoombaController(gameState, enemy));
-                            break;
-                        case "Spiny":
-                            ((Spiny)enemy).setEnemyController(new SpinyController(gameState, enemy));
-                            break;
-                        case "Bowser":
-                            enemy.setEnemyController(new BowserController(gameState, enemy));
-                            break;
-                        case "Plant":
-                            enemy.setEnemyController(new PlantController(gameState, enemy));
-                            break;
-                    }
-                }
-                if (section.getPipes() != null) {
-                    for (int j = 0; j < section.getPipes().length; j++) {
-                        Pipe pipe = section.getPipes()[j];
-                        if (pipe.getClass() == TelePlantPipe.class) {
-                            for (int k = 0; k < ((TelePlantPipe) pipe).getTeleSection().getEnemies().length; k++) {
-                                Enemy enemy = ((TelePlantPipe) pipe).getTeleSection().getEnemies()[k];
-                                String s = enemy.getClass().getSimpleName();
-                                switch (s){
-                                    case "Koopa":
-                                        ((Koopa)enemy).setEnemyController(new KoopaController(gameState, enemy));
-                                        break;
-                                    case "Goomba":
-                                        ((Goomba)enemy).setEnemyController(new GoombaController(gameState, enemy));
-                                        break;
-                                    case "Spiny":
-                                        ((Spiny)enemy).setEnemyController(new SpinyController(gameState, enemy));
-                                        break;
-                                    case "Bowser":
-                                        enemy.setEnemyController(new BowserController(gameState, enemy));
-                                        break;
-                                    case "Plant":
-                                        enemy.setEnemyController(new PlantController(gameState, enemy));
-                                        break;
-                                }
-                            }
-                        } else if (pipe.getClass() == SimpleTelePipe.class) {
-                            for (int k = 0; k < ((TelePlantPipe) pipe).getTeleSection().getEnemies().length; k++) {
-                                Enemy enemy = ((TelePlantPipe) pipe).getTeleSection().getEnemies()[k];
-                                enemy.setEnemyController(new EnemyController(gameState, enemy));
-                            }
-                        }
-                    }
-                }
-            }
+                setControllersGameState(gameState,section);
             }
         }
-        for (Level level :gameState.getLevels()){
-            for (Section section : level.getSections()){
-                if (section.getItems() != null){
-                    for (Item item : section.getItems()){
-                        item.setItemController(new ItemController(item,gameState));
-                    }
-                }
-                if (section.getPipes() != null) {
-                    for (int j = 0; j < section.getPipes().length; j++) {
-                        Pipe pipe = section.getPipes()[j];
-                        if (pipe.getClass() == TelePlantPipe.class) {
-                            for (int k = 0; k < ((TelePlantPipe) pipe).getTeleSection().getItems().length; k++) {
-                                Item item = ((TelePlantPipe) pipe).getTeleSection().getItems()[k];
-                                item.setItemController(new ItemController(item,gameState));
-                            }
-                        } else if (pipe.getClass() == SimpleTelePipe.class) {
-                            for (int k = 0; k < ((TelePlantPipe) pipe).getTeleSection().getItems().length; k++) {
-                                Item item = ((TelePlantPipe) pipe).getTeleSection().getItems()[k];
-                                item.setItemController(new ItemController(item,gameState));
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        gameState.setMarioState(gameState.getMarioState());
-        gameState.setMario(mario);
         gameState.setCurrentLevel(game.getLevels()[0]);
         gameState.setCurrentSection(game.getLevels()[0].getSections()[0]);
-        gameState.getMario().setPlayerController(new PlayerController(gameState));
         gameState.setCoins(0);
         gameState.setLevelNumber(1);
         gameState.setSectionNumber(1);
         gameState.setPaused(false);
         gameState.setRemainingHeart(game.getHearts());
         gameState.setRemainingTime(gameState.getCurrentSection().getTime());
-        gameState.setScore(0);
     }
-//    private void setGameStateDependencies(GameState gameState,LogicManager logicManager) {
-//        gameState.setCurrentUser(logicManager.getUser());
-//        gameState.setCurrentLevel(gameState.getLevels()[gameState.getLevelNumber()-1]);
-//        gameState.getMario().setPlayerController(new PlayerController(gameState));
-//        for (Level level :gameState.getLevels()) {
-//            for (Section section : level.getSections()) {
-//                if (section.getEnemies() != null) {
-//                    for (int i = 0; i < section.getEnemies().length; i++) {
-//                        Enemy enemy = section.getEnemies()[i];
-//                        String s = enemy.getClass().getSimpleName();
-//                        switch (s){
-//                            case "Koopa":
-//                                ((Koopa)enemy).setEnemyController(new KoopaController(gameState, enemy));
-//                                break;
-//                            case "Goomba":
-//                                ((Goomba)enemy).setEnemyController(new GoombaController(gameState, enemy));
-//                                break;
-//                            case "Spiny":
-//                                ((Spiny)enemy).setEnemyController(new SpinyController(gameState, enemy));
-//                                break;
-//                            case "Bowser":
-//                                enemy.setEnemyController(new BowserController(gameState, enemy));
-//                                break;
-//                            case "Plant":
-//                                enemy.setEnemyController(new PlantController(gameState, enemy));
-//                                break;
-//                        }
-//                    }
-//                    if (section.getPipes() != null) {
-//                        for (int j = 0; j < section.getPipes().length; j++) {
-//                            Pipe pipe = section.getPipes()[j];
-//                            if (pipe.getClass() == TelePlantPipe.class) {
-//                                for (int k = 0; k < ((TelePlantPipe) pipe).getTeleSection().getEnemies().length; k++) {
-//                                    Enemy enemy = ((TelePlantPipe) pipe).getTeleSection().getEnemies()[k];
-//                                    String s = enemy.getClass().getSimpleName();
-//                                    switch (s){
-//                                        case "Koopa":
-//                                            ((Koopa)enemy).setEnemyController(new KoopaController(gameState, enemy));
-//                                            break;
-//                                        case "Goomba":
-//                                            ((Goomba)enemy).setEnemyController(new GoombaController(gameState, enemy));
-//                                            break;
-//                                        case "Spiny":
-//                                            ((Spiny)enemy).setEnemyController(new SpinyController(gameState, enemy));
-//                                            break;
-//                                        case "Bowser":
-//                                            enemy.setEnemyController(new BowserController(gameState, enemy));
-//                                            break;
-//                                        case "Plant":
-//                                            enemy.setEnemyController(new PlantController(gameState, enemy));
-//                                            break;
-//                                    }
-//                                }
-//                            } else if (pipe.getClass() == SimpleTelePipe.class) {
-//                                for (int k = 0; k < ((TelePlantPipe) pipe).getTeleSection().getEnemies().length; k++) {
-//                                    Enemy enemy = ((TelePlantPipe) pipe).getTeleSection().getEnemies()[k];
-//                                    enemy.setEnemyController(new EnemyController(gameState, enemy));
-//                                }
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//        for (Level level :gameState.getLevels()){
-//            for (Section section : level.getSections()){
-//                if (section.getItems() != null){
-//                    for (Item item : section.getItems()){
-//                        item.setItemController(new ItemController(item,gameState));
-//                    }
-//                }
-//                if (section.getPipes() != null) {
-//                    for (int j = 0; j < section.getPipes().length; j++) {
-//                        Pipe pipe = section.getPipes()[j];
-//                        if (pipe.getClass() == TelePlantPipe.class) {
-//                            for (int k = 0; k < ((TelePlantPipe) pipe).getTeleSection().getItems().length; k++) {
-//                                Item item = ((TelePlantPipe) pipe).getTeleSection().getItems()[k];
-//                                item.setItemController(new ItemController(item,gameState));
-//                            }
-//                        } else if (pipe.getClass() == SimpleTelePipe.class) {
-//                            for (int k = 0; k < ((TelePlantPipe) pipe).getTeleSection().getItems().length; k++) {
-//                                Item item = ((TelePlantPipe) pipe).getTeleSection().getItems()[k];
-//                                item.setItemController(new ItemController(item,gameState));
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//        gameState.setCurrentSection(gameState.getCurrentLevel().getSections()[gameState.getSectionNumber()-1]);
-//        gameState.setPaused(false);
-////        gameState.setRemainingTime(gameState.getCurrentSection().getTime());
-//    }
+    private void setControllersGameState(GameState gameState,Section section){
+        if (section.getEnemies() != null) {
+            for (int i = 0; i < section.getEnemies().length; i++) {
+                section.getEnemies()[i].getEnemyController().initGameState(gameState);
+            }
+        }
+        //pipe
+        if (section.getPipes() != null) {
+            for (int i = 0; i < section.getPipes().length; i++) {
+                if (section.getPipes()[i].getClass() == TelePlantPipe.class) {
+                    setControllersGameState(gameState, ((TelePlantPipe) section.getPipes()[i]).getTeleSection());
+                } else if (section.getPipes()[i].getClass() == SimpleTelePipe.class) {
+                    setControllersGameState(gameState, ((SimpleTelePipe) section.getPipes()[i]).getTeleSection());
+                }
+            }
+        }
+        // item
+        if (section.getItems() != null) {
+            for (int i = 0; i < section.getItems().length; i++) {
+                section.getItems()[i].getItemController().initGameState(gameState);
+            }
+        }
+    }
     private void setGameStateControllerDependencies(GameState gameState) {
-        gravityEffectsHandler = new GravityEffectsHandler(gameState);
+        gravityEffectsHandler = new GravityEffectsHandler(gameState,clients);
     }
-//    public void checkPointRequest(String s) {
-//        double PR = returnPR();
-//        gameState.getMario().setVX(0);
-//        switch (s){
-//            case "Save CheckPoint":
-//                gameState.getWaitingCheckpoint().setSaved(true);
-//                gameState.setCoins((int) (gameState.getCoins() - PR));
-//                gameState.setPaused(false);
-//                GameState[] gameStates = gameState.getCurrentUser().getSavedGames();
-//                for (int i = 0;i < gameStates.length ; i++){
-//                    if (gameStates[i].getName().equals(gameState.getName())){
-//                        gameStates[i] = gameState;
-//                        gameState.getCurrentUser().setSavedGames(gameStates);
-//                        Saver.getSaver().saveUser(gameState.getCurrentUser(),false);
-//                        return;
-//                    }
-//                }
-//                if (gameStates.length == 1){
-//                    gameStates[1] = gameState;
-//                    gameState.getCurrentUser().setSavedGames(gameStates);
-//                    Saver.getSaver().saveUser(gameState.getCurrentUser(),false);
-//                    return;
-//                }
-//                else if (gameStates.length == 2){
-//                    gameStates[2] = gameState;
-//                    gameState.getCurrentUser().setSavedGames(gameStates);
-//                    Saver.getSaver().saveUser(gameState.getCurrentUser(),false);
-//                    return;
-//                }
-//            case "Get Coins":
-//                gameState.setCoins( (gameState.getCoins()+ (int)(PR/4)));
-//                gameState.setWaitingCheckpoint(null);
-//                gameState.getCurrentSection().setCheckPoint(null);
-//                gameState.setPaused(false);
-//                break;
-//        }
-//    }
-//    public void saveAndPauseRequest(){
-//        GameState[] gameStates = gameState.getCurrentUser().getSavedGames();
-//        if (gameStates != null) {
-//            for (int i = 0; i < gameStates.length; i++) {
-//                if (gameStates[i].getName().equals(gameState.getName())) {
-//                    gameStates[i] = gameState;
-//                    gameState.getCurrentUser().setSavedGames(gameStates);
-//                    Saver.getSaver().saveUser(gameState.getCurrentUser(), false);
-//                }
-//            }
-//        }
-//        if (gameStates == null){
-//            gameStates = new GameState[]{gameState};
-//            gameState.getCurrentUser().setSavedGames(gameStates);
-//            Saver.getSaver().saveUser(gameState.getCurrentUser(),false);
-//        }
-//        PanelsManagerCard cardPanel = this.gameState.getCurrentUser().getLogicManager().getGraphicManager().getFrame().getPanelsManagerCard();
-//        cardPanel.getCardLayout().show(cardPanel,"mainMenu");
-//        gameState.getGameloop().kill();
-//        gameState.getSound().stop();
-//        this.gameState = null;
-//    }
     public double returnPR() {
         int totalLength = 0;
         double progressLength = 0;
@@ -435,5 +188,13 @@ public class GameStateController extends Thread{
 
     public void setGameState(GameState gameState) {
         this.gameState = gameState;
+    }
+
+    public List<Client> getClients() {
+        return clients;
+    }
+
+    public void setClients(ArrayList<Client> clients) {
+        this.clients = clients;
     }
 }

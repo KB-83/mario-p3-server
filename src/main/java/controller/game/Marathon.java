@@ -6,16 +6,17 @@ import model.main_model.Client;
 import model.main_model.gamestrucure.GameState;
 import util.Loop;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Marathon extends GameStateController{
-    private List<Client> clients;
+
     private GameState gameState;
     private Loop gameloop;
 
-    public Marathon(List<Client> clients,GameState gameState) {
+    public Marathon(ArrayList<Client> clients, GameState gameState) {
+        super(clients);
         setGameState(gameState);
-        this.clients = clients;
         gameloop =  new Loop(this,60);
         gameloop.start();
     }
@@ -28,5 +29,11 @@ public class Marathon extends GameStateController{
     @Override
     public void run() {
 //        loop;
+    }
+    public void update() {
+        super.update();
+        for (Client client:getClients()) {
+            client.getPlayer().getPlayerController().update();
+        }
     }
 }

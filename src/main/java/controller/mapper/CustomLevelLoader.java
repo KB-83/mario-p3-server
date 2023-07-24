@@ -267,7 +267,7 @@ public class CustomLevelLoader extends JsonDeserializer<Level> {
                 sectionNode = pipeNode.get("section");
                 if (sectionNode != null) {
                     TeleSection teleSection = creatTeleSection(sectionNode,upperSection);
-                    ((TelePlantPipe) pipe).setTeleSection(teleSection);
+                    ((SimpleTelePipe) pipe).setTeleSection(teleSection);
                 }
                 break;
 

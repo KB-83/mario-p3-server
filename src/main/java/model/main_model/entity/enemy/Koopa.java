@@ -1,6 +1,7 @@
 package model.main_model.entity.enemy;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import controller.gamelogic.enemieslogic.KoopaController;
 
 public class Koopa extends Enemy{
 //    @JsonIgnore
@@ -9,6 +10,7 @@ public class Koopa extends Enemy{
     public Koopa() {
         setVX(100);
         isWaitingToDie = false;
+        setEnemyController(new KoopaController(this));
     }
 
 //    public KoopaController getKoopaController() {

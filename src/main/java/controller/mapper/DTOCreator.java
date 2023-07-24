@@ -51,7 +51,7 @@ public class DTOCreator {
             sectionDTO.setEnemies(enemyDTOS);
         }
 
-        for (int i = 0; i < gameState.getCurrentSection().getEnemies().length; i++) {
+        for (int i = 0; i < enemyDTOS.length; i++) {
             enemyDTOS[i].setType(gameState.getCurrentSection().getEnemies()[i].getClass().getSimpleName());
             enemyDTOS[i].setX(gameState.getCurrentSection().getEnemies()[i].getWorldX());
             enemyDTOS[i].setY(gameState.getCurrentSection().getEnemies()[i].getWorldY());
@@ -66,7 +66,7 @@ public class DTOCreator {
             }
             sectionDTO.setPipes(pipeDTOS);
         }
-        for (int i = 0; i < gameState.getCurrentSection().getPipes().length; i++) {
+        for (int i = 0; i < pipeDTOS.length; i++) {
 //            pipeDTOS[i].setType(gameState.getCurrentSection().getPipes()[i].getClass().getSimpleName());
             pipeDTOS[i].setCol(gameState.getCurrentSection().getPipes()[i].getCol());
             pipeDTOS[i].setRow(gameState.getCurrentSection().getPipes()[i].getRow());
@@ -81,7 +81,7 @@ public class DTOCreator {
             sectionDTO.setItems(itemDTOS);
         }
 
-        for (int i = 0; i < gameState.getCurrentSection().getEnemies().length; i++) {
+        for (int i = 0; i < itemDTOS.length; i++) {
             itemDTOS[i].setType(gameState.getCurrentSection().getItems()[i].getClass().getSimpleName());
             itemDTOS[i].setX(gameState.getCurrentSection().getItems()[i].getWorldX());
             itemDTOS[i].setY(gameState.getCurrentSection().getItems()[i].getWorldY());
@@ -96,7 +96,7 @@ public class DTOCreator {
             sectionDTO.setBlocks(blockDTOS);
         }
 
-        for (int i = 0; i < gameState.getCurrentSection().getEnemies().length; i++) {
+        for (int i = 0; i < blockDTOS.length; i++) {
             blockDTOS[i].setType(gameState.getCurrentSection().getBlocks()[i].getClass().getSimpleName());
             blockDTOS[i].setCol(gameState.getCurrentSection().getBlocks()[i].getCol());
             blockDTOS[i].setRow(gameState.getCurrentSection().getBlocks()[i].getRow());

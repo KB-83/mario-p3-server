@@ -11,14 +11,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class KoopaLifeChecker extends EnemyLifeChecker{
-    private GameState gameState;
     private Koopa koopa;
     private Timer waitingTimer;
     private long shotTime;
 //    private Sound sound = new Sound("KICK");
-    public KoopaLifeChecker(GameState gameState, Enemy enemy) {
+    public KoopaLifeChecker( Enemy enemy) {
         this.koopa = (Koopa) enemy;
-        this.gameState = gameState;
         setTimer();
     }
     private void setTimer(){
