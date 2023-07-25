@@ -32,6 +32,8 @@ public abstract class Player extends Entity {
         bullet = new Bullet();
         sward = new Sward();
         isUnHeat = false;
+        setHeight(Constant.BACKGROUND_TILE_SIZE);
+        setWidth(Constant.BACKGROUND_TILE_SIZE);
     }
 
     public int getCameraX() {

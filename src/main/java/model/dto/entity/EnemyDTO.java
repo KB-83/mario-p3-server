@@ -1,10 +1,10 @@
-package model.dto.entity.item;
+package model.dto.entity;
 
-public class ItemDTO {
+public class EnemyDTO {
     private int x,y;
     private String type;
 
-    public ItemDTO() {
+    public EnemyDTO() {
     }
 
     public int getX() {

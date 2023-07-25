@@ -39,11 +39,11 @@ public class PlayerCollisionHandler implements CollisionHandler{
     private BlockUnlocker blockUnlocker;
     public PlayerCollisionHandler(GameState gameState, PlayerLifeChecker playerLifeChecker,Player player) {
         this.gameState = gameState;
-        collisionChecker = new CollisionDetector(gameState.getMario());
+        collisionChecker = new CollisionDetector(player);
         this.playerLifeChecker = playerLifeChecker;
-        playerItemEater = new PlayerItemEater(gameState);
+        playerItemEater = new PlayerItemEater(gameState,player);
         this.player = player;//new
-        blockUnlocker = new BlockUnlocker();
+        blockUnlocker = new BlockUnlocker(player);
 
     }
     public void updateSection(Section section) {
@@ -95,6 +95,8 @@ public class PlayerCollisionHandler implements CollisionHandler{
             for (int i = 0; i < gameState.getCurrentSection().getItems().length; i++) {
                 itemRect.updatePosition(gameState.getCurrentSection().getItems()[i].getWorldX(), gameState.getCurrentSection().getItems()[i].getWorldY());
                 if (gameState.getCurrentSection().getItems()[i].isLock() == false && (collisionChecker.didCollide(playerRect, itemRect) || !collisionChecker.returnSamePoints(playerRect,itemRect).equals(""))) {
+                    System.out.println("player.touch item");
+                    System.out.println(playerRect.getTopY()+"----"+player.getWorldY());
                     playerItemEater.eatItem(gameState.getCurrentSection().getItems(), gameState.getCurrentSection().getItems()[i], i);
                 }
             }

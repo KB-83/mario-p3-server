@@ -1,6 +1,6 @@
 package model.dto.game;
 
-import model.dto.entity.player.PlayerDTO;
+import model.dto.entity.PlayerDTO;
 
 import java.util.ArrayList;
 

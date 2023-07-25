@@ -4,6 +4,9 @@ import model.main_model.entity.enemy.Enemy;
 import util.Constant;
 
 public abstract class EnemyLifeChecker {
+    public EnemyLifeChecker() {
+    }
+
     public void checkLife(Enemy enemy){
         if (enemy.getWorldY() >= Constant.PANEL_HEIGHT)
         {

@@ -1,7 +1,7 @@
 package model.dto.backgroundobject.block;
 
 
-import model.dto.entity.item.ItemDTO;
+import model.dto.entity.ItemDTO;
 
 public class QuestionBlockDTO extends BlockDTO {
 

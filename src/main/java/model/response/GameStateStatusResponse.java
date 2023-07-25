@@ -1,7 +1,6 @@
 package model.response;
 
-import controller.connection.ResponseVisitor;
-import model.dto.entity.player.PlayerDTO;
+import model.dto.entity.PlayerDTO;
 import model.dto.game.GameStateDTO;
 
 public class GameStateStatusResponse extends Response{

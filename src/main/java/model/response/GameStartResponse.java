@@ -1,6 +1,6 @@
 package model.response;
 
-import model.dto.entity.player.PlayerDTO;
+import model.dto.entity.PlayerDTO;
 import model.dto.game.GameStateDTO;
 
 public class GameStartResponse extends Response{

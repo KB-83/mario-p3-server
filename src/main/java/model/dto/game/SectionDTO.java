@@ -3,8 +3,8 @@ package model.dto.game;
 import model.dto.backgroundobject.CheckPointDTO;
 import model.dto.backgroundobject.block.BlockDTO;
 import model.dto.backgroundobject.pipe.PipeDTO;
-import model.dto.entity.enemy.EnemyDTO;
-import model.dto.entity.item.ItemDTO;
+import model.dto.entity.EnemyDTO;
+import model.dto.entity.ItemDTO;
 
 public class SectionDTO {
     private int length;

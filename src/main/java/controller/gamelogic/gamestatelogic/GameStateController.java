@@ -43,7 +43,6 @@ public class GameStateController extends Thread{
         //check collision
         //playerUpdates
         // did it in marathon subclass maybe todo: have to bring clients arraylist here
-//        gameState.getMario().getPlayerController().update();
         // enemies update
         if(gameState.getCurrentSection().getEnemies() != null) {
             for (Enemy enemy : gameState.getCurrentSection().getEnemies()) {
@@ -53,12 +52,12 @@ public class GameStateController extends Thread{
         // item
         if(gameState.getCurrentSection().getItems() != null) {
             for (Item item : gameState.getCurrentSection().getItems()) {
-//                item.getItemController().update();
+                item.getItemController().update();
             }
         }
 //        gameState.getSwardCollisionHandler().applyCollisionEffects();
 //        gameState.getBulletCollisionHandler().applyCollisionEffects();
-
+//
 
     }
     public void nextSection() {

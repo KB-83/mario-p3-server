@@ -1,12 +1,11 @@
 package controller.mapper;
 
 
-import model.dto.backgroundobject.BackGroundTileDTO;
 import model.dto.backgroundobject.block.BlockDTO;
 import model.dto.backgroundobject.pipe.PipeDTO;
-import model.dto.entity.enemy.EnemyDTO;
-import model.dto.entity.item.ItemDTO;
-import model.dto.entity.player.PlayerDTO;
+import model.dto.entity.EnemyDTO;
+import model.dto.entity.ItemDTO;
+import model.dto.entity.PlayerDTO;
 import model.dto.game.GameStateDTO;
 import model.dto.game.SectionDTO;
 import model.main_model.entity.player.Player;
@@ -24,6 +23,8 @@ public class DTOCreator {
         dto.setY(player.getWorldY());
         dto.setCameraY(player.getCameraY());
         dto.setType(player.getClass().getSimpleName());
+        dto.setImage(player.getImageAddress());
+        dto.setHeight(player.getHeight());
         return dto;
     }
 
@@ -43,76 +44,88 @@ public class DTOCreator {
         sectionDTO.setTime(sectionDTO.getTime());
         sectionDTO.setLength(sectionDTO.getLength());
         EnemyDTO[] enemyDTOS = sectionDTO.getEnemies();
-        if (enemyDTOS.length != gameState.getCurrentSection().getEnemies().length) {
-            enemyDTOS = new EnemyDTO[gameState.getCurrentSection().getEnemies().length];
-            for (int i = 0; i < enemyDTOS.length;i++) {
-                enemyDTOS[i] = new EnemyDTO();
+        if (enemyDTOS != null) {
+            if (enemyDTOS.length != gameState.getCurrentSection().getEnemies().length) {
+                enemyDTOS = new EnemyDTO[gameState.getCurrentSection().getEnemies().length];
+                for (int i = 0; i < enemyDTOS.length; i++) {
+                    enemyDTOS[i] = new EnemyDTO();
+                }
+                sectionDTO.setEnemies(enemyDTOS);
             }
-            sectionDTO.setEnemies(enemyDTOS);
-        }
 
-        for (int i = 0; i < enemyDTOS.length; i++) {
-            enemyDTOS[i].setType(gameState.getCurrentSection().getEnemies()[i].getClass().getSimpleName());
-            enemyDTOS[i].setX(gameState.getCurrentSection().getEnemies()[i].getWorldX());
-            enemyDTOS[i].setY(gameState.getCurrentSection().getEnemies()[i].getWorldY());
+            for (int i = 0; i < enemyDTOS.length; i++) {
+                enemyDTOS[i].setType(gameState.getCurrentSection().getEnemies()[i].getClass().getSimpleName());
+                enemyDTOS[i].setX(gameState.getCurrentSection().getEnemies()[i].getWorldX());
+                enemyDTOS[i].setY(gameState.getCurrentSection().getEnemies()[i].getWorldY());
+            }
         }
 
 
         PipeDTO[] pipeDTOS = sectionDTO.getPipes();
-        if (pipeDTOS.length != gameState.getCurrentSection().getPipes().length) {
-            pipeDTOS = new PipeDTO[gameState.getCurrentSection().getPipes().length];
-            for (int i = 0; i < pipeDTOS.length;i++) {
-                pipeDTOS[i] = new PipeDTO();
+        if (pipeDTOS != null ) {
+            if (gameState.getCurrentSection().getPipes() == null) {}//todo : we need a next section method here
+            if (pipeDTOS.length != gameState.getCurrentSection().getPipes().length) {
+                pipeDTOS = new PipeDTO[gameState.getCurrentSection().getPipes().length];
+                for (int i = 0; i < pipeDTOS.length; i++) {
+                    pipeDTOS[i] = new PipeDTO();
+                }
+                sectionDTO.setPipes(pipeDTOS);
             }
-            sectionDTO.setPipes(pipeDTOS);
-        }
-        for (int i = 0; i < pipeDTOS.length; i++) {
+            for (int i = 0; i < pipeDTOS.length; i++) {
 //            pipeDTOS[i].setType(gameState.getCurrentSection().getPipes()[i].getClass().getSimpleName());
-            pipeDTOS[i].setCol(gameState.getCurrentSection().getPipes()[i].getCol());
-            pipeDTOS[i].setRow(gameState.getCurrentSection().getPipes()[i].getRow());
+                pipeDTOS[i].setCol(gameState.getCurrentSection().getPipes()[i].getCol());
+                pipeDTOS[i].setRow(gameState.getCurrentSection().getPipes()[i].getRow());
+            }
         }
 
         ItemDTO[] itemDTOS = sectionDTO.getItems();
-        if (itemDTOS.length != gameState.getCurrentSection().getItems().length) {
-            itemDTOS = new ItemDTO[gameState.getCurrentSection().getItems().length];
-            for (int i = 0; i < itemDTOS.length;i++) {
-                itemDTOS[i] = new ItemDTO();
+        if (itemDTOS != null) {
+            if (itemDTOS.length != gameState.getCurrentSection().getItems().length) {
+                itemDTOS = new ItemDTO[gameState.getCurrentSection().getItems().length];
+                for (int i = 0; i < itemDTOS.length; i++) {
+                        itemDTOS[i] = new ItemDTO();
+                }
+                sectionDTO.setItems(itemDTOS);
             }
-            sectionDTO.setItems(itemDTOS);
-        }
 
-        for (int i = 0; i < itemDTOS.length; i++) {
-            itemDTOS[i].setType(gameState.getCurrentSection().getItems()[i].getClass().getSimpleName());
-            itemDTOS[i].setX(gameState.getCurrentSection().getItems()[i].getWorldX());
-            itemDTOS[i].setY(gameState.getCurrentSection().getItems()[i].getWorldY());
+            for (int i = 0; i < itemDTOS.length; i++) {
+                itemDTOS[i].setType(gameState.getCurrentSection().getItems()[i].getClass().getSimpleName());
+                itemDTOS[i].setX(gameState.getCurrentSection().getItems()[i].getWorldX());
+                itemDTOS[i].setY(gameState.getCurrentSection().getItems()[i].getWorldY());
+                itemDTOS[i].setLock(gameState.getCurrentSection().getItems()[i].isLock());
+            }
         }
 
         BlockDTO[] blockDTOS = sectionDTO.getBlocks();
-        if (blockDTOS.length != gameState.getCurrentSection().getBlocks().length) {
-            blockDTOS = new BlockDTO[gameState.getCurrentSection().getBlocks().length];
-            for (int i = 0; i < blockDTOS.length;i++) {
-                blockDTOS[i] = new BlockDTO();
+        if (blockDTOS != null) {
+            if (blockDTOS.length != gameState.getCurrentSection().getBlocks().length) {
+                blockDTOS = new BlockDTO[gameState.getCurrentSection().getBlocks().length];
+                for (int i = 0; i < blockDTOS.length; i++) {
+                    blockDTOS[i] = new BlockDTO();
+                }
+                sectionDTO.setBlocks(blockDTOS);
             }
-            sectionDTO.setBlocks(blockDTOS);
-        }
 
-        for (int i = 0; i < blockDTOS.length; i++) {
-            blockDTOS[i].setType(gameState.getCurrentSection().getBlocks()[i].getClass().getSimpleName());
-            blockDTOS[i].setCol(gameState.getCurrentSection().getBlocks()[i].getCol());
-            blockDTOS[i].setRow(gameState.getCurrentSection().getBlocks()[i].getRow());
+            for (int i = 0; i < blockDTOS.length; i++) {
+                blockDTOS[i].setType(gameState.getCurrentSection().getBlocks()[i].getClass().getSimpleName());
+                blockDTOS[i].setCol(gameState.getCurrentSection().getBlocks()[i].getCol());
+                blockDTOS[i].setRow(gameState.getCurrentSection().getBlocks()[i].getRow());
+            }
         }
 
         int[][] backGroundTiles = sectionDTO.getBackGroundTiles();
-        if (backGroundTiles[0].length != gameState.getCurrentSection().getBackgroundMap().getBackGroundTiles()[0].length) {
-            backGroundTiles = new int[gameState.getCurrentSection().getBackgroundMap().getBackGroundTiles().length]
-                    [gameState.getCurrentSection().getBackgroundMap().getBackGroundTiles()[0].length];
+        if (backGroundTiles != null) {
+            if (backGroundTiles[0].length != gameState.getCurrentSection().getBackgroundMap().getBackGroundTiles()[0].length) {
+                backGroundTiles = new int[gameState.getCurrentSection().getBackgroundMap().getBackGroundTiles().length]
+                        [gameState.getCurrentSection().getBackgroundMap().getBackGroundTiles()[0].length];
 
-            sectionDTO.setBackGroundTiles(backGroundTiles);
-        }
+                sectionDTO.setBackGroundTiles(backGroundTiles);
+            }
 
-        for (int i = 0; i < backGroundTiles.length; i++) {
-            for (int j = 0; j < backGroundTiles[0].length;j++) {
-                backGroundTiles[i][j] = gameState.getCurrentSection().getBackgroundMap().getBackGroundTiles()[i][j].getNum().getIndex();
+            for (int i = 0; i < backGroundTiles.length; i++) {
+                for (int j = 0; j < backGroundTiles[0].length; j++) {
+                    backGroundTiles[i][j] = gameState.getCurrentSection().getBackgroundMap().getBackGroundTiles()[i][j].getNum().getIndex();
+                }
             }
         }
 

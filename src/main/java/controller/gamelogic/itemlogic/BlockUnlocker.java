@@ -3,8 +3,10 @@ package controller.gamelogic.itemlogic;
 import model.main_model.backgroundobject.block.*;
 import model.main_model.entity.item.Mushroom;
 import model.main_model.entity.item.Star;
+import model.main_model.entity.player.Player;
 import model.main_model.gamestrucure.GameState;
 import util.Constant;
+import util.ObjectRemover;
 
 import javax.swing.Timer;
 import java.awt.event.ActionEvent;
@@ -17,8 +19,10 @@ public class BlockUnlocker {
     private Mushroom mushroom;
     private Timer flowerTimer;
     private long lastBreakTime;
+    private Player player;
 //    private Sound sound;
-    public BlockUnlocker() {
+    public BlockUnlocker(Player player) {
+        this.player = player;
         setTimers();
 //        sound = new Sound("BREAK_BLOCK");
     }
@@ -62,10 +66,10 @@ public class BlockUnlocker {
             return;
         }
         if (block.getClass() == SimpleBlock.class){
-//            if (gameState.getMario().isMega() || gameState.getMario().isFire()) {
-//                unlockSimple(block, blocks, gameState);
-//            }
-//            return;
+            if (player.isMega() || player.isFire()) {
+                unlockSimple(block, blocks, gameState);
+            }
+            return;
         }
 //        sound.setSound("BREAK_BLOCK");
 //        sound.play();
@@ -139,7 +143,7 @@ public class BlockUnlocker {
     private void unlockSimple(Block block,Block[] blocks,GameState gameState){
 //        sound.setSound("BREAK_BLOCK");
 //        sound.play();
-//        blocks = ObjectRemover.removeObjectFromArray(blocks,block);
+        blocks = ObjectRemover.removeObjectFromArray(blocks,block);
         gameState.getCurrentSection().setBlocks(blocks);
     }
 }

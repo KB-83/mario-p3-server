@@ -2,7 +2,7 @@ package model.main_model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import controller.ClientController;
-import model.dto.entity.player.PlayerDTO;
+import model.dto.entity.PlayerDTO;
 import model.dto.game.GameStateDTO;
 import model.main_model.entity.player.Mario;
 import model.main_model.entity.player.Player;

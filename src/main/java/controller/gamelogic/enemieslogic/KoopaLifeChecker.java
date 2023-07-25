@@ -4,6 +4,7 @@ import model.main_model.entity.enemy.Enemy;
 import model.main_model.entity.enemy.Koopa;
 import model.main_model.gamestrucure.GameState;
 import util.Constant;
+import util.ObjectRemover;
 
 
 import javax.swing.*;
@@ -14,9 +15,11 @@ public class KoopaLifeChecker extends EnemyLifeChecker{
     private Koopa koopa;
     private Timer waitingTimer;
     private long shotTime;
+    private GameState gameState;
 //    private Sound sound = new Sound("KICK");
-    public KoopaLifeChecker( Enemy enemy) {
+    public KoopaLifeChecker( Enemy enemy,GameState gameState) {
         this.koopa = (Koopa) enemy;
+        this.gameState = gameState;
         setTimer();
     }
     private void setTimer(){
@@ -57,7 +60,7 @@ public class KoopaLifeChecker extends EnemyLifeChecker{
     public void kill() {
 //        sound.setSound("KICK");
 //        sound.play();
-//        gameState.getCurrentSection().setEnemies(ObjectRemover.removeObjectFromArray(gameState.getCurrentSection().getEnemies(), koopa));
+        gameState.getCurrentSection().setEnemies(ObjectRemover.removeObjectFromArray(gameState.getCurrentSection().getEnemies(), koopa));
         waitingTimer.stop();
     }
 

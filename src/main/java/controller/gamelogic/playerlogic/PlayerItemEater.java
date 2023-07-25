@@ -3,6 +3,7 @@ package controller.gamelogic.playerlogic;
 
 
 import model.main_model.entity.item.Item;
+import model.main_model.entity.player.Player;
 import model.main_model.gamestrucure.GameState;
 
 import javax.swing.*;
@@ -11,12 +12,14 @@ import java.awt.event.ActionListener;
 
 public class PlayerItemEater {
     private GameState gameState;
+    private Player player;
 //    private Sound sound;
     private Timer unHeat;
     private long lastUnHeatTime;
 
-    public PlayerItemEater(GameState gameState) {
+    public PlayerItemEater(GameState gameState,Player player) {
         this.gameState = gameState;
+        this.player = player;
 //        sound = new Sound("POWER_UP");
         setUnHeat();
     }
@@ -42,17 +45,17 @@ public class PlayerItemEater {
                 gameState.setScore(gameState.getScore() + 40);
                 lastUnHeatTime = System.currentTimeMillis();
                 unHeat.start();
-//                gameState.getMario().setUnHeat(true);
+                player.setUnHeat(true);
                 int i = gameState.getMarioState();
                 switch (i) {
                     case 0:
                         gameState.setMarioState(1);
-//                        gameState.getMario().setMega(true);
+                        player.setMega(true);
                         break;
                     case 1:
                         gameState.setMarioState(2);
-//                        gameState.getMario().setMega(false);
-//                        gameState.getMario().setFire(true);
+                        player.setMega(false);
+                        player.setFire(true);
                 }
                 break;
             case "Mushroom":
@@ -62,12 +65,12 @@ public class PlayerItemEater {
                 switch (i) {
                     case 0:
                         gameState.setMarioState(1);
-//                        gameState.getMario().setMega(true);
+                        player.setMega(true);
                         break;
                     case 1:
                         gameState.setMarioState(2);
-//                        gameState.getMario().setMega(false);
-//                        gameState.getMario().setFire(true);
+                        player.setMega(false);
+                        player.setFire(true);
                 }
                 break;
             case "Flower":
@@ -77,12 +80,12 @@ public class PlayerItemEater {
                 switch (i) {
                     case 0:
                         gameState.setMarioState(1);
-//                        gameState.getMario().setMega(true);
+                        player.setMega(true);
                         break;
                     case 1:
                         gameState.setMarioState(2);
-//                        gameState.getMario().setMega(false);
-//                        gameState.getMario().setFire(true);
+                        player.setMega(false);
+                        player.setFire(true);
                         break;
                 }
                 break;

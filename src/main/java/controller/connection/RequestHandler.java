@@ -1,9 +1,10 @@
 package controller.connection;
 
 import controller.ClientController;
+import controller.PlayerRequestHandler;
 import controller.game.GameWaitingRoom;
 import controller.mapper.DTOCreator;
-import model.dto.entity.player.PlayerDTO;
+import model.dto.entity.PlayerDTO;
 import model.dto.game.GameStateDTO;
 import model.main_model.Client;
 import model.request.*;
@@ -44,7 +45,6 @@ public class RequestHandler implements RequestVisitor {
 
     @Override
     public void visit(MarathonRequest request, ClientController clientController) {
-        System.out.println("marathon request sent");
         GameWaitingRoom.getInstance().marathonClient(clientController.getClient());
     }
 
@@ -58,4 +58,40 @@ public class RequestHandler implements RequestVisitor {
         client.setPlayerDTO(playerDTO);
         clientController.sendResponse(new GameStateStatusResponse(gameStateDTO,playerDTO));
     }
+    @Override
+    public void visit(PlayerActionRequest request, ClientController clientController) {
+        PlayerRequestHandler handler = clientController.getClient().getPlayer().getPlayerController().getPlayerRequestHandler();
+        switch (request.getType()) {
+            case "right":
+                handler.RightRequest();
+                break;
+            case "left":
+                handler.LeftRequest();
+                break;
+            case "rightD":
+                handler.rightDoneRequest();
+                break;
+            case "leftD":
+                handler.leftDoneRequest();
+                break;
+            case "bullet":
+                handler.BulletRequest();
+                break;
+            case "jump":
+                handler.jumpRequest();
+                break;
+            case "seat":
+                handler.SeatRequest();
+                break;
+            case "sward":
+                handler.SwardRequest();
+                break;
+            case "pause":
+                handler.PauseRequest();
+                break;
+        }
+
+//        GameWaitingRoom.getInstance().marathonClient(clientController.getClient());
+    }
+
 }

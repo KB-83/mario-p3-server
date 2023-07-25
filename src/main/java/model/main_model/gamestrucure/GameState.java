@@ -208,9 +208,9 @@ public class GameState {
         this.levels = levels;
     }
 
-    public Mario getMario() {
-        return mario;
-    }
+//    public Mario getMario() {
+//        return mario;
+//    }
 
     public void setMario(Mario mario) {
         this.mario = mario;

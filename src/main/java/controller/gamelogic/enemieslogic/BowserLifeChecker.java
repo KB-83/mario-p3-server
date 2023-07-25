@@ -3,14 +3,15 @@ package controller.gamelogic.enemieslogic;
 
 import model.main_model.entity.enemy.Bowser;
 import model.main_model.gamestrucure.GameState;
+import util.ObjectRemover;
 
 public class BowserLifeChecker extends EnemyLifeChecker{
-    private GameState gameState;
     private Bowser bowser;
+    private GameState gameState;
 
-    public BowserLifeChecker(GameState gameState, Bowser bowser) {
-        this.gameState = gameState;
+    public BowserLifeChecker( Bowser bowser,GameState gameState) {
         this.bowser = bowser;
+        this.gameState = gameState;
     }
 
 
@@ -26,7 +27,7 @@ public class BowserLifeChecker extends EnemyLifeChecker{
 
     @Override
     public void kill() {
-//        gameState.getCurrentSection().setEnemies(ObjectRemover.removeObjectFromArray(gameState.getCurrentSection().getEnemies(), bowser));
+        gameState.getCurrentSection().setEnemies(ObjectRemover.removeObjectFromArray(gameState.getCurrentSection().getEnemies(), bowser));
     }
 
     @Override

@@ -28,6 +28,7 @@ public class PlantController extends EnemyController{
         minY = (plant.getWorldY() + 2* Constant.BACKGROUND_TILE_SIZE);
         setTimer();
         isDuringStand = true;
+
     }
     private void setTimer(){
 

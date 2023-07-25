@@ -1,6 +1,7 @@
 package controller.gamelogic.gamestatelogic;
 
 
+import controller.PlayerRequestHandler;
 import controller.gamelogic.collisionlogic.PlayerCollisionHandler;
 import controller.gamelogic.playerlogic.PlayerLifeChecker;
 import controller.gamelogic.playerlogic.PlayerMovementHandler;
@@ -11,17 +12,21 @@ public class PlayerController {
     private PlayerMovementHandler playerMovementHandler;
     private PlayerLifeChecker playerLifeChecker;
     private PlayerCollisionHandler playerCollisionHandler;
+    private PlayerRequestHandler playerRequestHandler;
 
     public PlayerController(GameState gameState, Player player) {
         playerMovementHandler = new PlayerMovementHandler(gameState,player);
         playerLifeChecker = new PlayerLifeChecker(gameState,player);
         playerCollisionHandler = new PlayerCollisionHandler(gameState,playerLifeChecker,player);
+        playerRequestHandler = new PlayerRequestHandler(gameState,player);
+
     }
     public void update(){
         playerCollisionHandler.applyCollisionEffects();
         playerMovementHandler.updatePlayerPosition();
         playerLifeChecker.checkIfHurt();
     }
+
 
 
     public PlayerMovementHandler getPlayerMovementHandler() {
@@ -46,5 +51,13 @@ public class PlayerController {
 
     public void setPlayerCollisionHandler(PlayerCollisionHandler playerCollisionHandler) {
         this.playerCollisionHandler = playerCollisionHandler;
+    }
+
+    public PlayerRequestHandler getPlayerRequestHandler() {
+        return playerRequestHandler;
+    }
+
+    public void setPlayerRequestHandler(PlayerRequestHandler playerRequestHandler) {
+        this.playerRequestHandler = playerRequestHandler;
     }
 }

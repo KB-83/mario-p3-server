@@ -4,7 +4,7 @@ package controller.game;
 import controller.gamelogic.gamestatelogic.GameStateController;
 import controller.gamelogic.gamestatelogic.PlayerController;
 import controller.mapper.DTOCreator;
-import model.dto.entity.player.PlayerDTO;
+import model.dto.entity.PlayerDTO;
 import model.dto.game.GameStateDTO;
 import model.main_model.Client;
 import model.main_model.gamestrucure.Game;
@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameWaitingRoom {
-    private final ArrayList<Client> marathonClients = new ArrayList<>();
+    private  ArrayList<Client> marathonClients = new ArrayList<>();
     private  Timer marathonTimer;
     private final ArrayList<Client> groupSurvivalClients = new ArrayList<>();
     private final ArrayList<Client> survivalClients = new ArrayList<>();
@@ -51,7 +51,7 @@ public class GameWaitingRoom {
             startAGame(marathonClients,DTOCreator.createGameStateDTO(gameState),gameState);
             marathon.start();
             //todo : clone it
-//            marathonClients.clear();
+            marathonClients = new ArrayList<>();
             marathonTimer.stop();
             // start game
         }
@@ -76,8 +76,7 @@ public class GameWaitingRoom {
                 startAGame(marathonClients, DTOCreator.createGameStateDTO(gameState),gameState);
                 marathon.start();
                 //todo : clone it
-
-//                marathonClients.clear();
+                marathonClients = new ArrayList<>();
                 marathonTimer.stop();
             }
         });

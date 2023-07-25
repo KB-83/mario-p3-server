@@ -11,6 +11,7 @@ public interface RequestVisitor {
     void visit(SignInRequest request, ClientController clientController);
     void visit(MarathonRequest request, ClientController clientController);
     void visit(GetGameStateRequest request, ClientController clientController);
+    void visit(PlayerActionRequest request, ClientController clientController);
 
 
 }

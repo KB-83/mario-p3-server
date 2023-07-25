@@ -1,10 +1,11 @@
-package model.dto.entity.enemy;
+package model.dto.entity;
 
-public class EnemyDTO {
+public class ItemDTO {
     private int x,y;
     private String type;
+    private boolean isLock;
 
-    public EnemyDTO() {
+    public ItemDTO() {
     }
 
     public int getX() {
@@ -29,5 +30,13 @@ public class EnemyDTO {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public boolean isLock() {
+        return isLock;
+    }
+
+    public void setLock(boolean lock) {
+        isLock = lock;
     }
 }
