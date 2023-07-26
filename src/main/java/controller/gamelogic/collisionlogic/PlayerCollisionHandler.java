@@ -95,8 +95,6 @@ public class PlayerCollisionHandler implements CollisionHandler{
             for (int i = 0; i < gameState.getCurrentSection().getItems().length; i++) {
                 itemRect.updatePosition(gameState.getCurrentSection().getItems()[i].getWorldX(), gameState.getCurrentSection().getItems()[i].getWorldY());
                 if (gameState.getCurrentSection().getItems()[i].isLock() == false && (collisionChecker.didCollide(playerRect, itemRect) || !collisionChecker.returnSamePoints(playerRect,itemRect).equals(""))) {
-                    System.out.println("player.touch item");
-                    System.out.println(playerRect.getTopY()+"----"+player.getWorldY());
                     playerItemEater.eatItem(gameState.getCurrentSection().getItems(), gameState.getCurrentSection().getItems()[i], i);
                 }
             }

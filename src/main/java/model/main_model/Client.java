@@ -1,12 +1,16 @@
 package model.main_model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import controller.ClientController;
 import model.dto.entity.PlayerDTO;
 import model.dto.game.GameStateDTO;
 import model.main_model.entity.player.Mario;
 import model.main_model.entity.player.Player;
 import model.main_model.gamestrucure.GameState;
+import model.main_model.room.PrivateChat;
+
+import java.util.ArrayList;
 
 public class Client {
     @JsonIgnore
@@ -21,6 +25,8 @@ public class Client {
     private ClientController clientController;
     private String username;
     private String password;
+    @JsonInclude(JsonInclude.Include.ALWAYS)
+    private ArrayList <PrivateChat> privateChats;
 //    todo : maybe in feature going to add multiplie players
 //    private Player[] players;
     private int coin;
@@ -29,6 +35,7 @@ public class Client {
 
     public Client() {
         this.player = new Mario();
+        privateChats = new ArrayList<>();
     }
 
     public Client(String username, String password,ClientController clientController) {
@@ -37,6 +44,7 @@ public class Client {
         this.password = password;
         //test
         this.player = new Mario();
+        privateChats = new ArrayList<>();
     }
 
     public String getUsername() {
@@ -121,4 +129,11 @@ public class Client {
         this.diamond = diamond;
     }
 
+    public ArrayList<PrivateChat> getPrivateChats() {
+        return privateChats;
+    }
+
+    public void setPrivateChats(ArrayList<PrivateChat> privateChats) {
+        this.privateChats = privateChats;
+    }
 }

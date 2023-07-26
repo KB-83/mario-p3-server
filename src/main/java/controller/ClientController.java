@@ -6,6 +6,8 @@ import controller.connection.RequestHandler;
 import model.main_model.Client;
 import model.request.Request;
 import model.response.Response;
+import util.Config;
+import util.Constant;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -34,6 +36,9 @@ public class ClientController extends Thread{
             throw new RuntimeException(e);
         }
     }
+    public ClientController(Client client) {
+        this.client = client;
+    }
     public void run() {
         while (isOnline) {
             receiveRequest();
@@ -61,6 +66,7 @@ public class ClientController extends Thread{
             throw new RuntimeException(e);
         } catch (IOException | IllegalArgumentException e) {
             isOnline = false;
+            Config.ONLINE_CLIENTS.remove(client);
             System.out.println("client "+ socket.getInetAddress().toString()+" disconnected");
         }
     }

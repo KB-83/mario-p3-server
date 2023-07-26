@@ -21,17 +21,14 @@ public class Saver {
             saver = new Saver();
         }return saver;
     }
-    public boolean saveUser(String username, boolean isSignInRequest, ClientController controller) {
+    public boolean saveUser(String username, boolean isSignInRequest, ClientController controller,Client client) {
         File file = new File("src/main/resources/user/"+username+".json");
         if (file.exists() && isSignInRequest) {
-            controller.sendResponse(new SignInLoginResponse(false,"user already exist."));
+            controller.sendResponse(new SignInLoginResponse(controller.getClient(),false,"user already exist."));
             return false;
         }
         try {
             FileWriter fileWriter = new FileWriter(file);
-            Client client = new Client();
-            client.setClientController(controller);
-            client.setUsername(username);
             objectMapper.writeValue(fileWriter,client);
         } catch (IOException e) {
             System.out.println("json mapping for this user is not right.\nsource: Saver class saveUser method.");

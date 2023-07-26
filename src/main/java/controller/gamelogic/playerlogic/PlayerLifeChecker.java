@@ -21,9 +21,9 @@ public class PlayerLifeChecker {
     }
     public void checkIfHurt() {
 
-//        if (gameState.getMario().getWorldY() > Constant.PANEL_ROWS * Constant.BACKGROUND_TILE_SIZE) {
-//            handleFalling();
-//        }
+        if (player.getWorldY() > Constant.PANEL_ROWS * Constant.BACKGROUND_TILE_SIZE) {
+            handleFalling();
+        }
         if (gameState.getRemainingTime() < 0){
             handleOutOfTime();
         }
@@ -38,9 +38,9 @@ public class PlayerLifeChecker {
     }
     private void handleOutOfTime(){}
     public void handleEnemyCollide(Enemy enemy, String position){
-//        if (gameState.getMario().isUnHeat()){
-//            return;
-//        }
+        if (player.isUnHeat()){
+            return;
+        }
         if (position.equals("DOWN")) {
             return;
 //            pass to EnemyLifeChecker
@@ -54,22 +54,22 @@ public class PlayerLifeChecker {
         }
     }
     private void kickPlayer(){
-//        if (!gameState.getMario().isFire() && !gameState.getMario().isMega()) {
-//            decreaseHeart();
-//            return;
-//        }
+        if (!player.isFire() && !player.isMega()) {
+            decreaseHeart();
+            return;
+        }
 //        sound.setSound("KICK");
-//        if (gameState.getMario().isFire()){
-//            gameState.getMario().setFire(false);
-//            gameState.getMario().setMega(true);
+        if (player.isFire()){
+            player.setFire(false);
+            player.setMega(true);
 //            gameState.setMarioState(1);
-//        }
-//
-//        else if (gameState.getMario().isMega()){
-//            gameState.getMario().setMega(false);
-//            gameState.getMario().setHeight(Constant.BACKGROUND_TILE_SIZE);
+        }
+
+        else if (player.isMega()){
+            player.setMega(false);
+            player.setHeight(Constant.BACKGROUND_TILE_SIZE);
 //            gameState.setMarioState(0);
-//        }
+        }
 //        sound.play();
     }
     private void decreaseHeart(){
@@ -91,10 +91,10 @@ public class PlayerLifeChecker {
         if (gameState.getScore() < 0) {
             gameState.setScore(0);
         }
-//        gameState.getMario().setMega(false);
-//        gameState.getMario().setFire(false);
-//        gameState.getMario().setHeight(Constant.BACKGROUND_TILE_SIZE);
-        gameState.setMarioState(0);
+        player.setMega(false);
+        player.setFire(false);
+        player.setHeight(Constant.BACKGROUND_TILE_SIZE);
+//        gameState.setMarioState(0);
 //        gameState.getMario().getPlayerRequestHandler().jumpRequest();
         CheckPoint checkPoint = null;
         Section checkPointSection = null;
@@ -110,26 +110,26 @@ public class PlayerLifeChecker {
                 savedCheckpoints++;
             }
         }
-//        int Dn = (int) (((savedCheckpoints+1 * gameState.getCoins()) + gameState.getGameStateController().returnPR())/(savedCheckpoints+4));
-//        gameState.setCoins(gameState.getCoins()-Dn);
-//        Player player = gameState.getMario();
+        int Dn = (int) (((savedCheckpoints+1 * gameState.getCoins()) + gameState.getGameStateController().returnPR())/(savedCheckpoints+4));
+        gameState.setCoins(gameState.getCoins()-Dn);
+
         if (checkPoint != null) {
-//            gameState.getGameStateController().changeSection(checkPointSection,sectionNum);
-//            player.setWorldX(checkPoint.getCol() * Constant.BACKGROUND_TILE_SIZE);
-//            player.setWorldY(checkPoint.getRow() * Constant.BACKGROUND_TILE_SIZE);
+            gameState.getGameStateController().changeSection(checkPointSection,sectionNum);
+            player.setWorldX(checkPoint.getCol() * Constant.BACKGROUND_TILE_SIZE);
+            player.setWorldY(checkPoint.getRow() * Constant.BACKGROUND_TILE_SIZE);
             if(gameState.getCurrentSection().getLength() - checkPoint.getCol() - 3 >= Constant.PANEL_WIDTH/Constant.BACKGROUND_TILE_SIZE) {
-//                player.setCameraX(2 * Constant.BACKGROUND_TILE_SIZE);
+                player.setCameraX(2 * Constant.BACKGROUND_TILE_SIZE);
 //                    player.setCameraY();
             }
             else {
-//                player.setCameraX(player.getWorldX());
+                player.setCameraX(player.getWorldX());
             }
         }
         else {
-//            player.setWorldX(0);
-//            player.setWorldY(7 * Constant.BACKGROUND_TILE_SIZE);
-//            player.setCameraX(0);
-//            gameState.getGameStateController().changeSection(gameState.getCurrentLevel().getSections()[0],1);
+            player.setWorldX(0);
+            player.setWorldY(7 * Constant.BACKGROUND_TILE_SIZE);
+            player.setCameraX(0);
+            gameState.getGameStateController().changeSection(gameState.getCurrentLevel().getSections()[0],1);
         }
     }
     private void killPlayer(){}

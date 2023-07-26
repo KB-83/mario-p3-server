@@ -25,7 +25,7 @@ public class Loader {
         File file = new File("src/main/resources/user/"+userName+".json");
         Client client = null;
         if (!file.exists()) {
-            clientController.sendResponse(new SignInLoginResponse(false,"user dos not exist."));
+            clientController.sendResponse(new SignInLoginResponse(client,false,"user dos not exist."));
             return null;
         }
         try {
@@ -35,7 +35,7 @@ public class Loader {
             System.out.println("json mapping for this user is not right.\nsource: Loader class loadUser method.");
             e.printStackTrace();
         }
-           clientController.sendResponse(new SignInLoginResponse(true,""));
+           clientController.sendResponse(new SignInLoginResponse(client,true,""));
         return client;
     }
     public Game loadGame(String name) {

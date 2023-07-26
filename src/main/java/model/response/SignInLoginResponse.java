@@ -1,14 +1,17 @@
 package model.response;
 
 import controller.connection.ResponseVisitor;
+import model.main_model.Client;
 
 public class SignInLoginResponse extends Response{
     private boolean isOk;
     private String massage;
+    private Client client;
     public SignInLoginResponse() {
     }
 
-    public SignInLoginResponse(boolean isOk, String massage) {
+    public SignInLoginResponse(Client client,boolean isOk, String massage) {
+        this.client = client;
         this.isOk = isOk;
         this.massage = massage;
     }
@@ -27,5 +30,13 @@ public class SignInLoginResponse extends Response{
 
     public void setMassage(String massage) {
         this.massage = massage;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
     }
 }

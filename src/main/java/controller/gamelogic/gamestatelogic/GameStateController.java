@@ -67,6 +67,10 @@ public class GameStateController extends Thread{
             gameState.setRemainingTime(gameState.getCurrentSection().getTime());
 //            gameState.getMario().setCameraX(0);
 //            gameState.getMario().setWorldX(0);
+            //todo : test
+//            clients.get(0).getPlayer().setCameraX(0);
+//            clients.get(0).getPlayer().setWorldX(0);
+            //todo : test
 
         }
         else {
@@ -77,6 +81,11 @@ public class GameStateController extends Thread{
         gameState.setCurrentSection(section);
         gameState.setSectionNumber(sectionNumber);
         gameState.setRemainingTime(gameState.getCurrentSection().getTime());
+        //todo : test
+//        clients.get(0).getPlayer().setCameraX(0);
+//        clients.get(0).getPlayer().setWorldX(0);
+        //todo : test
+
 //        gameState.getMario().setCameraX(0);
 //        gameState.getMario().setWorldX(0);
     }

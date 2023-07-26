@@ -134,7 +134,7 @@ public class EnemyCollisionHandler{
                         }
                         if (collisionChecker.returnSamePoints(mainEnemyRect,backgrounTileRect).equals("DOWN")) {
                             enemy.setOnTopOfBlock(true);
-//                    // todo: improve it too
+//                     todo: improve it too
                             enemy.setWorldY(backgrounTileRect.getTopY()-mainEnemyRect.getHeight());
                             if (enemy.getVY() < 0) {
                                 enemy.setVY(0);
