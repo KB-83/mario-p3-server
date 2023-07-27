@@ -21,12 +21,8 @@ public class Saver {
             saver = new Saver();
         }return saver;
     }
-    public boolean saveUser(String username, boolean isSignInRequest, ClientController controller,Client client) {
-        File file = new File("src/main/resources/user/"+username+".json");
-        if (file.exists() && isSignInRequest) {
-            controller.sendResponse(new SignInLoginResponse(controller.getClient(),false,"user already exist."));
-            return false;
-        }
+    public boolean saveUser(Client client) {
+        File file = new File("src/main/resources/user/"+client.getUsername()+".json");
         try {
             FileWriter fileWriter = new FileWriter(file);
             objectMapper.writeValue(fileWriter,client);
@@ -36,6 +32,19 @@ public class Saver {
             return false;
         }
         return true;
+    }
+    public Client signInUser(String password,String username,ClientController controller) {
+        File file = new File("src/main/resources/user/"+username+".json");
+        if (file.exists()) {
+            controller.sendResponse(new SignInLoginResponse(null,false,"user already exist."));
+            return null;
+        }
+        else {
+            Client fish = new Client(username,password,controller);
+            saveUser(fish);
+            controller.sendResponse(new SignInLoginResponse(fish,true,""));
+            return fish;
+        }
     }
 
 }

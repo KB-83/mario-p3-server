@@ -14,6 +14,7 @@ import controller.connection.RequestVisitor;
         @JsonSubTypes.Type(value = GetGameStateRequest.class),
         @JsonSubTypes.Type(value = PlayerActionRequest.class),
         @JsonSubTypes.Type(value = SendPMRequest.class),
+        @JsonSubTypes.Type(value = BuyRequest.class),
         @JsonSubTypes.Type(value = Room.class)
 })
 

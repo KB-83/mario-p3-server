@@ -21,7 +21,7 @@ public class Loader {
             loader = new Loader();
         }return loader;
     }
-    public Client loadClient (String userName, ClientController clientController) {
+    public Client loadClient (String password,String userName, ClientController clientController) {
         File file = new File("src/main/resources/user/"+userName+".json");
         Client client = null;
         if (!file.exists()) {
@@ -35,8 +35,13 @@ public class Loader {
             System.out.println("json mapping for this user is not right.\nsource: Loader class loadUser method.");
             e.printStackTrace();
         }
+        if (password.equals(client.getPassword())){
            clientController.sendResponse(new SignInLoginResponse(client,true,""));
-        return client;
+        return client;}
+        else {
+            clientController.sendResponse(new SignInLoginResponse(client,false,"password is wrong"));
+            return null;
+        }
     }
     public Game loadGame(String name) {
         File file = new File("src/main/resources/game/"+name+".json");

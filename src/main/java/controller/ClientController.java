@@ -46,7 +46,9 @@ public class ClientController extends Thread{
     }
     public void setClient(Client client) {
         this.client = client;
-        client.setClientController(this);
+        if (client != null) {
+            client.setClientController(this);
+        }
     }
     public void sendResponse(Response response) {
         try {

@@ -1,7 +1,9 @@
 package util;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import model.main_model.Client;
+import model.main_model.ShopLimitation;
 import model.main_model.gamestrucure.Game;
 
 import javax.imageio.ImageIO;
@@ -23,6 +25,7 @@ public class Config extends Properties {
     public final static HashMap<String, Client> ONLINE_CLIENTS = new HashMap<>();
     public final static ArrayList<Game> ONLINE_GAMES = new ArrayList<>();
     public static ObjectMapper objectMapper = new ObjectMapper();
+    public final static ShopLimitation LIMITATIONS = loadLimitations("src/main/resources/config/limitation.json");
 
     public static Config getConfig(String name) {
         if ("mainConfig".equals(name))
@@ -73,6 +76,13 @@ public class Config extends Properties {
         }
 
 //        return imageMap;
+    }
+    private static ShopLimitation loadLimitations(String address) {
+        try {
+            return objectMapper.readValue(new File(address),ShopLimitation.class);
+        }catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

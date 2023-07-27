@@ -1,0 +1,30 @@
+{
+  "damageBomb": {
+    "number":10,
+    "grade":2
+  },
+  "speedBomb": {
+    "number":10,
+    "grade":2
+  },
+  "speedPotion": {
+    "number":10
+  },
+  "invisibilityPotion":{
+    "number":10
+  },
+  "healthPotion":{
+    "number":10
+  },
+  "hammer":{
+    "moneyUnit":"DIAMOND",
+    "grade":2,
+    "number":10
+
+  },
+  "sward":{
+    "grade":2,
+    "number":10
+
+  }
+}

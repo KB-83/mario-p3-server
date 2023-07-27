@@ -2,14 +2,17 @@ package controller.connection;
 
 import controller.ClientController;
 import controller.PlayerRequestHandler;
+import controller.ShopController;
 import controller.game.GameWaitingRoom;
 import controller.mapper.DTOCreator;
 import model.dto.entity.PlayerDTO;
 import model.dto.game.GameStateDTO;
+import model.main_model.Bill;
 import model.main_model.Client;
 import model.main_model.room.Massage;
 import model.main_model.room.PrivateChat;
 import model.request.*;
+import model.response.BuyResponse;
 import model.response.GameStateStatusResponse;
 import model.response.NewPMResponse;
 import util.Config;
@@ -41,14 +44,17 @@ public class RequestHandler implements RequestVisitor {
     }
     @Override
     public void visit(LoginRequest request, ClientController clientController) {
-        clientController.setClient(Loader.getLoader().loadClient(request.getUsername(),clientController));
-        Config.ONLINE_CLIENTS.put(clientController.getClient().getUsername(),clientController.getClient());
+        clientController.setClient(Loader.getLoader().loadClient(request.getPassword(),request.getUsername(),clientController));
+        if (clientController.getClient() != null) {
+            Config.ONLINE_CLIENTS.put(clientController.getClient().getUsername(), clientController.getClient());
+        }
     }
     @Override
     public void visit(SignInRequest request, ClientController clientController) {
-        if (Saver.getSaver().saveUser(request.getUsername(),true,clientController,clientController.getClient())){
-            clientController.setClient(Loader.getLoader().loadClient(request.getUsername(),clientController));
-            Config.ONLINE_CLIENTS.put(clientController.getClient().getUsername(),clientController.getClient());
+        Client fish = Saver.getSaver().signInUser(request.getPassword(),request.getUsername(),clientController);
+        if (fish != null){
+            clientController.setClient(fish);
+            Config.ONLINE_CLIENTS.put(fish.getUsername(),fish);
         }
     }
 
@@ -115,13 +121,9 @@ public class RequestHandler implements RequestVisitor {
                 break;
             }
         }
-        System.out.println(request.getOpponentUserName());
-        System.out.println(Config.CLIENTS.size());
-        System.out.println(Config.CLIENTS.get(request.getOpponentUserName()).getUsername());
         Client opponent = Config.CLIENTS.get(request.getOpponentUserName());
 
         if (didChatBefore) {
-            System.out.println(118);
             preChat.getMassages().add(new Massage(true,request.getContext()));
             for (PrivateChat privateChat : opponent.getPrivateChats()) {
                 if (privateChat.getOpponentUsername().equals(clientController.getClient().getUsername())) {
@@ -144,8 +146,8 @@ public class RequestHandler implements RequestVisitor {
         // bara dotashoon be private chathashoon add mishe
         // in sakhte
         //client ha save mishan
-        Saver.getSaver().saveUser(clientController.getClient().getUsername(),false,null,clientController.getClient());
-        Saver.getSaver().saveUser(opponent.getUsername(),false,null,opponent);
+        Saver.getSaver().saveUser(clientController.getClient());
+        Saver.getSaver().saveUser(opponent);
 //        va dobare toyr oon response send mishan
         if (Config.ONLINE_CLIENTS.containsKey(opponent.getUsername())) {
             Config.ONLINE_CLIENTS.get(opponent.getUsername()).setPrivateChats(opponent.getPrivateChats());
@@ -154,6 +156,17 @@ public class RequestHandler implements RequestVisitor {
         }
         clientController.sendResponse(new NewPMResponse(new Massage(true,request.getContext()),"",clientController.getClient().getPrivateChats()));// bara khodesh
 
+    }
+
+    @Override
+    public void visit(BuyRequest request, ClientController clientController) {
+        Bill bill = ShopController.getInstance().returnCheckBuyRequest(request,clientController);
+        if (bill != null) {
+            clientController.sendResponse(new BuyResponse(bill,"r u sure?",true));
+        }
+        else {
+            clientController.sendResponse(new BuyResponse(null,"oops",false));
+        }
     }
 
 }

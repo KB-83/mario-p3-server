@@ -1,50 +1,20 @@
 {
   "username" : "username",
-  "password" : "pass:",
+  "password" : "pass",
   "privateChats" : [ {
     "opponentUsername" : "kb",
     "massages" : [ {
       "context" : null,
       "ownersPM" : false
     }, {
-      "context" : "hi",
-      "ownersPM" : false
-    }, {
-      "context" : "hi back babe",
-      "ownersPM" : true
-    }, {
-      "context" : "boos",
-      "ownersPM" : false
-    }, {
-      "context" : "boos",
-      "ownersPM" : true
-    }, {
-      "context" : "khoobam",
-      "ownersPM" : false
-    }, {
-      "context" : "sic khodeto jende",
-      "ownersPM" : false
-    }, {
-      "context" : "Ensure that the Massage class (as shown in your previous message) is also serializable, as it is part of the PrivateChat class.  Check for any exceptions or error messages that might occur during serialization. If an exception is thrown during the serialization process, it could prevent the complete serialization of the privateChats ArrayList.  Make sure that all the properties in the Massage class have proper getter and setter methods. The serialization process relies on these methods to access the properties of the objects.  Verify that the PrivateChat objects you added to the privateChats ArrayList are not null. If you try to add a null object to the list, it won't be serialized.  If you have confirmed that the PrivateChat objects are not null, and there are no exceptions or errors during serialization, but the objects are still not being saved in the JSON file, it's possible that there might be a bug or configuration issue with the JSON serialization library you are using.  I recommend checking your JSON serialization code and reviewing any additional configurations or custom serializers you might have implemented. If the issue persists, consider providing more details about the JSON serialization library you are using, or share more of your serialization code so we can better assist you in identifying the problem.",
-      "ownersPM" : false
-    }, {
       "context" : "salam",
-      "ownersPM" : false
-    }, {
-      "context" : "salammm",
-      "ownersPM" : true
-    }, {
-      "context" : "joon",
-      "ownersPM" : false
-    }, {
-      "context" : "joooooon:D",
       "ownersPM" : false
     } ]
   }, {
     "opponentUsername" : "2",
     "massages" : [ ]
   } ],
-  "coin" : 174,
+  "coin" : 17400,
   "score" : 47,
-  "diamond" : 20
+  "diamond" : 2000
 }
