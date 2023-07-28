@@ -8,8 +8,11 @@ import model.dto.entity.ItemDTO;
 import model.dto.entity.PlayerDTO;
 import model.dto.game.GameStateDTO;
 import model.dto.game.SectionDTO;
+import model.main_model.Client;
 import model.main_model.entity.player.Player;
 import model.main_model.gamestrucure.GameState;
+
+import java.util.ArrayList;
 
 public class DTOCreator {
     private DTOCreator(){}
@@ -25,6 +28,7 @@ public class DTOCreator {
         dto.setType(player.getClass().getSimpleName());
         dto.setImage(player.getImageAddress());
         dto.setHeight(player.getHeight());
+        dto.setName(player.getClientName());
         return dto;
     }
 
@@ -37,6 +41,11 @@ public class DTOCreator {
         dto.getCurrentSection().setEnemies(new EnemyDTO[]{});
         dto.getCurrentSection().setPipes(new PipeDTO[]{});
         dto.getCurrentSection().setBackGroundTiles(new int[][]{{}});
+        dto.setPlayerDTOS(new ArrayList<>());
+        for (int i = 0; i < gameState.getGameStateController().getClients().size(); i++) {
+            PlayerDTO playerDTO = new PlayerDTO();
+            dto.getPlayerDTOS().add(playerDTO);
+        }
         return updateGameStateDTO(dto,gameState);
     }
     public static GameStateDTO updateGameStateDTO(GameStateDTO dto, GameState gameState) {
@@ -168,6 +177,20 @@ public class DTOCreator {
                     }
                 }
             }
+        }
+        ArrayList<PlayerDTO> playerDTOS = dto.getPlayerDTOS();
+        for (int i = 0 ; i< gameState.getGameStateController().getClients().size();i++) {
+            try {
+                PlayerDTO playerdto = gameState.getGameStateController().getClients().get(i).getPlayerDTO();
+                playerDTOS.get(i).setImage(playerdto.getImage());
+                playerDTOS.get(i).setHeight(playerdto.getHeight());
+                playerDTOS.get(i).setX(playerdto.getX());
+                playerDTOS.get(i).setY(playerdto.getY());
+                playerDTOS.get(i).setCameraX(playerdto.getCameraX());
+                playerDTOS.get(i).setCameraY(playerdto.getCameraY());
+                playerDTOS.get(i).setType(playerdto.getType());
+                playerDTOS.get(i).setName(playerdto.getName());
+            }catch (NullPointerException e){}
         }
 
         return dto;

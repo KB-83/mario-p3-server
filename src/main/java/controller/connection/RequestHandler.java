@@ -1,7 +1,7 @@
 package controller.connection;
 
 import controller.ClientController;
-import controller.PlayerRequestHandler;
+import controller.gamelogic.playerlogic.PlayerRequestHandler;
 import controller.ShopController;
 import controller.game.GameWaitingRoom;
 import controller.mapper.DTOCreator;
@@ -16,12 +16,10 @@ import model.response.BuyResponse;
 import model.response.GameStateStatusResponse;
 import model.response.NewPMResponse;
 import util.Config;
-import util.Constant;
 import util.Loader;
 import util.Saver;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class RequestHandler implements RequestVisitor {
     private static RequestHandler requestResponseHandler;
@@ -78,10 +76,10 @@ public class RequestHandler implements RequestVisitor {
         PlayerRequestHandler handler = clientController.getClient().getPlayer().getPlayerController().getPlayerRequestHandler();
         switch (request.getType()) {
             case "right":
-                handler.RightRequest();
+                handler.rightRequest();
                 break;
             case "left":
-                handler.LeftRequest();
+                handler.leftRequest();
                 break;
             case "rightD":
                 handler.rightDoneRequest();

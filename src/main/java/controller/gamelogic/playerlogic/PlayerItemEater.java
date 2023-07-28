@@ -46,14 +46,18 @@ public class PlayerItemEater {
                 lastUnHeatTime = System.currentTimeMillis();
                 unHeat.start();
                 player.setUnHeat(true);
-                int i = gameState.getMarioState();
+                int i = 0;
+                if (player.isMega()) {
+                    i = 1;
+                }
+                else if(player.isFire()) {
+                    i = 2;
+                }
                 switch (i) {
                     case 0:
-                        gameState.setMarioState(1);
                         player.setMega(true);
                         break;
                     case 1:
-                        gameState.setMarioState(2);
                         player.setMega(false);
                         player.setFire(true);
                 }
@@ -61,14 +65,18 @@ public class PlayerItemEater {
             case "Mushroom":
 //                sound.setSound("POWER_UP");
                 gameState.setScore(gameState.getScore() + 30);
-                i = gameState.getMarioState();
+                i = 0;
+                if (player.isMega()) {
+                    i = 1;
+                }
+                else if(player.isFire()) {
+                    i = 2;
+                }
                 switch (i) {
                     case 0:
-                        gameState.setMarioState(1);
                         player.setMega(true);
                         break;
                     case 1:
-                        gameState.setMarioState(2);
                         player.setMega(false);
                         player.setFire(true);
                 }
@@ -76,14 +84,18 @@ public class PlayerItemEater {
             case "Flower":
 //                sound.setSound("POWER_UP");
                 gameState.setScore(gameState.getScore() + 20);
-                i = gameState.getMarioState();
+                i = 0;
+                if (player.isMega()) {
+                    i = 1;
+                }
+                else if(player.isFire()) {
+                    i = 2;
+                }
                 switch (i) {
                     case 0:
-                        gameState.setMarioState(1);
                         player.setMega(true);
                         break;
                     case 1:
-                        gameState.setMarioState(2);
                         player.setMega(false);
                         player.setFire(true);
                         break;

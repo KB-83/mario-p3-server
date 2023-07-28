@@ -44,6 +44,7 @@ public class Client {
         this.password = password;
         //test
         this.player = new Mario();
+        player.setClientName(username);
         privateChats = new ArrayList<>();
     }
 
@@ -53,6 +54,7 @@ public class Client {
 
     public void setUsername(String username) {
         this.username = username;
+        player.setClientName(username);
     }
 
     public String getPassword() {

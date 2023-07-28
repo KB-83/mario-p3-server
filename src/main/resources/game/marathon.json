@@ -2,7 +2,7 @@
   "name" : "default",
   "levels" : [ {
     "sections" : [ {
-      "length" : 30,
+      "length" : 230,
       "time" : 50,
       "blocks" : [ {
         "type" : "QUESTION",
@@ -23,16 +23,7 @@
           "type" : "GOOMBA",
           "x" : 12,
           "y" : 0
-        }],
-      "pipes" : [ {
-        "x" : 6,
-        "y" : 0,
-        "type" : "SIMPLE"
-      }, {
-        "x" : 20,
-        "y" : 0,
-        "type" : "PIRANHA_TRAP"
-      } ]
+        }]
     },
 
       {

@@ -1,4 +1,4 @@
-package controller;
+package controller.gamelogic.playerlogic;
 
 
 import model.main_model.backgroundobject.pipe.*;
@@ -14,10 +14,11 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class PlayerRequestHandler {
+public abstract class PlayerRequestHandler {
     private Player player;
     private GameState gameState;
     private int counter;
+    private int counterMax = 2;
     private ActionListener jumpActionListener;
     private Timer jumpTimer;
     private double jumpStartTime;
@@ -33,6 +34,7 @@ public class PlayerRequestHandler {
         setActonListeners();
 
     }
+    public abstract void update();
 
     public void jumpRequest(){
         if(gameState.isPaused() || player.isDuringJump()){
@@ -48,7 +50,7 @@ public class PlayerRequestHandler {
         jumpStartTime = System.currentTimeMillis();
         jumpStartY = player.getWorldY();
     }
-    public void RightRequest(){
+    public void rightRequest(){
         if(gameState.isPaused()){
             return;
         }
@@ -59,11 +61,11 @@ public class PlayerRequestHandler {
 //        }
         // todo : check next line
         player.setCameraY(player.getWorldY());
-        if(counter < 2){
+        if(counter < counterMax){
             setPlayerImageByState("Right1");
             counter++;
         }
-        else if(counter < 4) {
+        else if(counter < counterMax * 2) {
             setPlayerImageByState("Right2");
             counter++;
         }
@@ -73,18 +75,20 @@ public class PlayerRequestHandler {
         player.setVX(400);
 
     }
-    public void rightDoneRequest(){
-        player.setVX(0);
-    }
-    public void LeftRequest(){
+//    public void rightDoneRequest(){
+//        player.setVX(0);
+//    }
+    public abstract void rightDoneRequest();
+
+    public void leftRequest(){
         if(gameState.isPaused()){
             return;
         }
-        if(counter < 2){
+        if(counter < counterMax){
             setPlayerImageByState("Left1");
             counter++;
         }
-        else if(counter < 4) {
+        else if(counter < counterMax * 2) {
             setPlayerImageByState("Left2");
             counter++;
         }
@@ -94,9 +98,11 @@ public class PlayerRequestHandler {
         //todo : improve it
         player.setVX(-400);
     }
-    public void leftDoneRequest(){
-        player.setVX(0);
-    }
+//    public void leftDoneRequest(){
+//        player.setVX(0);
+//    }
+    public abstract void leftDoneRequest();
+
 
     public void SeatRequest(){
         if(gameState.isPaused() || player.isDuringJump()){
@@ -226,5 +232,13 @@ public class PlayerRequestHandler {
 
     public Timer getJumpTimer() {
         return jumpTimer;
+    }
+
+    public void setCounterMax(int counterMax) {
+        this.counterMax = counterMax;
+    }
+
+    public int getCounterMax() {
+        return counterMax;
     }
 }

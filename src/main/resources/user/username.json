@@ -9,6 +9,9 @@
     }, {
       "context" : "salam",
       "ownersPM" : false
+    }, {
+      "context" : "hi",
+      "ownersPM" : true
     } ]
   }, {
     "opponentUsername" : "2",

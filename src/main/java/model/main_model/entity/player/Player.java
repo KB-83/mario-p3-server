@@ -20,6 +20,7 @@ public abstract class Player extends Entity {
     private boolean isFire, isMega;
     @JsonIgnore
     private boolean isUnHeat;
+    private String clientName;
     //todo: is it nessesart?
 //    @JsonIgnore
 //    private PlayerRequestHandler playerRequestHandler;
@@ -120,5 +121,13 @@ public abstract class Player extends Entity {
 
     public void setUnHeat(boolean unHeat) {
         isUnHeat = unHeat;
+    }
+
+    public String getClientName() {
+        return clientName;
+    }
+
+    public void setClientName(String clientName) {
+        this.clientName = clientName;
     }
 }

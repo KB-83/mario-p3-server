@@ -33,7 +33,9 @@ public class Marathon extends GameStateController{
     public void update() {
         super.update();
         for (Client client:getClients()) {
-            client.getPlayer().getPlayerController().update();
+            if (client.getPlayer().getPlayerController() != null) { //todo : think about it its going to improve now is just giving time to thread to make controller not null. game waiting room line 86
+                client.getPlayer().getPlayerController().update();
+            }
         }
     }
 }

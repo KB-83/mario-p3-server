@@ -16,16 +16,11 @@ public class GameState {
     private String name;
     @JsonIgnore
     private GameStateController gameStateController;
-//    @JsonIgnore
-//    private User currentUser;
     private Level[] levels;
     @JsonIgnore
     private Level currentLevel;
     @JsonIgnore
     private Section currentSection;
-    private Mario mario;
-    // 0 : mini //  1 : mega // 2 : fire
-    private int marioState;
     @JsonIgnore
     private Loop gameloop;
     @JsonIgnore
@@ -184,14 +179,6 @@ public class GameState {
 //        this.sound = sound;
 //    }
 
-    public int getMarioState() {
-        return marioState;
-    }
-
-    public void setMarioState(int marioState) {
-        this.marioState = marioState;
-    }
-
     public CheckPoint getWaitingCheckpoint() {
         return waitingCheckpoint;
     }
@@ -212,9 +199,6 @@ public class GameState {
 //        return mario;
 //    }
 
-    public void setMario(Mario mario) {
-        this.mario = mario;
-    }
     public SwardCollisionHandler getSwardCollisionHandler() {
         return swardCollisionHandler;
     }

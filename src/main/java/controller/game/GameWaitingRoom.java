@@ -45,9 +45,9 @@ public class GameWaitingRoom {
             Game game = Config.ONLINE_GAMES.get(0);
             GameState gameState = new GameStateController(marathonClients).createGameState(game);
             //todo : test too
-            client.getPlayer().setPlayerController(new PlayerController(gameState, client.getPlayer()));
+            client.getPlayer().setPlayerController(new PlayerController(gameState, client.getPlayer(),"marathon"));
             Marathon marathon = new Marathon(marathonClients,gameState);
-//            marathons.add(marathon);
+            marathons.add(marathon);
             startAGame(marathonClients,DTOCreator.createGameStateDTO(gameState),gameState);
             marathon.start();
             //todo : clone it
@@ -60,30 +60,30 @@ public class GameWaitingRoom {
         }
     }
     public void setMarathonTimer() {
-        marathonTimer = new Timer(6000, new ActionListener() {
+        marathonTimer = new Timer(5000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(marathonClients.size() >= 2) {
+                if(marathonClients.size() >= 1) {
                     //start game
+                    Game game = Config.ONLINE_GAMES.get(0);//todo : it can be a hash map by game names.
+                    GameState gameState = new GameStateController(marathonClients).createGameState(game);
+                    Marathon marathon = new Marathon(marathonClients,gameState);
+//                marathons.add(marathon);
+                    startAGame(marathonClients, DTOCreator.createGameStateDTO(gameState),gameState);
+                    marathon.start();
+                    //todo : clone it
+                    marathonClients = new ArrayList<>();
                 }
                 else if (marathonClients.size() == 1) {
                     //send no online user to the client
                 }
-                Game game = Config.ONLINE_GAMES.get(0);
-                GameState gameState = new GameStateController(marathonClients).createGameState(game);
-                Marathon marathon = new Marathon(marathonClients,gameState);
-//                marathons.add(marathon);
-                startAGame(marathonClients, DTOCreator.createGameStateDTO(gameState),gameState);
-                marathon.start();
-                //todo : clone it
-                marathonClients = new ArrayList<>();
                 marathonTimer.stop();
             }
         });
     }
     public void startAGame(ArrayList<Client> clients, GameStateDTO gameStateDTO,GameState gameState) {
         for (Client client : clients) {
-            client.getPlayer().setPlayerController(new PlayerController(gameState, client.getPlayer()));
+            client.getPlayer().setPlayerController(new PlayerController(gameState, client.getPlayer(),"marathon"));
             client.setCurrentGameStateDTO(gameStateDTO);
             client.setCurrentGameState(gameState);
             PlayerDTO playerDTO = DTOCreator.createPlayerDTO(client.getPlayer());

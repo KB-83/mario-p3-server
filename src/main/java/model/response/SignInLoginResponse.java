@@ -1,6 +1,5 @@
 package model.response;
 
-import controller.connection.ResponseVisitor;
 import model.main_model.Client;
 
 public class SignInLoginResponse extends Response{
