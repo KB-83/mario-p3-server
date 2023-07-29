@@ -27,8 +27,8 @@ public abstract class Player extends Entity {
     @JsonIgnore
     private PlayerController playerController;
 
-    public Player() {
-
+    public Player(String name) {
+        clientName = name;
         setOnTopOfBlock(true);
         bullet = new Bullet();
         sward = new Sward();

@@ -23,6 +23,7 @@ public abstract class PlayerRequestHandler {
     private ActionListener jumpActionListener;
     private Timer jumpTimer;
     private double jumpStartTime;
+    private int v = V.Mario.getV();
 //    private Sound sound;
     private int jumpStartY;
     //todo: behtareh inaro be logic game pass bede
@@ -73,7 +74,7 @@ public abstract class PlayerRequestHandler {
         else {
             counter = 0;
         }
-        player.setVX(V.Mario.getV());
+        player.setVX(v);
 
     }
 //    public void rightDoneRequest(){
@@ -97,7 +98,7 @@ public abstract class PlayerRequestHandler {
             counter = 0;
         }
         //todo : improve it
-        player.setVX(-V.Mario.getV());
+        player.setVX(-v);
     }
 //    public void leftDoneRequest(){
 //        player.setVX(0);
@@ -229,6 +230,14 @@ public abstract class PlayerRequestHandler {
         else {
             player.setImageAddress("Mario"+s);
         }
+    }
+
+    public int getV() {
+        return v;
+    }
+
+    public void setV(int v) {
+        this.v = v;
     }
 
     public Timer getJumpTimer() {

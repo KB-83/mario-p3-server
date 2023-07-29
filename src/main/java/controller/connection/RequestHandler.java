@@ -64,12 +64,17 @@ public class RequestHandler implements RequestVisitor {
     @Override
     public void visit(GetGameStateRequest request, ClientController clientController) {
         // todo: change it this response doesnt have to new
-        Client client = clientController.getClient();
-        GameStateDTO gameStateDTO= DTOCreator.updateGameStateDTO(client.getCurrentGameStateDTO(),client.getCurrentGameState());
-        client.setCurrentGameStateDTO(gameStateDTO);
-        PlayerDTO playerDTO = DTOCreator.updatePlayerDTO(clientController.getClient().getPlayer(),clientController.getClient().getPlayerDTO());
-        client.setPlayerDTO(playerDTO);
-        clientController.sendResponse(new GameStateStatusResponse(gameStateDTO,playerDTO));
+        try {
+            Client client = clientController.getClient();
+            GameStateDTO gameStateDTO = DTOCreator.updateGameStateDTO(client.getCurrentGameStateDTO(), client.getCurrentGameState());
+            client.setCurrentGameStateDTO(gameStateDTO);
+            PlayerDTO playerDTO = DTOCreator.updatePlayerDTO(clientController.getClient().getPlayer(), clientController.getClient().getPlayerDTO());
+            client.setPlayerDTO(playerDTO);
+            clientController.sendResponse(new GameStateStatusResponse(gameStateDTO, playerDTO));
+        }
+        catch (NullPointerException e){
+            System.out.println("still looks for update");
+        }
     }
     @Override
     public void visit(PlayerActionRequest request, ClientController clientController) {

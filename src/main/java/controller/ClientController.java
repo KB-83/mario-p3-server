@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import controller.connection.RequestHandler;
 import model.main_model.Client;
+import model.main_model.entity.player.V;
 import model.request.Request;
 import model.response.Response;
 import util.Config;
@@ -79,5 +80,12 @@ public class ClientController extends Thread{
 
     public boolean isOnline() {
         return isOnline;
+    }
+    public void cleanClientFromGame() {
+        client.setCurrentGameState(null);
+        client.setCurrentGameStateDTO(null);
+        //test
+        client.setPlayerDTO(null);
+        client.setPlayer(null);
     }
 }

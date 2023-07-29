@@ -6,9 +6,8 @@ import controller.ClientController;
 import model.main_model.Client;
 import model.response.SignInLoginResponse;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.util.Properties;
 
 public class Saver {
     private static Saver saver;
@@ -41,10 +40,34 @@ public class Saver {
         }
         else {
             Client fish = new Client(username,password,controller);
+            addNewClientToProperties(fish);
             saveUser(fish);
+            Config.loadConfigs();
             controller.sendResponse(new SignInLoginResponse(fish,true,""));
             return fish;
         }
+    }
+    private void addNewClientToProperties(Client client){
+        File propertiesFile = new File("src/main/resources/config/clients.properties");
+        Config properties = Config.getConfig("clients");
+
+        try {
+
+            FileInputStream inputStream = new FileInputStream(propertiesFile);
+            properties.load(inputStream);
+            inputStream.close();
+
+            properties.setProperty(client.getUsername(), "/" + client.getUsername() + ".json");
+
+            FileOutputStream outputStream = new FileOutputStream(propertiesFile);
+            properties.store(outputStream,null);
+            outputStream.close();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
 }

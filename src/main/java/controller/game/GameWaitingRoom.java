@@ -7,6 +7,7 @@ import controller.mapper.DTOCreator;
 import model.dto.entity.PlayerDTO;
 import model.dto.game.GameStateDTO;
 import model.main_model.Client;
+import model.main_model.entity.player.Mario;
 import model.main_model.gamestrucure.Game;
 import model.main_model.gamestrucure.GameState;
 import model.response.GameStartResponse;
@@ -85,6 +86,7 @@ public class GameWaitingRoom {
     }
     public void startAGame(ArrayList<Client> clients, GameStateDTO gameStateDTO,GameState gameState) {
         for (Client client : clients) {
+            client.setPlayer(new Mario(client.getUsername()));
             client.getPlayer().setPlayerController(new PlayerController(gameState, client.getPlayer(),"marathon"));
             client.setCurrentGameStateDTO(gameStateDTO);
             client.setCurrentGameState(gameState);

@@ -13,6 +13,7 @@ import model.main_model.room.PrivateChat;
 import java.util.ArrayList;
 
 public class Client {
+    private String username;
     @JsonIgnore
     private GameState currentGameState;
     @JsonIgnore
@@ -23,7 +24,6 @@ public class Client {
     private PlayerDTO playerDTO;
     @JsonIgnore
     private ClientController clientController;
-    private String username;
     private String password;
     @JsonInclude(JsonInclude.Include.ALWAYS)
     private ArrayList <PrivateChat> privateChats;
@@ -34,8 +34,8 @@ public class Client {
     private int diamond;
 
     public Client() {
-        this.player = new Mario();
         privateChats = new ArrayList<>();
+//        player = new Mario("");
     }
 
     public Client(String username, String password,ClientController clientController) {
@@ -43,8 +43,6 @@ public class Client {
         this.username = username;
         this.password = password;
         //test
-        this.player = new Mario();
-        player.setClientName(username);
         privateChats = new ArrayList<>();
     }
 
@@ -54,7 +52,9 @@ public class Client {
 
     public void setUsername(String username) {
         this.username = username;
-        player.setClientName(username);
+        if (player != null) {
+            player.setClientName(username);
+        }
     }
 
     public String getPassword() {

@@ -82,7 +82,6 @@ public class DTOCreator {
         PipeDTO[] pipeDTOS = sectionDTO.getPipes();
         if (pipeDTOS != null || gameState.getCurrentSection().getPipes()!= null) {
             if (gameState.getCurrentSection().getPipes() == null) {
-                System.out.println("76");
                 sectionDTO.setPipes(null) ;
             }//todo : we need a next section method here
             else {
