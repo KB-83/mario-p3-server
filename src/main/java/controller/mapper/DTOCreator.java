@@ -50,7 +50,7 @@ public class DTOCreator {
     }
     public static GameStateDTO updateGameStateDTO(GameStateDTO dto, GameState gameState) {
         SectionDTO sectionDTO = dto.getCurrentSection();
-        sectionDTO.setTime(sectionDTO.getTime());
+        sectionDTO.setTime(gameState.getCurrentSection().getRemainingTime());
         sectionDTO.setLength(sectionDTO.getLength());
         EnemyDTO[] enemyDTOS = sectionDTO.getEnemies();
         if (enemyDTOS != null &&gameState.getCurrentSection().getEnemies() != null) {

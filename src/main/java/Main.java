@@ -1,6 +1,5 @@
 
 import controller.ServerController;
-import controller.game.Marathon;
 import util.Config;
 
 
@@ -13,3 +12,4 @@ public class Main {
 
     }
 }
+

@@ -29,6 +29,7 @@ public class GameState {
     private  SwardCollisionHandler swardCollisionHandler;
     @JsonIgnore
     private BulletCollisionHandler bulletCollisionHandler;
+
 //    @JsonIgnore
 //    private Sound sound;
     private int levelNumber;

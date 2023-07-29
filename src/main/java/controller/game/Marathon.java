@@ -4,16 +4,18 @@ import controller.ClientController;
 import controller.gamelogic.gamestatelogic.GameStateController;
 import model.main_model.Client;
 import model.main_model.gamestrucure.GameState;
+import model.response.GameOverResponse;
 import util.Config;
 import util.Loop;
+import util.Saver;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Marathon extends GameStateController{
 
     private GameState gameState;
-    private Loop gameloop;
     public static double multiplierSpeed = Config.CONSTANT.get("Marathon.multiplierSpeed");
     public static double multiplierSlowDown = Config.CONSTANT.get("Marathon.multiplierSlowDown");
     public static int periodSlowDown = (int) (Config.CONSTANT.get("Marathon.periodSlowDown").doubleValue()) ;
@@ -45,5 +47,90 @@ public class Marathon extends GameStateController{
                 client.getPlayer().getPlayerController().update();
             }
         }
+        if (getGameState().getCurrentSection().getRemainingTime() <= 0) {
+            //todo : bug player client az aval shro nemikone
+            endOfGame();
+        }
+    }
+    private void endOfGame() {
+        Score[] scores = sortClientsByScore();
+        scores = addDiamond(scores);
+        for (Score score : scores) {
+            Client client = score.getClient();
+            client.setScore(client.getScore()+score.getScore());
+            client.setDiamond(client.getDiamond()+score.getDiamond());
+            Saver.getSaver().saveUser(client);
+            if (client.getClientController().isOnline()) {
+                client.getClientController().sendResponse(new GameOverResponse(score.getScore(),score.getDiamond(),"marathon is over"));// game over response
+            }
+        }
+        getLoop().kill();
+
+    }
+    private Score[] sortClientsByScore() {
+        Score[] sortedScores = new Score[getClients().size()];
+        for (int i = 0; i < sortedScores.length ; i++) {
+            sortedScores[i] = new Score(getClients().get(i),score(getClients().get(i)));
+
+        }
+
+        for (int i = 0; i < sortedScores.length - 1; i++) {
+            for (int j = 0; j < sortedScores.length- i - 1; j++) {
+                if (sortedScores[j].getScore() < sortedScores[j+1].getScore()) {
+                    Score temp = sortedScores[j];
+                    sortedScores[j] = sortedScores[j+1];
+                    sortedScores[j+1] = temp;
+                }
+            }
+        }
+        return sortedScores;
+    }
+    private int score(Client client) {
+        double distanceFromStart = client.getPlayer().getWorldX();
+        // age mord sabt mishe
+        double lifeTime = 0;
+        return  (int) (Math.max(lifeTime, minLifeTime) * lifeTimeMultiplier +
+                        Math.max(distanceFromStart, minDistance) * distanceMultiplier);
+    }
+    private Score[] addDiamond(Score[] scores) {
+        int n = getClients().size();
+        for (int i = 0; i < scores.length; i++) {
+            scores[i].setDiamond((int) Math.floor(n/Math.pow(2,i+1)));
+        }
+        return scores;
+    }
+}
+class Score {
+    private Client client;
+    private int score;
+    private int diamond;
+
+    public Score(Client client, int score) {
+        this.client = client;
+        this.score = score;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public int getDiamond() {
+        return diamond;
+    }
+
+    public void setDiamond(int diamond) {
+        this.diamond = diamond;
     }
 }

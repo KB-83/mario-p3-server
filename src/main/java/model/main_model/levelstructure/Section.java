@@ -18,6 +18,12 @@ public class Section {
     private Pipe[] pipes;
     private Pipe spawnPipe;
     @JsonIgnore
+    private long startTime = System.currentTimeMillis();
+    @JsonIgnore
+    private int remainingTime;
+    @JsonIgnore
+    private int passedTime;
+    @JsonIgnore
     private BackgroundMap backgroundMap;
     private CheckPoint checkPoint;
     @JsonIgnore
@@ -101,5 +107,29 @@ public class Section {
 
     public void setCheckPoint(CheckPoint checkPoint) {
         this.checkPoint = checkPoint;
+    }
+
+    public int getRemainingTime() {
+        return remainingTime;
+    }
+
+    public void setRemainingTime(int remainingTime) {
+        this.remainingTime = remainingTime;
+    }
+
+    public long getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(long startTime) {
+        this.startTime = startTime;
+    }
+
+    public int getPassedTime() {
+        return passedTime;
+    }
+
+    public void setPassedTime(int passedTime) {
+        this.passedTime = passedTime;
     }
 }

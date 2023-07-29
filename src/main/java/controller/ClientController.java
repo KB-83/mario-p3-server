@@ -41,7 +41,6 @@ public class ClientController extends Thread{
     }
     public void run() {
         while (isOnline) {
-            System.out.println("running client controller");
             receiveRequest();
         }
     }
@@ -76,5 +75,9 @@ public class ClientController extends Thread{
 
     public Client getClient() {
         return client;
+    }
+
+    public boolean isOnline() {
+        return isOnline;
     }
 }

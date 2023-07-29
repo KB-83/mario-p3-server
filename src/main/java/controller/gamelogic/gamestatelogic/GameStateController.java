@@ -23,6 +23,7 @@ public class GameStateController extends Thread{
     private GameState gameState;
     private ArrayList<Client> clients;
     private GravityEffectsHandler gravityEffectsHandler;
+    private Loop loop;
 
 
     public GameStateController(ArrayList<Client> clients) {
@@ -30,11 +31,19 @@ public class GameStateController extends Thread{
     }
 
     public void update(){
-        System.out.println("updating");
+//        System.out.println("updating");
         //player updates
         if (gameState.isPaused()) {
             return;
         }
+//        if (loop.isRunning()){
+//        ..todo : improve
+            gameState.getCurrentSection().setPassedTime((int) ((System.currentTimeMillis() - gameState.getCurrentSection().getStartTime())/1000));
+//        }
+        gameState.getCurrentSection().setRemainingTime(gameState.getCurrentSection().getTime() - gameState.getCurrentSection().getPassedTime());
+        //        ..todo : improve
+
+
         // this is gravity
         // todo : improve it
         // todo : game logic can be handel here if you part it
@@ -79,6 +88,7 @@ public class GameStateController extends Thread{
         }
     }
     public void changeSection(Section section,int sectionNumber) {
+//        section.setStartTime(System.currentTimeMillis());
         gameState.setCurrentSection(section);
         gameState.setSectionNumber(sectionNumber);
         gameState.setRemainingTime(gameState.getCurrentSection().getTime());
@@ -115,8 +125,10 @@ public class GameStateController extends Thread{
         //test
 //        gameState.getSound().play();
 //        gameState.getSound().loop();
+        gameState.getCurrentSection().setStartTime(System.currentTimeMillis());
         Loop gameLoop = new Loop(gameState.getGameStateController(), Constant.FPS);
-        gameState.setGameLoop(gameLoop);
+//        gameState.setGameLoop(loop);
+        loop = gameLoop;
         gameLoop.start();
 
     }
@@ -204,5 +216,9 @@ public class GameStateController extends Thread{
 
     public void setClients(ArrayList<Client> clients) {
         this.clients = clients;
+    }
+
+    public Loop getLoop() {
+        return loop;
     }
 }
