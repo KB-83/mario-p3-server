@@ -1,5 +1,6 @@
 
 import controller.ServerController;
+import controller.game.Marathon;
 import util.Config;
 
 
@@ -9,5 +10,6 @@ public class Main {
         Config.loadConfigs();
         ServerController serverController = new ServerController();
         serverController.start();
+
     }
 }

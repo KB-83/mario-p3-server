@@ -41,6 +41,7 @@ public class ClientController extends Thread{
     }
     public void run() {
         while (isOnline) {
+            System.out.println("running client controller");
             receiveRequest();
         }
     }
@@ -68,7 +69,7 @@ public class ClientController extends Thread{
             throw new RuntimeException(e);
         } catch (IOException | IllegalArgumentException e) {
             isOnline = false;
-            Config.ONLINE_CLIENTS.remove(client);
+            Config.ONLINE_CLIENTS.remove(client.getUsername(),client);
             System.out.println("client "+ socket.getInetAddress().toString()+" disconnected");
         }
     }

@@ -13,6 +13,30 @@
         "type" : "COINS",
         "x" : 12,
         "y" : 4
+      } , {
+        "type" : "SIMPLE",
+        "x" : 72,
+        "y" : 3
+      }, {
+        "type" : "SIMPLE",
+        "x" : 73,
+        "y" : 3
+      }, {
+        "type" : "SIMPLE",
+        "x" : 74,
+        "y" : 3
+      } , {
+        "type" : "SIMPLE",
+        "x" : 62,
+        "y" : 3
+      }, {
+        "type" : "SIMPLE",
+        "x" : 83,
+        "y" : 3
+      }, {
+        "type" : "SIMPLE",
+        "x" : 64,
+        "y" : 3
       } ],
       "enemies" : [ {
         "type" : "GOOMBA",
@@ -22,6 +46,19 @@
         {
           "type" : "GOOMBA",
           "x" : 12,
+          "y" : 0
+        },
+        {
+          "type" : "GOOMBA",
+          "x" : 72,
+          "y" : 0
+        },{
+          "type" : "GOOMBA",
+          "x" : 82,
+          "y" : 0
+        },{
+          "type" : "GOOMBA",
+          "x" : 92,
           "y" : 0
         }]
     },
@@ -765,6 +802,18 @@
         }, {
           "type" : "SIMPLE",
           "x" : 21,
+          "y" : 3
+        } , {
+          "type" : "SIMPLE",
+          "x" : 67,
+          "y" : 3
+        }, {
+          "type" : "SIMPLE",
+          "x" : 68,
+          "y" : 3
+        }, {
+          "type" : "SIMPLE",
+          "x" : 69,
           "y" : 3
         } ],
         "enemies" : [ {

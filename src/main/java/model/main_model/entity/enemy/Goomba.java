@@ -10,7 +10,7 @@ public class Goomba extends Enemy{
     public Goomba() {
 //        setImageAddress("/image/enemies/Goompa.png");
         setEnemyController(new GoombaController(this));
-        setVX(100);
+        setVX(-100);
     }
 
     public GoombaController getGoombaController() {

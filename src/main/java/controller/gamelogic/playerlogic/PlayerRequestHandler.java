@@ -6,6 +6,7 @@ import model.main_model.entity.Bullet;
 import model.main_model.entity.Sward;
 import model.main_model.entity.player.JumpV0;
 import model.main_model.entity.player.Player;
+import model.main_model.entity.player.V;
 import model.main_model.gamestrucure.GameState;
 import model.main_model.gamestrucure.gameworldoption.Gravity;
 import util.Constant;
@@ -72,7 +73,7 @@ public abstract class PlayerRequestHandler {
         else {
             counter = 0;
         }
-        player.setVX(400);
+        player.setVX(V.Mario.getV());
 
     }
 //    public void rightDoneRequest(){
@@ -96,7 +97,7 @@ public abstract class PlayerRequestHandler {
             counter = 0;
         }
         //todo : improve it
-        player.setVX(-400);
+        player.setVX(-V.Mario.getV());
     }
 //    public void leftDoneRequest(){
 //        player.setVX(0);

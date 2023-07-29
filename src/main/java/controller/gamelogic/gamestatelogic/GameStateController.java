@@ -30,6 +30,7 @@ public class GameStateController extends Thread{
     }
 
     public void update(){
+        System.out.println("updating");
         //player updates
         if (gameState.isPaused()) {
             return;
@@ -105,7 +106,6 @@ public class GameStateController extends Thread{
         setGameStateDependencies(game1, gameState);
         setGameStateControllerDependencies(gameState);
         //todo : check if its good()
-        startGameState(gameState);
         this.gameState = gameState;
         return gameState;
     }
@@ -198,7 +198,7 @@ public class GameStateController extends Thread{
         this.gameState = gameState;
     }
 
-    public List<Client> getClients() {
+    public ArrayList<Client> getClients() {
         return clients;
     }
 

@@ -9,7 +9,7 @@ import util.Constant;
 
 import java.util.ArrayList;
 
-public class PlayerLifeChecker {
+public abstract class PlayerLifeChecker {
     private GameState gameState;
     private long lastKickTimeByEnemy;
     private Player player;
@@ -29,49 +29,56 @@ public class PlayerLifeChecker {
         }
 
     }
-    private void handleFalling(){
-        decreaseHeart();
-        gameState.setScore(gameState.getScore() - 30);
-        if (gameState.getScore() < 0) {
-            gameState.setScore(0);
-        }
+    public void update(){
+        checkIfHurt();
     }
-    private void handleOutOfTime(){}
-    public void handleEnemyCollide(Enemy enemy, String position){
-        if (player.isUnHeat()){
-            return;
-        }
-        if (position.equals("DOWN")) {
-            return;
-//            pass to EnemyLifeChecker
-        }
-        else {
-            //cool down
-            if (System.currentTimeMillis() - lastKickTimeByEnemy >= 3000) {
-                lastKickTimeByEnemy = System.currentTimeMillis();
-                kickPlayer();
-            }
-        }
-    }
-    private void kickPlayer(){
-        if (!player.isFire() && !player.isMega()) {
-            decreaseHeart();
-            return;
-        }
-//        sound.setSound("KICK");
-        if (player.isFire()){
-            player.setFire(false);
-            player.setMega(true);
-//            gameState.setMarioState(1);
-        }
 
-        else if (player.isMega()){
-            player.setMega(false);
-            player.setHeight(Constant.BACKGROUND_TILE_SIZE);
-//            gameState.setMarioState(0);
-        }
-//        sound.play();
-    }
+    //    private void handleFalling(){
+//        decreaseHeart();
+//        gameState.setScore(gameState.getScore() - 30);
+//        if (gameState.getScore() < 0) {
+//            gameState.setScore(0);
+//        }
+//    }
+    public abstract void handleFalling();
+    private void handleOutOfTime(){}
+//    public void handleEnemyCollide(Enemy enemy, String position){
+//        if (player.isUnHeat()){
+//            return;
+//        }
+//        if (position.equals("DOWN")) {
+//            return;
+////            pass to EnemyLifeChecker
+//        }
+//        else {
+//            //cool down
+//            if (System.currentTimeMillis() - lastKickTimeByEnemy >= 3000) {
+//                lastKickTimeByEnemy = System.currentTimeMillis();
+//                kickPlayer();
+//            }
+//        }
+//    }
+    public abstract void handleEnemyCollide(Enemy enemy, String position);
+//    private void kickPlayer(){
+//        if (!player.isFire() && !player.isMega()) {
+//            decreaseHeart();
+//            return;
+//        }
+////        sound.setSound("KICK");
+//        if (player.isFire()){
+//            player.setFire(false);
+//            player.setMega(true);
+////            gameState.setMarioState(1);
+//        }
+//
+//        else if (player.isMega()){
+//            player.setMega(false);
+//            player.setHeight(Constant.BACKGROUND_TILE_SIZE);
+////            gameState.setMarioState(0);
+//        }
+////        sound.play();
+//    }
+    public abstract void kickPlayer();
     private void decreaseHeart(){
 //        if (gameState.getRemainingHeart() <=1) {
 //            killPlayer();

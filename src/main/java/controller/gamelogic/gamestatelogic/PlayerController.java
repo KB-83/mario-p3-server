@@ -1,6 +1,7 @@
 package controller.gamelogic.gamestatelogic;
 
 
+import controller.gamelogic.gamestatelogic.marathonlogic.PlayerMarathonLifeChecker;
 import controller.gamelogic.gamestatelogic.marathonlogic.PlayerMarathonRequestHandler;
 import controller.gamelogic.playerlogic.PlayerRequestHandler;
 import controller.gamelogic.collisionlogic.PlayerCollisionHandler;
@@ -16,18 +17,18 @@ public class PlayerController {
     private PlayerRequestHandler playerRequestHandler;
 
     public PlayerController(GameState gameState, Player player,String gameStateType) {
-        playerMovementHandler = new PlayerMovementHandler(gameState,player);
-        playerLifeChecker = new PlayerLifeChecker(gameState,player);
-        playerCollisionHandler = new PlayerCollisionHandler(gameState,playerLifeChecker,player);
         if (gameStateType.toLowerCase().equals("marathon")) {
             playerRequestHandler = new PlayerMarathonRequestHandler(gameState, player);
+            playerLifeChecker = new PlayerMarathonLifeChecker(gameState,player);
         }
+        playerMovementHandler = new PlayerMovementHandler(gameState,player);
+        playerCollisionHandler = new PlayerCollisionHandler(gameState,playerLifeChecker,player);
 
     }
     public void update(){
         playerCollisionHandler.applyCollisionEffects();
         playerMovementHandler.updatePlayerPosition();
-        playerLifeChecker.checkIfHurt();
+        playerLifeChecker.update();
         playerRequestHandler.update();
     }
 

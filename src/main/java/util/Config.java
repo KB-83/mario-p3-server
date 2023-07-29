@@ -20,7 +20,7 @@ import java.util.Properties;
 public class Config extends Properties {
     private static final String CONFIGS_ADDRESS = "src/main/resources/config/address.properties";
     private static final Config DEFAULT_CONFIG = new Config(CONFIGS_ADDRESS);
-    public final static HashMap<String, Long> CONSTANT = new HashMap<>();
+    public final static HashMap<String, Double> CONSTANT = new HashMap<>();
     public final static HashMap<String, Client> CLIENTS = new HashMap<>();
     public final static HashMap<String, Client> ONLINE_CLIENTS = new HashMap<>();
     public final static ArrayList<Game> ONLINE_GAMES = new ArrayList<>();
@@ -57,7 +57,7 @@ public class Config extends Properties {
     private  static void loadConstants(String name) {
         Config config = getConfig(name);
         for (String key : config.stringPropertyNames()) {
-            CONSTANT.put(key, Long.valueOf(config.getProperty(key)));
+            CONSTANT.put(key, Double.valueOf(config.getProperty(key)));
         }
         ONLINE_GAMES.add(Loader.getLoader().loadGame("Marathon"));
     }

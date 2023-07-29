@@ -43,10 +43,11 @@ public class GameWaitingRoom {
         else {
             //todo : do it better it is just a test
             Game game = Config.ONLINE_GAMES.get(0);
-            GameState gameState = new GameStateController(marathonClients).createGameState(game);
+            Marathon marathon = new Marathon(marathonClients);
+            GameState gameState = marathon.createGameState(game);
             //todo : test too
             client.getPlayer().setPlayerController(new PlayerController(gameState, client.getPlayer(),"marathon"));
-            Marathon marathon = new Marathon(marathonClients,gameState);
+
             marathons.add(marathon);
             startAGame(marathonClients,DTOCreator.createGameStateDTO(gameState),gameState);
             marathon.start();
@@ -66,11 +67,12 @@ public class GameWaitingRoom {
                 if(marathonClients.size() >= 1) {
                     //start game
                     Game game = Config.ONLINE_GAMES.get(0);//todo : it can be a hash map by game names.
-                    GameState gameState = new GameStateController(marathonClients).createGameState(game);
-                    Marathon marathon = new Marathon(marathonClients,gameState);
+                    Marathon marathon = new Marathon(marathonClients);
+                    GameState gameState = marathon.createGameState(game);
+
 //                marathons.add(marathon);
                     startAGame(marathonClients, DTOCreator.createGameStateDTO(gameState),gameState);
-                    marathon.start();
+                    marathon.startGameState(gameState);
                     //todo : clone it
                     marathonClients = new ArrayList<>();
                 }

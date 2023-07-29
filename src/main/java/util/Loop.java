@@ -2,7 +2,10 @@ package util;
 
 
 import controller.gamelogic.gamestatelogic.GameStateController;
+import model.main_model.Client;
 import model.main_model.gamestrucure.GameState;
+
+import java.util.ArrayList;
 
 public class Loop implements Runnable{
     private GameStateController gameStateController;// to update
@@ -45,6 +48,7 @@ public class Loop implements Runnable{
         long delta = 0;
         long currentTime;
         while (running){
+            checkOnlineClients();
             // sorry but it is the best i can design fo pause mechanisem :(
             //todo : improve pause mechanisem
 //            while (gameState.isPaused()){}
@@ -60,5 +64,15 @@ public class Loop implements Runnable{
                 tryFps = 0;
             }
         }
+    }
+    private void checkOnlineClients() {
+        ArrayList<Client> clients = gameStateController.getClients();
+        for (Client client : clients) {
+            if (Config.ONLINE_CLIENTS.containsValue(client)) {
+                return;
+            }
+        }
+        kill();
+
     }
 }
