@@ -15,6 +15,8 @@ public class PlayerController {
     private PlayerLifeChecker playerLifeChecker;
     private PlayerCollisionHandler playerCollisionHandler;
     private PlayerRequestHandler playerRequestHandler;
+    private boolean isLoosed;
+    private int lifeTime;
 
     public PlayerController(GameState gameState, Player player,String gameStateType) {
         if (gameStateType.toLowerCase().equals("marathon")) {
@@ -64,5 +66,21 @@ public class PlayerController {
 
     public void setPlayerRequestHandler(PlayerRequestHandler playerRequestHandler) {
         this.playerRequestHandler = playerRequestHandler;
+    }
+
+    public boolean isLoosed() {
+        return isLoosed;
+    }
+
+    public void setLoosed(boolean loosed) {
+        isLoosed = loosed;
+    }
+
+    public int getLifeTime() {
+        return lifeTime;
+    }
+
+    public void setLifeTime(int lifeTime) {
+        this.lifeTime = lifeTime;
     }
 }

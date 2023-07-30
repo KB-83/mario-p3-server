@@ -6,13 +6,17 @@ import model.main_model.entity.enemy.Enemy;
 import model.main_model.entity.player.Player;
 import model.main_model.entity.player.V;
 import model.main_model.gamestrucure.GameState;
+import util.Constant;
 
 public class PlayerMarathonLifeChecker extends PlayerLifeChecker {
     private Player player;
     private long lastKickTime = 0;
+    private GameState gameState;
+    private long lastKickTimeByEnemy;
     public PlayerMarathonLifeChecker(GameState gameState, Player player) {
         super(gameState, player);
         this.player = player;
+        this.gameState = gameState;
     }
 
     @Override
@@ -34,7 +38,10 @@ public class PlayerMarathonLifeChecker extends PlayerLifeChecker {
 
     @Override
     public void handleEnemyCollide(Enemy enemy, String position) {
-        kickPlayer();
+        if (System.currentTimeMillis() - lastKickTimeByEnemy >= 3000) {
+            lastKickTimeByEnemy = System.currentTimeMillis();
+            kickPlayer();
+        }
     }
 
     @Override
@@ -43,6 +50,23 @@ public class PlayerMarathonLifeChecker extends PlayerLifeChecker {
             player.getPlayerController().getPlayerRequestHandler().setV((int) (V.Mario.getV()  * Marathon.multiplierSlowDown));
             player.setVX(V.Mario.getV() * Marathon.multiplierSlowDown);
             lastKickTime = System.currentTimeMillis();
+        }
+        if (!player.isFire() && !player.isMega()) {
+            player.getPlayerController().setLoosed(true);
+            player.getPlayerController().setLifeTime(gameState.getRemainingTime());
+            return;
+        }
+//        sound.setSound("KICK");
+        if (player.isFire()){
+            player.setFire(false);
+            player.setMega(true);
+//            gameState.setMarioState(1);
+        }
+
+        else if (player.isMega()){
+            player.setMega(false);
+            player.setHeight(Constant.BACKGROUND_TILE_SIZE);
+//            gameState.setMarioState(0);
         }
     }
 }

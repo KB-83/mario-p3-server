@@ -6,6 +6,7 @@ import model.main_model.Client;
 import model.main_model.gamestrucure.GameState;
 import model.response.GameOverResponse;
 import util.Config;
+import util.Constant;
 import util.Loop;
 import util.Saver;
 
@@ -44,7 +45,9 @@ public class Marathon extends GameStateController{
         super.update();
         for (Client client:getClients()) {
             if (client.getPlayer().getPlayerController() != null) { //todo : think about it its going to improve now is just giving time to thread to make controller not null. game waiting room line 86
-                client.getPlayer().getPlayerController().update();
+                if (client.getPlayer().getPlayerController().isLoosed() == false) {
+                    client.getPlayer().getPlayerController().update();
+                }
             }
         }
         if (getGameState().getCurrentSection().getRemainingTime() <= 0) {
@@ -87,7 +90,7 @@ public class Marathon extends GameStateController{
         return sortedScores;
     }
     private int score(Client client) {
-        double distanceFromStart = client.getPlayer().getWorldX();
+        double distanceFromStart = client.getPlayer().getWorldX() / Constant.BACKGROUND_TILE_SIZE;
         // age mord sabt mishe
         double lifeTime = 0;
         return  (int) (Math.max(lifeTime, minLifeTime) * lifeTimeMultiplier +

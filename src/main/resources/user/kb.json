@@ -1,6 +1,6 @@
 {
   "username" : "kb",
-  "password" : "pass:",
+  "password" : "pass",
   "privateChats" : [ {
     "opponentUsername" : "username",
     "massages" : [ {
@@ -18,6 +18,6 @@
     "massages" : [ ]
   } ],
   "coin" : 174,
-  "score" : 4459,
-  "diamond" : 21
+  "score" : 274178,
+  "diamond" : 24
 }

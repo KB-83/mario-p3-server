@@ -39,7 +39,7 @@ public abstract class PlayerRequestHandler {
     public abstract void update();
 
     public void jumpRequest(){
-        if(gameState.isPaused() || player.isDuringJump()){
+        if(gameState.isPaused() || player.isDuringJump() || player.getPlayerController().isLoosed()){
             return;
         }
         player.setDuringJump(true);
@@ -53,7 +53,7 @@ public abstract class PlayerRequestHandler {
         jumpStartY = player.getWorldY();
     }
     public void rightRequest(){
-        if(gameState.isPaused()){
+        if(gameState.isPaused() || player.getPlayerController().isLoosed()){
             return;
         }
         // todo : make section v=changing mechanisem alright
@@ -83,7 +83,7 @@ public abstract class PlayerRequestHandler {
     public abstract void rightDoneRequest();
 
     public void leftRequest(){
-        if(gameState.isPaused()){
+        if(gameState.isPaused() || player.getPlayerController().isLoosed()){
             return;
         }
         if(counter < counterMax){
@@ -107,7 +107,7 @@ public abstract class PlayerRequestHandler {
 
 
     public void SeatRequest(){
-        if(gameState.isPaused() || player.isDuringJump()){
+        if(gameState.isPaused() || player.isDuringJump() || player.getPlayerController().isLoosed()){
             return;
         }
         //todo ; just a test
@@ -133,7 +133,7 @@ public abstract class PlayerRequestHandler {
         player.setCameraY(player.getCameraY()+10);
     }
     public void SwardRequest(){
-        if(gameState.isPaused()){
+        if(gameState.isPaused() || player.getPlayerController().isLoosed()){
             return;
         }
 //        && System.currentTimeMillis() - player.getSward().getLastTime() >= 5000 && gameState.getCoins() >=3
@@ -163,7 +163,7 @@ public abstract class PlayerRequestHandler {
         }
     }
     public void BulletRequest(){
-        if(gameState.isPaused()){
+        if(gameState.isPaused() || player.getPlayerController().isLoosed()){
             return;
         }
 //        3000 is cool down
