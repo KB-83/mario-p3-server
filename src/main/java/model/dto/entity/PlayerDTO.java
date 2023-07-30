@@ -7,6 +7,7 @@ public class PlayerDTO {
     private String image;
     private String name;
     private int height;
+    private int remainingLifePercent;
 
     public PlayerDTO() {
         image = "MarioRight1";
@@ -74,5 +75,13 @@ public class PlayerDTO {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getRemainingLifePercent() {
+        return remainingLifePercent;
+    }
+
+    public void setRemainingLifePercent(int remainingLifePercent) {
+        this.remainingLifePercent = remainingLifePercent;
     }
 }

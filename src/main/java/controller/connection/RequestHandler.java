@@ -60,6 +60,10 @@ public class RequestHandler implements RequestVisitor {
     public void visit(MarathonRequest request, ClientController clientController) {
         GameWaitingRoom.getInstance().marathonClient(clientController.getClient());
     }
+    @Override
+    public void visit(SurvivalRequest request, ClientController clientController) {
+        GameWaitingRoom.getInstance().survivalClient(clientController.getClient());
+    }
 
     @Override
     public void visit(GetGameStateRequest request, ClientController clientController) {

@@ -23,7 +23,7 @@ public class Config extends Properties {
     public final static HashMap<String, Double> CONSTANT = new HashMap<>();
     public final static HashMap<String, Client> CLIENTS = new HashMap<>();
     public final static HashMap<String, Client> ONLINE_CLIENTS = new HashMap<>();
-    public final static ArrayList<Game> ONLINE_GAMES = new ArrayList<>();
+    public final static HashMap<String,Game> ONLINE_GAMES = new HashMap<>();
     public static ObjectMapper objectMapper = new ObjectMapper();
     public final static ShopLimitation LIMITATIONS = loadLimitations("src/main/resources/config/limitation.json");
 
@@ -59,7 +59,8 @@ public class Config extends Properties {
         for (String key : config.stringPropertyNames()) {
             CONSTANT.put(key, Double.valueOf(config.getProperty(key)));
         }
-        ONLINE_GAMES.add(Loader.getLoader().loadGame("Marathon"));
+        ONLINE_GAMES.put("marathon",Loader.getLoader().loadGame("Marathon"));
+        ONLINE_GAMES.put("survival",Loader.getLoader().loadGame("Survival"));
     }
     private  static void loadClients(String name) {
         Config config = getConfig(name);

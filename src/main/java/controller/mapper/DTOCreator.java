@@ -29,6 +29,7 @@ public class DTOCreator {
         dto.setImage(player.getImageAddress());
         dto.setHeight(player.getHeight());
         dto.setName(player.getClientName());
+        dto.setRemainingLifePercent(player.getRemainingLifePercent());
         return dto;
     }
 
@@ -189,6 +190,7 @@ public class DTOCreator {
                 playerDTOS.get(i).setCameraY(playerdto.getCameraY());
                 playerDTOS.get(i).setType(playerdto.getType());
                 playerDTOS.get(i).setName(playerdto.getName());
+                playerDTOS.get(i).setRemainingLifePercent(playerdto.getRemainingLifePercent());
             }catch (NullPointerException e){}
         }
 

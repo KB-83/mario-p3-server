@@ -20,6 +20,7 @@ public abstract class Player extends Entity {
     private boolean isFire, isMega;
     @JsonIgnore
     private boolean isUnHeat;
+    private int remainingLifePercent = -1;
     private String clientName;
     //todo: is it nessesart?
 //    @JsonIgnore
@@ -129,5 +130,13 @@ public abstract class Player extends Entity {
 
     public void setClientName(String clientName) {
         this.clientName = clientName;
+    }
+
+    public int getRemainingLifePercent() {
+        return remainingLifePercent;
+    }
+
+    public void setRemainingLifePercent(int remainingLifePercent) {
+        this.remainingLifePercent = remainingLifePercent;
     }
 }

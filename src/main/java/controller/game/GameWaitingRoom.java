@@ -22,13 +22,16 @@ import java.util.List;
 public class GameWaitingRoom {
     private  ArrayList<Client> marathonClients = new ArrayList<>();
     private  Timer marathonTimer;
+    private  Timer survivalTimer;
     private final ArrayList<Client> groupSurvivalClients = new ArrayList<>();
-    private final ArrayList<Client> survivalClients = new ArrayList<>();
+    private ArrayList<Client> survivalClients = new ArrayList<>();
     private static GameWaitingRoom gameWaitingRoom;
     private List<Marathon> marathons;
+    private List<Survival> survivals;
 
     private GameWaitingRoom() {
         setMarathonTimer();
+        setSurvivalTimer();
     }
     public static GameWaitingRoom getInstance() {
         if (gameWaitingRoom == null) {
@@ -50,7 +53,7 @@ public class GameWaitingRoom {
             client.getPlayer().setPlayerController(new PlayerController(gameState, client.getPlayer(),"marathon"));
 
             marathons.add(marathon);
-            startAGame(marathonClients,DTOCreator.createGameStateDTO(gameState),gameState);
+            startAGame(marathonClients,DTOCreator.createGameStateDTO(gameState),gameState,"marathon");
             marathon.start();
             //todo : clone it
             marathonClients = new ArrayList<>();
@@ -61,18 +64,43 @@ public class GameWaitingRoom {
             marathonTimer.start();
         }
     }
+    public void survivalClient(Client client) {
+        if (survivalClients.size() < 8) {
+            survivalClients.add(client);
+        }
+        else {
+            //todo : do it better it is just a test
+            Game game = Config.ONLINE_GAMES.get(0);
+            Survival survival = new Survival(survivalClients);
+            GameState gameState = survival.createGameState(game);
+            //todo : test too
+            client.getPlayer().setPlayerController(new PlayerController(gameState, client.getPlayer(),"survival"));
+
+            survivals.add(survival);
+            startAGame(survivalClients,DTOCreator.createGameStateDTO(gameState),gameState,"survival");
+            survival.start();
+            //todo : clone it
+            survivalClients = new ArrayList<>();
+            survivalTimer.stop();
+            // start game
+        }
+        if (survivalClients.size() == 1) {
+            survivalTimer.start();
+        }
+    }
+
     public void setMarathonTimer() {
         marathonTimer = new Timer(5000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(marathonClients.size() >= 1) {
                     //start game
-                    Game game = Config.ONLINE_GAMES.get(0);//todo : it can be a hash map by game names.
+                    Game game = Config.ONLINE_GAMES.get("marathon");//todo : it can be a hash map by game names.
                     Marathon marathon = new Marathon(marathonClients);
                     GameState gameState = marathon.createGameState(game);
 
 //                marathons.add(marathon);
-                    startAGame(marathonClients, DTOCreator.createGameStateDTO(gameState),gameState);
+                    startAGame(marathonClients, DTOCreator.createGameStateDTO(gameState),gameState,"marathon");
                     marathon.startGameState(gameState);
                     //todo : clone it
                     marathonClients = new ArrayList<>();
@@ -84,10 +112,34 @@ public class GameWaitingRoom {
             }
         });
     }
-    public void startAGame(ArrayList<Client> clients, GameStateDTO gameStateDTO,GameState gameState) {
+    public void setSurvivalTimer() {
+        survivalTimer = new Timer(5000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(survivalClients.size() >= 1) {
+                    //start game
+                    Game game = Config.ONLINE_GAMES.get("survival");//todo : it can be a hash map by game names.
+                    Survival survival = new Survival(survivalClients);
+                    GameState gameState = survival.createGameState(game);
+
+//                marathons.add(marathon);
+                    startAGame(survivalClients, DTOCreator.createGameStateDTO(gameState),gameState,"survival");
+                    survival.startGameState(gameState);
+                    //todo : clone it
+                    survivalClients = new ArrayList<>();
+                }
+                else if (survivalClients.size() == 1) {
+                    //send no online user to the client
+                }
+                survivalTimer.stop();
+            }
+        });
+    }
+
+    public void startAGame(ArrayList<Client> clients, GameStateDTO gameStateDTO,GameState gameState,String gameStateType) {
         for (Client client : clients) {
             client.setPlayer(new Mario(client.getUsername()));
-            client.getPlayer().setPlayerController(new PlayerController(gameState, client.getPlayer(),"marathon"));
+            client.getPlayer().setPlayerController(new PlayerController(gameState, client.getPlayer(),gameStateType));
             client.setCurrentGameStateDTO(gameStateDTO);
             client.setCurrentGameState(gameState);
             PlayerDTO playerDTO = DTOCreator.createPlayerDTO(client.getPlayer());

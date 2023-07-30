@@ -1,0 +1,66 @@
+{
+  "name" : "default",
+  "levels" : [ {
+    "sections" : [ {
+      "length" : 26,
+      "time" : 20,
+      "blocks" : [ {
+        "type" : "QUESTION",
+        "x" : 10,
+        "y" : 4,
+        "item" : "COIN"
+      }, {
+        "type" : "SIMPLE",
+        "x" : 0,
+        "y" : 0,
+        "item" : "COIN"
+      },{
+        "type" : "SIMPLE",
+        "x" : 0,
+        "y" : 1,
+        "item" : "COIN"
+      },{
+        "type" : "SIMPLE",
+        "x" : 22,
+        "y" : 0,
+        "item" : "COIN"
+      },{
+        "type" : "SIMPLE",
+        "x" : 22,
+        "y" : 1,
+        "item" : "COIN"
+      },
+        {
+        "type" : "COINS",
+        "x" : 12,
+        "y" : 4
+      } ],
+      "enemies" : [ {
+        "type" : "GOOMBA",
+        "x" : 10,
+        "y" : 0
+      } ,
+        {
+          "type" : "GOOMBA",
+          "x" : 12,
+          "y" : 0
+        },
+        {
+          "type" : "GOOMBA",
+          "x" : 72,
+          "y" : 0
+        },{
+          "type" : "GOOMBA",
+          "x" : 82,
+          "y" : 0
+        },{
+          "type" : "GOOMBA",
+          "x" : 92,
+          "y" : 0
+        }]
+    } ]
+  }
+],
+  "hearts" : 0,
+  "marioState" : 0
+}

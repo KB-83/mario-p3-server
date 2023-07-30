@@ -1,8 +1,18 @@
 package controller.game;
 
+import controller.gamelogic.gamestatelogic.GameStateController;
+import model.main_model.Client;
 import model.main_model.gamestrucure.GameState;
 
-public class GroupSurvival {
+import java.util.ArrayList;
+import java.util.List;
+
+public class GroupSurvival extends GameStateController {
     private GameState gameState;
-    // a group can be consist of two or more marios or do they have to be seperate
+    private ArrayList<Client> group1;
+    private ArrayList<Client> group2;
+
+    public GroupSurvival(ArrayList<Client> clients) {
+        super(clients);
+    }
 }

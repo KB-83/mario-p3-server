@@ -64,7 +64,8 @@ public class Marathon extends GameStateController{
             client.setDiamond(client.getDiamond()+score.getDiamond());
             Saver.getSaver().saveUser(client);
             if (client.getClientController().isOnline()) {
-                client.getClientController().sendResponse(new GameOverResponse(score.getScore(),score.getDiamond(),"marathon is over"));// game over response
+                client.getClientController().sendResponse(new GameOverResponse(
+                        score.getScore(),score.getDiamond(),"marathon is over"));// game over response
                 client.getClientController().cleanClientFromGame();
             }
         }
