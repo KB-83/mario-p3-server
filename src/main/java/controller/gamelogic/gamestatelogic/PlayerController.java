@@ -3,6 +3,8 @@ package controller.gamelogic.gamestatelogic;
 
 import controller.gamelogic.gamestatelogic.marathonlogic.PlayerMarathonLifeChecker;
 import controller.gamelogic.gamestatelogic.marathonlogic.PlayerMarathonRequestHandler;
+import controller.gamelogic.gamestatelogic.survivallogic.PlayerGSurvivalLifeChecker;
+import controller.gamelogic.gamestatelogic.survivallogic.PlayerGSurvivalRequestHandler;
 import controller.gamelogic.gamestatelogic.survivallogic.PlayerSurvivalLifeChecker;
 import controller.gamelogic.gamestatelogic.survivallogic.PlayerSurvivalRequestHandler;
 import controller.gamelogic.playerlogic.PlayerRequestHandler;
@@ -28,6 +30,10 @@ public class PlayerController {
         else if (gameStateType.toLowerCase().equals("survival")){
             playerRequestHandler = new PlayerSurvivalRequestHandler(gameState, player);
             playerLifeChecker = new PlayerSurvivalLifeChecker(gameState,player);
+        }
+        else if (gameStateType.toLowerCase().equals("groupsurvival")){
+            playerRequestHandler = new PlayerGSurvivalRequestHandler(gameState, player);
+            playerLifeChecker = new PlayerGSurvivalLifeChecker(gameState,player);
         }
         playerMovementHandler = new PlayerMovementHandler(gameState,player);
         playerCollisionHandler = new PlayerCollisionHandler(gameState,playerLifeChecker,player);

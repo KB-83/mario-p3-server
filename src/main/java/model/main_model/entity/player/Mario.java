@@ -5,8 +5,6 @@ import util.Constant;
 public class Mario extends Player {
     public Mario(String name){
         super(name);
-        //test
-        setFire(true);
     }
     public Mario(String name,int x, int y) {
         super(name);

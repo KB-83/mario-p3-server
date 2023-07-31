@@ -21,6 +21,7 @@ public abstract class Player extends Entity {
     @JsonIgnore
     private boolean isUnHeat;
     private int remainingLifePercent = -1;
+    private int teamColor;
     private String clientName;
     //todo: is it nessesart?
 //    @JsonIgnore
@@ -138,5 +139,13 @@ public abstract class Player extends Entity {
 
     public void setRemainingLifePercent(int remainingLifePercent) {
         this.remainingLifePercent = remainingLifePercent;
+    }
+
+    public int getTeamColor() {
+        return teamColor;
+    }
+
+    public void setTeamColor(int teamColor) {
+        this.teamColor = teamColor;
     }
 }

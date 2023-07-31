@@ -7,6 +7,7 @@ public class PlayerDTO {
     private String image;
     private String name;
     private int height;
+    private int teamColor;
     private int remainingLifePercent;
 
     public PlayerDTO() {
@@ -83,5 +84,13 @@ public class PlayerDTO {
 
     public void setRemainingLifePercent(int remainingLifePercent) {
         this.remainingLifePercent = remainingLifePercent;
+    }
+
+    public int getTeamColor() {
+        return teamColor;
+    }
+
+    public void setTeamColor(int teamColor) {
+        this.teamColor = teamColor;
     }
 }
