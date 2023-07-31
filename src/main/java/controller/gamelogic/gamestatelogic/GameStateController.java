@@ -147,6 +147,7 @@ public class GameStateController extends Thread{
         gameState.setSectionNumber(1);
         gameState.setPaused(false);
         gameState.setRemainingHeart(game.getHearts());
+        gameState.setMarioStartState(game.getMarioState());
         gameState.setRemainingTime(gameState.getCurrentSection().getTime());
     }
     private void setControllersGameState(GameState gameState,Section section){

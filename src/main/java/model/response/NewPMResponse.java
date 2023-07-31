@@ -1,7 +1,7 @@
 package model.response;
 
-import model.main_model.room.Massage;
-import model.main_model.room.PrivateChat;
+import model.main_model.chat.Massage;
+import model.main_model.chat.PrivateChat;
 
 import java.util.ArrayList;
 

@@ -42,6 +42,8 @@ public class GameState {
     private boolean isPaused;
     @JsonIgnore
     private CheckPoint waitingCheckpoint;
+    //0 -1 -2
+    private int marioStartState;
     // todo : test
 
     public GameState() {
@@ -226,5 +228,13 @@ public class GameState {
 
     public void setGameloop(Loop gameloop) {
         this.gameloop = gameloop;
+    }
+
+    public int getMarioStartState() {
+        return marioStartState;
+    }
+
+    public void setMarioStartState(int marioStartState) {
+        this.marioStartState = marioStartState;
     }
 }

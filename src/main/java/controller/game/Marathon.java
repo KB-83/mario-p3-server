@@ -1,18 +1,14 @@
 package controller.game;
 
-import controller.ClientController;
 import controller.gamelogic.gamestatelogic.GameStateController;
 import model.main_model.Client;
 import model.main_model.gamestrucure.GameState;
 import model.response.GameOverResponse;
 import util.Config;
 import util.Constant;
-import util.Loop;
 import util.Saver;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 public class Marathon extends GameStateController{
 

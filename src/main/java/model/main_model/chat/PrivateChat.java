@@ -1,4 +1,4 @@
-package model.main_model.room;
+package model.main_model.chat;
 
 import java.util.ArrayList;
 

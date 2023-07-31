@@ -16,6 +16,7 @@ public interface RequestVisitor {
     void visit(BuyRequest request, ClientController clientController);
     void visit(SurvivalRequest request, ClientController clientController);
     void visit(GroupSurvivalRequest request, ClientController clientController);
+    void visit(RoomRequest request, ClientController clientController);
 
 
 }

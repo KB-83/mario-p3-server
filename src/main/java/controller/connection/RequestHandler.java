@@ -5,12 +5,13 @@ import controller.gamelogic.playerlogic.PlayerRequestHandler;
 import controller.ShopController;
 import controller.game.GameWaitingRoom;
 import controller.mapper.DTOCreator;
+import controller.room.RoomController;
 import model.dto.entity.PlayerDTO;
 import model.dto.game.GameStateDTO;
 import model.main_model.Bill;
 import model.main_model.Client;
-import model.main_model.room.Massage;
-import model.main_model.room.PrivateChat;
+import model.main_model.chat.Massage;
+import model.main_model.chat.PrivateChat;
 import model.request.*;
 import model.response.BuyResponse;
 import model.response.GameStateStatusResponse;
@@ -68,6 +69,11 @@ public class RequestHandler implements RequestVisitor {
     @Override
     public void visit(GroupSurvivalRequest request, ClientController clientController) {
         GameWaitingRoom.getInstance().groupSurvivalClient(clientController.getClient());
+    }
+
+    @Override
+    public void visit(RoomRequest request, ClientController clientController) {
+        RoomController.createRoom(request,clientController);
     }
 
     @Override

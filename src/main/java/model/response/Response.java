@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
         @JsonSubTypes.Type(value = SignInLoginResponse.class),
         @JsonSubTypes.Type(value = NewPMResponse.class),
         @JsonSubTypes.Type(value = GameStateStatusResponse.class),
+        @JsonSubTypes.Type(value = RoomResponse.class),
         @JsonSubTypes.Type(value = GameOverResponse.class),
         @JsonSubTypes.Type(value = BuyResponse.class),
         @JsonSubTypes.Type(value = GameStartResponse.class)

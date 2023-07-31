@@ -5,10 +5,9 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import controller.ClientController;
 import model.dto.entity.PlayerDTO;
 import model.dto.game.GameStateDTO;
-import model.main_model.entity.player.Mario;
 import model.main_model.entity.player.Player;
 import model.main_model.gamestrucure.GameState;
-import model.main_model.room.PrivateChat;
+import model.main_model.chat.PrivateChat;
 
 import java.util.ArrayList;
 

@@ -125,7 +125,7 @@ public class GameWaitingRoom {
             startAGame(survivalClients,DTOCreator.createGameStateDTO(gameState),gameState,"groupSurvival");
             groupSurvival.start();
             //todo : clone it
-            groupSurvivals = new ArrayList<>();
+            groupSurvivalClients = new ArrayList<>();
             groupSurvivalTimer.stop();
             // start game
         }
@@ -221,6 +221,14 @@ public class GameWaitingRoom {
     public void startAGame(ArrayList<Client> clients, GameStateDTO gameStateDTO,GameState gameState,String gameStateType) {
         for (Client client : clients) {
             client.setPlayer(new Mario(client.getUsername()));
+            switch (gameState.getMarioStartState()) {
+                case 1 :
+                    client.getPlayer().setMega(true);
+                    break;
+                case 2 :
+                    client.getPlayer().setFire(true);
+                    break;
+            }
             client.getPlayer().setPlayerController(new PlayerController(gameState, client.getPlayer(),gameStateType));
             client.setCurrentGameStateDTO(gameStateDTO);
             client.setCurrentGameState(gameState);
@@ -232,6 +240,7 @@ public class GameWaitingRoom {
             setGSurvivalColors(((GroupSurvival)gameState.getGameStateController()).getTeam1().getClients(),
                     ((GroupSurvival)gameState.getGameStateController()).getTeam2().getClients());
         }
+
     }
     private void setGSurvivalColors(ArrayList<Client> team1,ArrayList<Client> team2) {
         for (int i = 0;i<team1.size();i++) {
