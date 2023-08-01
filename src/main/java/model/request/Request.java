@@ -17,8 +17,9 @@ import controller.connection.RequestVisitor;
         @JsonSubTypes.Type(value = BuyRequest.class),
         @JsonSubTypes.Type(value = SurvivalRequest.class),
         @JsonSubTypes.Type(value = RoomGameStartRequest.class),
+        @JsonSubTypes.Type(value = EnterRoomRequest.class),
         @JsonSubTypes.Type(value = GroupSurvivalRequest.class),
-        @JsonSubTypes.Type(value = RoomRequest.class)
+        @JsonSubTypes.Type(value = CreateRoomRequest.class)
 })
 
 public abstract class Request {

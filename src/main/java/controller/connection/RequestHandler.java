@@ -72,14 +72,19 @@ public class RequestHandler implements RequestVisitor {
     }
 
     @Override
-    public void visit(RoomRequest request, ClientController clientController) {
-        RoomsManager.getInstance().createRoom(request,clientController);
+    public void visit(CreateRoomRequest request, ClientController clientController) {
+        RoomsManager.createRoom(request,clientController);
     }
 
     @Override
     public void visit(RoomGameStartRequest request, ClientController clientController) {
         //test har otaghi hasto start kon
-        RoomsManager.getInstance().getRooms().get(0).getRoomController().startGame();
+        RoomsManager.getRooms().get(0).getRoomController().startGame();
+    }
+
+    @Override
+    public void visit(EnterRoomRequest request, ClientController clientController) {
+        RoomsManager.roomEnterRequest(clientController,request.getToken(),request.isPlayer());
     }
 
     @Override

@@ -16,15 +16,15 @@ public class RoomController {
         this.room = room;
     }
 
-    private void addViewer (String username) {
+    public void addViewer (String username) {
         Client client = Config.findOnlineClientByUserName(username);
-        Viewer viewer = new Viewer();
-        viewer.setClientController(client.getClientController());
-        viewer.setUsername(client.getUsername());
-        room.getViewers().add(viewer);
-        room.getClients().add(viewer);
+//        Viewer viewer = new Viewer();
+//        viewer.setClientController(client.getClientController());
+//        viewer.setUsername(client.getUsername());
+        room.getViewers().add(client);
+        room.getClients().add(client);
     }
-    private void addPLayer(String username) {
+    public void addPLayer(String username) {
         Client client = Config.findOnlineClientByUserName(username);
         room.getPlayers().add(client);
         room.getClients().add(client);

@@ -3,13 +3,13 @@ package model.request;
 import controller.ClientController;
 import controller.connection.RequestVisitor;
 
-public class RoomRequest extends Request{
+public class CreateRoomRequest extends Request{
     private String username;
     private String roomPassword;
     private String roomName;
 
 
-    public RoomRequest() {
+    public CreateRoomRequest() {
     }
     @Override
     public void visit(RequestVisitor visitor, ClientController clientController) {

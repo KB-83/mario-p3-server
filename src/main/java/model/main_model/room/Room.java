@@ -12,52 +12,26 @@ public class Room {
     private String token;
     private RoomController roomController;
     private final ArrayList<Client> clients = new ArrayList<>();
-    private Manager manager;
-    private List<Assistant> assistants;
-    private List<Viewer> viewers;
-    private List<Client> players;
+    private Client manager;
+    private final ArrayList<Client> assistants = new ArrayList<>();
+    private final ArrayList<Client> viewers = new ArrayList<>();
+    private final ArrayList<Client> players = new ArrayList<>();
     private GameStateController gameStateController;
     private Chat chat;
 
-    public Room(Manager manager,String token) {
+    public Room(Client manager,String token) {
         this.manager = manager;
         this.token = token;
         /////// bug take it
-        clients.add(manager.getClientController().getClient());
+        clients.add(manager);
         chat = new Chat();
         chat.setOpponentUsername(token);
     }
 
-    public Manager getManager() {
-        return manager;
-    }
 
-    public void setManager(Manager manager) {
-        this.manager = manager;
-    }
-
-    public List<Assistant> getAssistants() {
-        return assistants;
-    }
-
-    public void setAssistants(List<Assistant> assistants) {
-        this.assistants = assistants;
-    }
-
-    public List<Viewer> getViewers() {
-        return viewers;
-    }
-
-    public void setViewers(List<Viewer> viewers) {
-        this.viewers = viewers;
-    }
 
     public List<Client> getPlayers() {
         return players;
-    }
-
-    public void setPlayers(List<Client> players) {
-        this.players = players;
     }
 
     public String getToken() {
@@ -78,6 +52,18 @@ public class Room {
 
     public void setGameStateController(GameStateController gameStateController) {
         this.gameStateController = gameStateController;
+    }
+
+    public Client getManager() {
+        return manager;
+    }
+
+    public List<Client> getAssistants() {
+        return assistants;
+    }
+
+    public List<Client> getViewers() {
+        return viewers;
     }
 
     public Chat getChat() {
