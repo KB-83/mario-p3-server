@@ -1,19 +1,31 @@
 package model.main_model.room;
 
+import controller.gamelogic.gamestatelogic.GameStateController;
+import controller.room.RoomController;
 import model.main_model.Client;
+import model.main_model.chat.Chat;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Room {
     private String token;
+    private RoomController roomController;
+    private final ArrayList<Client> clients = new ArrayList<>();
     private Manager manager;
     private List<Assistant> assistants;
     private List<Viewer> viewers;
     private List<Client> players;
+    private GameStateController gameStateController;
+    private Chat chat;
 
     public Room(Manager manager,String token) {
         this.manager = manager;
         this.token = token;
+        /////// bug take it
+        clients.add(manager.getClientController().getClient());
+        chat = new Chat();
+        chat.setOpponentUsername(token);
     }
 
     public Manager getManager() {
@@ -54,5 +66,33 @@ public class Room {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public ArrayList<Client> getClients() {
+        return clients;
+    }
+
+    public GameStateController getGameStateController() {
+        return gameStateController;
+    }
+
+    public void setGameStateController(GameStateController gameStateController) {
+        this.gameStateController = gameStateController;
+    }
+
+    public Chat getChat() {
+        return chat;
+    }
+
+    public void setChat(Chat chat) {
+        this.chat = chat;
+    }
+
+    public RoomController getRoomController() {
+        return roomController;
+    }
+
+    public void setRoomController(RoomController roomController) {
+        this.roomController = roomController;
     }
 }

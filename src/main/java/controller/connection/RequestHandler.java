@@ -77,6 +77,12 @@ public class RequestHandler implements RequestVisitor {
     }
 
     @Override
+    public void visit(RoomGameStartRequest request, ClientController clientController) {
+        //test har otaghi hasto start kon
+        RoomsManager.getInstance().getRooms().get(0).getRoomController().startGame();
+    }
+
+    @Override
     public void visit(GetGameStateRequest request, ClientController clientController) {
         // todo: change it this response doesnt have to new
         try {

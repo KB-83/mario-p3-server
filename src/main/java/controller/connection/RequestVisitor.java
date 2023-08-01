@@ -17,6 +17,7 @@ public interface RequestVisitor {
     void visit(SurvivalRequest request, ClientController clientController);
     void visit(GroupSurvivalRequest request, ClientController clientController);
     void visit(RoomRequest request, ClientController clientController);
+    void visit(RoomGameStartRequest request, ClientController clientController);
 
 
 }

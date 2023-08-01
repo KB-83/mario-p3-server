@@ -120,7 +120,7 @@ public class GameStateController extends Thread{
         return gameState;
     }
 
-    public void startGameState(GameState gameState){
+    public void startGameState(){
         //todo : doing gamestATE Timers run
         //test
 //        gameState.getSound().play();
@@ -148,6 +148,8 @@ public class GameStateController extends Thread{
         gameState.setPaused(false);
         gameState.setRemainingHeart(game.getHearts());
         gameState.setMarioStartState(game.getMarioState());
+        // buged line
+        gameState.getCurrentSection().setRemainingTime(gameState.getCurrentSection().getTime());
         gameState.setRemainingTime(gameState.getCurrentSection().getTime());
     }
     private void setControllersGameState(GameState gameState,Section section){
