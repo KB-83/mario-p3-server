@@ -170,6 +170,7 @@ public class RequestHandler implements RequestVisitor {
             clientController.getClient().getChats().add(chat);
             chat.setOpponentUsername(clientController.getClient().getUsername());
             massages.get(0).setSenderUsername(senderUsername);
+            //add room chat //todo
             opponent.getChats().add(chat);
         }
         // bara dotashoon be private chathashoon add mishe

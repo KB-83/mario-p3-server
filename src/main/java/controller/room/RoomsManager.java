@@ -28,14 +28,17 @@ public class RoomsManager {
         Room room = new Room(manager, TokenGenerator.generateRandomToken()); // bayad check beshe yski nabashe
         Chat chat = new Chat();
         chat.setOpponentUsername(room.getToken());
+        chat.setMassages(new ArrayList<>());
         RoomController roomController = new RoomController(room);
         room.setRoomController(roomController);
+        room.setChat(chat);
         manager.setRoom(room);
         manager.setManagerController(new ManagerController(manager));
 //        room.seRoomController
         rooms.add(room);
         RoomResponse roomResponse = new RoomResponse(room.getToken());
         clientController.sendResponse(roomResponse);
+        room.getRoomController().updateClientsRoom();
     }
     public static void roomEnterRequest(ClientController clientController,String token, boolean isPlayer) {
         for (Room room : rooms) {
@@ -47,6 +50,7 @@ public class RoomsManager {
                     room.getRoomController().addViewer(clientController.getClient().getUsername());
                 }
                 clientController.sendResponse(new EnterRoomResponse());
+                room.getRoomController().updateClientsRoom();
                 return;
             }
         }

@@ -2,11 +2,15 @@ package controller.room;
 
 import controller.ClientController;
 import controller.GameStateManagerCreator;
+import model.dto.RoomDTO;
 import model.main_model.Client;
 import model.main_model.room.Room;
 import model.main_model.room.Viewer;
 import model.response.GameStartResponse;
+import model.response.RoomUpdateResponse;
 import util.Config;
+
+import java.util.ArrayList;
 
 
 public class RoomController {
@@ -53,6 +57,18 @@ public class RoomController {
         room.getGameStateController().startGameState();
         for (Client client : room.getClients()) {
             client.getClientController().sendResponse(new GameStartResponse(client.getCurrentGameStateDTO(),client.getPlayerDTO()));
+        }
+    }
+    public void updateClientsRoom() {
+        RoomDTO roomDTO = new RoomDTO();
+        roomDTO.setRoomChat(room.getChat());
+        ArrayList<String> users = new ArrayList<>();
+        for (Client client : room.getClients()) {
+            users.add(client.getUsername());
+        }
+        roomDTO.setRoomUsers(users);
+        for (Client client : room.getClients()) {
+            client.getClientController().sendResponse(new RoomUpdateResponse(roomDTO));
         }
     }
 
