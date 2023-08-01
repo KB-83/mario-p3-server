@@ -1,19 +1,17 @@
 package model.response;
 
 import model.main_model.chat.Massage;
-import model.main_model.chat.PrivateChat;
+import model.main_model.chat.Chat;
 
 import java.util.ArrayList;
 
 public class NewPMResponse extends Response {
     private Massage massage;
-    private String sender;
-    private ArrayList<PrivateChat> newPrivateChat;
+    private ArrayList<Chat> newChat;
 
-    public NewPMResponse(Massage massage, String sender, ArrayList<PrivateChat> newPrivateChat) {
+    public NewPMResponse(Massage massage, String sender, ArrayList<Chat> newChat) {
         this.massage = massage;
-        this.sender = sender;
-        this.newPrivateChat = newPrivateChat;
+        this.newChat = newChat;
     }
 
     public NewPMResponse() {
@@ -27,19 +25,11 @@ public class NewPMResponse extends Response {
         this.massage = massage;
     }
 
-    public String getSender() {
-        return sender;
+    public ArrayList<Chat> getNewPrivateChat() {
+        return newChat;
     }
 
-    public void setSender(String sender) {
-        this.sender = sender;
-    }
-
-    public ArrayList<PrivateChat> getNewPrivateChat() {
-        return newPrivateChat;
-    }
-
-    public void setNewPrivateChat(ArrayList<PrivateChat> newPrivateChat) {
-        this.newPrivateChat = newPrivateChat;
+    public void setNewPrivateChat(ArrayList<Chat> newChat) {
+        this.newChat = newChat;
     }
 }

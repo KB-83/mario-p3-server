@@ -5,13 +5,13 @@ import controller.gamelogic.playerlogic.PlayerRequestHandler;
 import controller.ShopController;
 import controller.game.GameWaitingRoom;
 import controller.mapper.DTOCreator;
-import controller.room.RoomController;
+import controller.room.RoomsManager;
 import model.dto.entity.PlayerDTO;
 import model.dto.game.GameStateDTO;
 import model.main_model.Bill;
 import model.main_model.Client;
 import model.main_model.chat.Massage;
-import model.main_model.chat.PrivateChat;
+import model.main_model.chat.Chat;
 import model.request.*;
 import model.response.BuyResponse;
 import model.response.GameStateStatusResponse;
@@ -73,7 +73,7 @@ public class RequestHandler implements RequestVisitor {
 
     @Override
     public void visit(RoomRequest request, ClientController clientController) {
-        RoomController.createRoom(request,clientController);
+        RoomsManager.getInstance().createRoom(request,clientController);
     }
 
     @Override
@@ -129,37 +129,37 @@ public class RequestHandler implements RequestVisitor {
 
     @Override
     public void visit(SendPMRequest request, ClientController clientController) {
-
+        String senderUsername = clientController.getClient().getUsername();
         boolean didChatBefore = false;
-        PrivateChat preChat = null;
-        for (PrivateChat privateChat : clientController.getClient().getPrivateChats()) {
-            if (privateChat.getOpponentUsername().equals(request.getOpponentUserName())) {
+        Chat preChat = null;
+        for (Chat chat : clientController.getClient().getChats()) {
+            if (chat.getOpponentUsername().equals(request.getMassage().getReceiverUsername())) {
                 didChatBefore = true;
-                preChat = privateChat;
+                preChat = chat;
                 break;
             }
         }
-        Client opponent = Config.CLIENTS.get(request.getOpponentUserName());
+        Client opponent = Config.CLIENTS.get(request.getMassage().getReceiverUsername());
 
         if (didChatBefore) {
-            preChat.getMassages().add(new Massage(true,request.getContext()));
-            for (PrivateChat privateChat : opponent.getPrivateChats()) {
-                if (privateChat.getOpponentUsername().equals(clientController.getClient().getUsername())) {
-                   privateChat.getMassages().add(new Massage(false,request.getContext()));
+            preChat.getMassages().add(new Massage(senderUsername,request.getMassage().getContext()));
+            for (Chat chat : opponent.getChats()) {
+                if (chat.getOpponentUsername().equals(clientController.getClient().getUsername())) {
+                   chat.getMassages().add(new Massage(senderUsername,request.getMassage().getContext()));
                    break;
                 }
             }
         }
         else {
-            PrivateChat privateChat = new PrivateChat();
-            privateChat.setOpponentUsername(request.getOpponentUserName());
+            Chat chat = new Chat();
+            chat.setOpponentUsername(request.getMassage().getReceiverUsername());
             ArrayList<Massage> massages = new ArrayList<>();
-            massages.add(new Massage(true,request.getContext()));
-            privateChat.setMassages(massages);
-            clientController.getClient().getPrivateChats().add(privateChat);
-            privateChat.setOpponentUsername(clientController.getClient().getUsername());
-            massages.get(0).setOwnersPM(false);
-            opponent.getPrivateChats().add(privateChat);
+            massages.add(new Massage(senderUsername,request.getMassage().getContext()));
+            chat.setMassages(massages);
+            clientController.getClient().getChats().add(chat);
+            chat.setOpponentUsername(clientController.getClient().getUsername());
+            massages.get(0).setSenderUsername(senderUsername);
+            opponent.getChats().add(chat);
         }
         // bara dotashoon be private chathashoon add mishe
         // in sakhte
@@ -168,11 +168,11 @@ public class RequestHandler implements RequestVisitor {
         Saver.getSaver().saveUser(opponent);
 //        va dobare toyr oon response send mishan
         if (Config.ONLINE_CLIENTS.containsKey(opponent.getUsername())) {
-            Config.ONLINE_CLIENTS.get(opponent.getUsername()).setPrivateChats(opponent.getPrivateChats());
+            Config.ONLINE_CLIENTS.get(opponent.getUsername()).setChats(opponent.getChats());
             opponent = Config.ONLINE_CLIENTS.get(opponent.getUsername());
-            opponent.getClientController().sendResponse(new NewPMResponse(new Massage(false, request.getContext()),clientController.getClient().getUsername(),opponent.getPrivateChats()));
+            opponent.getClientController().sendResponse(new NewPMResponse(new Massage(senderUsername, request.getMassage().getContext()),clientController.getClient().getUsername(),opponent.getChats()));
         }
-        clientController.sendResponse(new NewPMResponse(new Massage(true,request.getContext()),"",clientController.getClient().getPrivateChats()));// bara khodesh
+        clientController.sendResponse(new NewPMResponse(new Massage(senderUsername,request.getMassage().getContext()),"",clientController.getClient().getChats()));// bara khodesh
 
     }
 

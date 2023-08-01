@@ -5,11 +5,11 @@ import model.main_model.Client;
 import java.util.List;
 
 public class Room {
+    private String token;
     private Manager manager;
     private List<Assistant> assistants;
     private List<Viewer> viewers;
     private List<Client> players;
-    private String token;
 
     public Room(Manager manager,String token) {
         this.manager = manager;

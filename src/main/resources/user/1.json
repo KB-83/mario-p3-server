@@ -1,7 +1,7 @@
 {
   "username" : "1",
   "password" : "pass",
-  "privateChats" : [ ],
+  "chats" : [ ],
   "coin" : 0,
   "score" : 84732,
   "diamond" : 1

@@ -1,21 +1,61 @@
 {
   "username" : "kb",
   "password" : "pass",
-  "privateChats" : [ {
+  "chats" : [ {
     "opponentUsername" : "username",
     "massages" : [ {
-      "context" : null,
-      "ownersPM" : false
+      "senderUsername" : null,
+      "receiverUsername" : null,
+      "context" : null
     }, {
-      "context" : "salam",
-      "ownersPM" : true
+      "senderUsername" : "username",
+      "receiverUsername" : null,
+      "context" : "hi"
     }, {
-      "context" : "hi",
-      "ownersPM" : false
+      "senderUsername" : "username",
+      "receiverUsername" : null,
+      "context" : "j"
+    }, {
+      "senderUsername" : "username",
+      "receiverUsername" : null,
+      "context" : "j"
+    }, {
+      "senderUsername" : "username",
+      "receiverUsername" : null,
+      "context" : "j"
+    }, {
+      "senderUsername" : "username",
+      "receiverUsername" : null,
+      "context" : "k"
+    }, {
+      "senderUsername" : "username",
+      "receiverUsername" : null,
+      "context" : "m"
+    }, {
+      "senderUsername" : "username",
+      "receiverUsername" : null,
+      "context" : "hi"
+    }, {
+      "senderUsername" : "kb",
+      "receiverUsername" : null,
+      "context" : "hi"
+    }, {
+      "senderUsername" : "kb",
+      "receiverUsername" : null,
+      "context" : "hi"
+    }, {
+      "senderUsername" : "username",
+      "receiverUsername" : null,
+      "context" : "hi"
+    }, {
+      "senderUsername" : "username",
+      "receiverUsername" : null,
+      "context" : "hi"
+    }, {
+      "senderUsername" : "username",
+      "receiverUsername" : null,
+      "context" : "n"
     } ]
-  }, {
-    "opponentUsername" : "2",
-    "massages" : [ ]
   } ],
   "coin" : 174,
   "score" : 274178,

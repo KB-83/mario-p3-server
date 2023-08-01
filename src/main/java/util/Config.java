@@ -85,5 +85,14 @@ public class Config extends Properties {
             throw new RuntimeException(e);
         }
     }
+    public static Client findOnlineClientByUserName(String username) {
+        for (Client client : ONLINE_CLIENTS.values()) {
+            if (client.getUsername().equals(username)) {
+                return client;
+            }
+        }
+        return null;
+    }
+
 
 }

@@ -1,23 +1,25 @@
 package model.main_model.chat;
 
 public class Massage {
-    private boolean isOwnersPM;
+    private String senderUsername;
+    //all,someone
+    private String receiverUsername;
     private String context;
 
-    public Massage(boolean isOwnersPm, String context) {
-        this.isOwnersPM = isOwnersPm;
+    public Massage(String senderUsername, String context) {
+        this.senderUsername = senderUsername;
         this.context = context;
     }
 
     public Massage() {
     }
 
-    public boolean isOwnersPM() {
-        return isOwnersPM;
+    public String getSenderUsername() {
+        return senderUsername;
     }
 
-    public void setOwnersPM(boolean ownersPM) {
-        isOwnersPM = ownersPM;
+    public void setSenderUsername(String senderUsername) {
+        this.senderUsername = senderUsername;
     }
 
     public String getContext() {
@@ -26,5 +28,13 @@ public class Massage {
 
     public void setContext(String context) {
         this.context = context;
+    }
+
+    public String getReceiverUsername() {
+        return receiverUsername;
+    }
+
+    public void setReceiverUsername(String receiverUsername) {
+        this.receiverUsername = receiverUsername;
     }
 }

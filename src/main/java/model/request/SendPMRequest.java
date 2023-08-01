@@ -2,29 +2,20 @@ package model.request;
 
 import controller.ClientController;
 import controller.connection.RequestVisitor;
+import model.main_model.chat.Massage;
 
 public class SendPMRequest extends Request{
-    private String opponentUserName;
-    private String Context;
+    private Massage massage;
 
     public SendPMRequest() {
     }
 
-
-    public String getOpponentUserName() {
-        return opponentUserName;
+    public Massage getMassage() {
+        return massage;
     }
 
-    public void setOpponentUserName(String opponentUserName) {
-        this.opponentUserName = opponentUserName;
-    }
-
-    public String getContext() {
-        return Context;
-    }
-
-    public void setContext(String context) {
-        Context = context;
+    public void setMassage(Massage massage) {
+        this.massage = massage;
     }
 
     @Override

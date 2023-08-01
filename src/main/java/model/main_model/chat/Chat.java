@@ -2,14 +2,15 @@ package model.main_model.chat;
 
 import java.util.ArrayList;
 
-public class PrivateChat {
+public class Chat {
+    // if room its a room token
     private String opponentUsername;
     private ArrayList<Massage> massages;
 
-    public PrivateChat() {
+    public Chat() {
     }
 
-    public PrivateChat(String opponentUsername, ArrayList<Massage> massages) {
+    public Chat(String opponentUsername, ArrayList<Massage> massages) {
         this.opponentUsername = opponentUsername;
         this.massages = massages;
     }

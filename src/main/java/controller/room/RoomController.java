@@ -5,15 +5,31 @@ import model.main_model.Client;
 import model.main_model.room.Manager;
 import model.main_model.room.Room;
 import model.main_model.room.TokenGenerator;
+import model.main_model.room.Viewer;
 import model.request.RoomRequest;
 import model.response.RoomResponse;
+import util.Config;
 
 import java.util.ArrayList;
 
 public class RoomController {
-    public static ArrayList<Room> rooms;//maybe in feature add a rooms manage singlton class
     private Room room;
-    private void addVisitor() {}
+
+    public RoomController(Room room) {
+        this.room = room;
+    }
+
+    private void addViewer (String username) {
+        Client client = Config.findOnlineClientByUserName(username);
+        Viewer viewer = new Viewer();
+        viewer.setClientController(client.getClientController());
+        viewer.setUsername(client.getUsername());
+        room.getViewers().add(viewer);
+    }
+    private void addPLayer(String username) {
+        Client client = Config.findOnlineClientByUserName(username);
+        room.getPlayers().add(client);
+    }
     private void showChat() {}
     private void closeRoom() {}
     private void managerLeft() {
@@ -23,11 +39,5 @@ public class RoomController {
     public Room getRoom() {
         return room;
     }
-    public static void createRoom(RoomRequest roomRequest, ClientController clientController){
-        Manager manager = new Manager();
-        manager.setClientController(clientController);
-        Room room1 = new Room(manager, TokenGenerator.generateRandomToken());
-        RoomResponse roomResponse = new RoomResponse(room1.getToken());
-        clientController.sendResponse(roomResponse);
-    }
+
 }
