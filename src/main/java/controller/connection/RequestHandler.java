@@ -12,6 +12,7 @@ import model.main_model.Bill;
 import model.main_model.Client;
 import model.main_model.chat.Massage;
 import model.main_model.chat.Chat;
+import model.main_model.room.Room;
 import model.request.*;
 import model.response.BuyResponse;
 import model.response.GameStateStatusResponse;
@@ -151,6 +152,15 @@ public class RequestHandler implements RequestVisitor {
             }
         }
         Client opponent = Config.CLIENTS.get(request.getMassage().getReceiverUsername());
+        if (opponent == null) {
+            for (Room room : RoomsManager.getRooms()) {
+                if (room.getToken().equals(request.getMassage().getReceiverUsername())) {
+                    room.getRoomController().newPM(request);
+                    return;
+                }
+            }
+            return;
+        }
 
         if (didChatBefore) {
             preChat.getMassages().add(new Massage(senderUsername,request.getMassage().getContext()));

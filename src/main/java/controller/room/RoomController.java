@@ -4,11 +4,17 @@ import controller.ClientController;
 import controller.GameStateManagerCreator;
 import model.dto.RoomDTO;
 import model.main_model.Client;
+import model.main_model.chat.Chat;
+import model.main_model.chat.Massage;
 import model.main_model.room.Room;
 import model.main_model.room.Viewer;
+import model.request.SendPMRequest;
 import model.response.GameStartResponse;
+import model.response.NewPMResponse;
+import model.response.RoomChatUpdateResponse;
 import model.response.RoomUpdateResponse;
 import util.Config;
+import util.Saver;
 
 import java.util.ArrayList;
 
@@ -69,6 +75,14 @@ public class RoomController {
         roomDTO.setRoomUsers(users);
         for (Client client : room.getClients()) {
             client.getClientController().sendResponse(new RoomUpdateResponse(roomDTO));
+        }
+    }
+    public void newPM(SendPMRequest request) {
+        String senderUsername = request.getMassage().getSenderUsername();
+        room.getChat().getMassages().add(new Massage(senderUsername,request.getMassage().getContext()));
+        //test that an offline client would be removed from room clients
+        for (Client client : room.getClients()) {
+            client.getClientController().sendResponse(new RoomChatUpdateResponse(room.getChat()));
         }
     }
 
