@@ -22,6 +22,18 @@ public class Saver {
             saver = new Saver();
         }return saver;
     }
+//    public boolean saveClient (Client client) {
+//        File file = new File("src/main/resources/user/"+client.getUsername()+".json");
+//        try {
+//            FileWriter fileWriter = new FileWriter(file);
+//            objectMapper.writeValue(fileWriter,client);
+//        } catch (IOException e) {
+//            System.out.println("json mapping for this user is not right.\nsource: Saver class saveUser method.");
+//            e.printStackTrace();
+//            return false;
+//        }
+//        return true;
+//    }
     public boolean saveClient(Client client) {
         try (Session session = HibernateUtil.getSession()) {
             session.beginTransaction();
@@ -33,7 +45,6 @@ public class Saver {
             return false;
         }
     }
-    //todo : fix it
     public boolean updateClient(Client client) {
         try (Session session = HibernateUtil.getSession()) {
             session.beginTransaction();
@@ -45,11 +56,26 @@ public class Saver {
             return false;
         }
     }
+    public boolean updateChat(Chat chat) {
+        try (Session session = HibernateUtil.getSession()) {
+            session.beginTransaction();
+            session.update(chat);
+            session.getTransaction().commit();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
     public boolean addMassageToChat(Chat chat, Massage massage) {
         try (Session session = HibernateUtil.getSession()) {
             session.beginTransaction();
+            massage.setChat(chat);
             session.save(massage);
+            //duplicate bug
+//            chat.getMassages().add(massage);
             session.update(chat);
+
             session.getTransaction().commit();
             return true;
         } catch (Exception e) {
