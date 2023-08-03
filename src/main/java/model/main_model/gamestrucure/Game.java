@@ -5,6 +5,7 @@ import model.main_model.levelstructure.Level;
 
 public class Game {
     // todo : check if it is nessesary
+    private String type;
     private String name;
 //    private Player player;
     // todo : till here
@@ -45,5 +46,13 @@ public class Game {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

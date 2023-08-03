@@ -55,6 +55,10 @@
       "senderUsername" : "username",
       "receiverUsername" : null,
       "context" : "n"
+    }, {
+      "senderUsername" : "username",
+      "receiverUsername" : null,
+      "context" : "hi"
     } ]
   } ],
   "coin" : 174,

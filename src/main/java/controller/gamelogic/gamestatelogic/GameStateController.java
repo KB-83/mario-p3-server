@@ -133,6 +133,7 @@ public class GameStateController extends Thread{
 
     }
     private void setGameStateDependencies(Game game, GameState gameState) {
+        gameState.setType(game.getType());
         gameState.setLevels(game.getLevels());
         gameState.setName(game.getName());
         for (Level level :gameState.getLevels()) {

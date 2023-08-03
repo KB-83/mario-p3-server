@@ -45,7 +45,7 @@ public class GameStateManagerCreator {
         if (groupSurvivalClients.size() % 2 == 1) {
             groupSurvivalClients.remove(groupSurvivalClients.size() - 1);
         }
-        Game game = Config.ONLINE_GAMES.get("survival");
+        Game game = Config.ONLINE_GAMES.get("group_survival");
         GroupSurvival groupSurvival = new GroupSurvival(groupSurvivalClients,team1,team2);
         GameState gameState = groupSurvival.createGameState(game);
 
@@ -65,7 +65,6 @@ public class GameStateManagerCreator {
             }
             client.getPlayer().setPlayerController(new PlayerController(gameState, client.getPlayer(),gameStateType));
             client.setCurrentGameStateDTO(gameStateDTO);
-
             client.setCurrentGameState(gameState);
             PlayerDTO playerDTO = DTOCreator.createPlayerDTO(client.getPlayer());
             client.setPlayerDTO(playerDTO);

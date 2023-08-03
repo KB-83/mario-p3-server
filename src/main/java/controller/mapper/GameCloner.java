@@ -24,6 +24,7 @@ public class GameCloner {
             levels[i] = cloneLevel(game.getLevels()[i]);
         }
         Game game1 = new Game();
+        game1.setType(game.getType());
         game1.setHearts(game.getHearts());
         game1.setName(game.getName());
         game1.setMarioState(game.getMarioState());

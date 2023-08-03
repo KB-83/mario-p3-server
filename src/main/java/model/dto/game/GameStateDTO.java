@@ -6,6 +6,9 @@ import model.dto.entity.PlayerDTO;
 import java.util.ArrayList;
 
 public class GameStateDTO {
+    //M-S-GS-O-T
+    //marathon-survival-group_survival-offline-team
+    private String type;
     private SectionDTO currentSection;
     private ArrayList<PlayerDTO> playerDTOS;
     @JsonIgnore
@@ -44,5 +47,13 @@ public class GameStateDTO {
 
     public void setLevelNumber(int levelNumber) {
         this.levelNumber = levelNumber;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

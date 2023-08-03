@@ -36,6 +36,7 @@ public class DTOCreator {
 
     public static GameStateDTO createGameStateDTO(GameState gameState) {
         GameStateDTO dto = new GameStateDTO();
+        dto.setType(gameState.getType());
         dto.setCurrentSection(new SectionDTO());
         //todo : mahdoodiat dadam ke new nakonam vali akaresh moshkel dare? felan ba hamin mirim
         dto.getCurrentSection().setItems(new ItemDTO[]{});

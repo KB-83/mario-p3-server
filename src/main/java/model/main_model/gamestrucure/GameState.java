@@ -14,6 +14,9 @@ import util.Loop;
 
 public class GameState {
     private String name;
+    //M-S-GS-O-T
+    //marathon-survival-group_survival.json-offline-team
+    private String type;
     @JsonIgnore
     private GameStateController gameStateController;
     private Level[] levels;
@@ -236,5 +239,13 @@ public class GameState {
 
     public void setMarioStartState(int marioStartState) {
         this.marioStartState = marioStartState;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

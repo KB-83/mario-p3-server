@@ -27,9 +27,13 @@
       "senderUsername" : "username",
       "receiverUsername" : null,
       "context" : "n"
+    }, {
+      "senderUsername" : "username",
+      "receiverUsername" : null,
+      "context" : "hi"
     } ]
   } ],
   "coin" : 17400,
-  "score" : 550771,
+  "score" : 550870,
   "diamond" : 2002
 }

@@ -51,7 +51,6 @@ public class Loader {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        ;
         return game;
     }
 }

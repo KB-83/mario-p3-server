@@ -1,4 +1,5 @@
 {
+  "type" : "M",
   "name" : "default",
   "levels" : [ {
     "sections" : [ {
@@ -366,33 +367,6 @@
         } ]
       } ]
   },
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     {
       "sections" : [ {
         "length" : 26,
