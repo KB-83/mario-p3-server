@@ -1,11 +1,34 @@
 package model.main_model.chat;
 
-import java.util.ArrayList;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import model.main_model.Client;
 
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity
+@Table(name = "chats")
 public class Chat {
     // if room its a room token
+
+    @Id
+    @JsonIgnore
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    @Column(name = "opponent_username", nullable = false)
     private String opponentUsername;
-    private ArrayList<Massage> massages;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "client_id", nullable = false)
+    @JsonIgnore
+    private Client client;
+
+    @OneToMany(mappedBy = "chat", cascade = CascadeType.ALL, orphanRemoval = true , fetch = FetchType.EAGER)
+    private List<Massage> massages = new ArrayList<>();
+
+
 
     public Chat() {
     }
@@ -23,11 +46,19 @@ public class Chat {
         this.opponentUsername = opponentUsername;
     }
 
-    public ArrayList<Massage> getMassages() {
+    public List<Massage> getMassages() {
         return massages;
     }
 
-    public void setMassages(ArrayList<Massage> massages) {
+    public void setMassages(List<Massage> massages) {
         this.massages = massages;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
     }
 }

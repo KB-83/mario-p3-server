@@ -4,10 +4,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import controller.ClientController;
 import model.main_model.Client;
+import model.main_model.chat.Chat;
+import model.main_model.chat.Massage;
 import model.response.SignInLoginResponse;
+import org.hibernate.Session;
 
 import java.io.*;
-import java.util.Properties;
 
 public class Saver {
     private static Saver saver;
@@ -20,18 +22,43 @@ public class Saver {
             saver = new Saver();
         }return saver;
     }
-    public boolean saveUser(Client client) {
-        File file = new File("src/main/resources/user/"+client.getUsername()+".json");
-        try {
-            FileWriter fileWriter = new FileWriter(file);
-            objectMapper.writeValue(fileWriter,client);
-        } catch (IOException e) {
-            System.out.println("json mapping for this user is not right.\nsource: Saver class saveUser method.");
+    public boolean saveClient(Client client) {
+        try (Session session = HibernateUtil.getSession()) {
+            session.beginTransaction();
+            session.save(client);
+            session.getTransaction().commit();
+            return true;
+        } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
-        return true;
     }
+    //todo : fix it
+    public boolean updateClient(Client client) {
+        try (Session session = HibernateUtil.getSession()) {
+            session.beginTransaction();
+            session.update(client);
+            session.getTransaction().commit();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    public boolean addMassageToChat(Chat chat, Massage massage) {
+        try (Session session = HibernateUtil.getSession()) {
+            session.beginTransaction();
+            session.save(massage);
+            session.update(chat);
+            session.getTransaction().commit();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
     public Client signInUser(String password,String username,ClientController controller) {
         File file = new File("src/main/resources/user/"+username+".json");
         if (file.exists()) {
@@ -41,7 +68,7 @@ public class Saver {
         else {
             Client fish = new Client(username,password,controller);
             addNewClientToProperties(fish);
-            saveUser(fish);
+            saveClient(fish);
             Config.loadConfigs();
             controller.sendResponse(new SignInLoginResponse(fish,true,""));
             return fish;

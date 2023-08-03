@@ -4,12 +4,13 @@ import model.main_model.chat.Massage;
 import model.main_model.chat.Chat;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class NewPMResponse extends Response {
     private Massage massage;
-    private ArrayList<Chat> newChat;
+    private List<Chat> newChat;
 
-    public NewPMResponse(Massage massage, String sender, ArrayList<Chat> newChat) {
+    public NewPMResponse(Massage massage, String sender, List<Chat> newChat) {
         this.massage = massage;
         this.newChat = newChat;
     }
@@ -25,11 +26,11 @@ public class NewPMResponse extends Response {
         this.massage = massage;
     }
 
-    public ArrayList<Chat> getNewPrivateChat() {
+    public List<Chat> getNewPrivateChat() {
         return newChat;
     }
 
-    public void setNewPrivateChat(ArrayList<Chat> newChat) {
+    public void setNewPrivateChat(List<Chat> newChat) {
         this.newChat = newChat;
     }
 }

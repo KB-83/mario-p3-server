@@ -79,7 +79,7 @@ public class RoomController {
     }
     public void newPM(SendPMRequest request) {
         String senderUsername = request.getMassage().getSenderUsername();
-        room.getChat().getMassages().add(new Massage(senderUsername,request.getMassage().getContext()));
+        room.getChat().getMassages().add(new Massage(senderUsername,request.getMassage().getReceiverUsername(),request.getMassage().getContext()));
         //test that an offline client would be removed from room clients
         for (Client client : room.getClients()) {
             client.getClientController().sendResponse(new RoomChatUpdateResponse(room.getChat()));

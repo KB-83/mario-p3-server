@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import model.main_model.Client;
 import model.main_model.ShopLimitation;
 import model.main_model.gamestrucure.Game;
+import org.hibernate.Session;
+import org.hibernate.query.Query;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -12,10 +14,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 
 public class Config extends Properties {
     private static final String CONFIGS_ADDRESS = "src/main/resources/config/address.properties";
@@ -52,7 +51,8 @@ public class Config extends Properties {
     }
     public static void loadConfigs() {
         loadConstants("constants");
-        loadClients("clients");
+//        loadClients("clients");
+        loadClients();
     }
     private  static void loadConstants(String name) {
         Config config = getConfig(name);
@@ -63,21 +63,35 @@ public class Config extends Properties {
         ONLINE_GAMES.put("survival",Loader.getLoader().loadGame("Survival"));
         ONLINE_GAMES.put("group_survival",Loader.getLoader().loadGame("group_survival"));
     }
-    private  static void loadClients(String name) {
-        Config config = getConfig(name);
+//    private  static void loadClients(String name) {
+//        Config config = getConfig(name);
+//
+//        for (String key : config.stringPropertyNames()) {
+//            String clientPath = config.getProperty(key);
+//            try {
+//                Reader fileReader = new FileReader("src/main/resources/user"+clientPath);
+//                Client client = objectMapper.readValue(fileReader,Client.class);
+//                CLIENTS.put(key, client);
+//            } catch (IOException e) {
+//                throw new RuntimeException(e);
+//            }
+//        }
+//
+////        return imageMap;
+//    }
+    private static void loadClients() {
+        try (Session session = HibernateUtil.getSession()) {
+            String hql = "FROM Client";
 
-        for (String key : config.stringPropertyNames()) {
-            String clientPath = config.getProperty(key);
-            try {
-                Reader fileReader = new FileReader("src/main/resources/user"+clientPath);
-                Client client = objectMapper.readValue(fileReader,Client.class);
-                CLIENTS.put(key, client);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+            Query<Client> query = session.createQuery(hql, Client.class);
+            List<Client> clients = query.getResultList();
+
+            for (Client client : clients) {
+                CLIENTS.put(client.getUsername(), client);
             }
+        } catch (Exception e) {
+            throw new RuntimeException("Error loading clients from the database", e);
         }
-
-//        return imageMap;
     }
     private static ShopLimitation loadLimitations(String address) {
         try {

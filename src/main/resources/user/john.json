@@ -1,0 +1,19 @@
+{
+  "username" : "john",
+  "password" : "123",
+  "coin" : 10,
+  "score" : 195,
+  "diamond" : 1,
+  "chats" : [ {
+    "opponentUsername" : "marry",
+    "massages" : [ {
+      "senderUsername" : "john",
+      "receiverUsername" : "marry",
+      "context" : "hi marry"
+    }, {
+      "senderUsername" : "marry",
+      "receiverUsername" : "john",
+      "context" : "hello john"
+    } ]
+  } ]
+}

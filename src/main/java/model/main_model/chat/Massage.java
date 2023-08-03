@@ -1,13 +1,31 @@
 package model.main_model.chat;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
+
+@Entity
+@Table(name = "massages")
 public class Massage {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    @ManyToOne
+    @JoinColumn(name = "chat_id", nullable = false)
+    @JsonIgnore
+    private Chat chat;
+    @Column(name = "sender_username", nullable = false)
     private String senderUsername;
-    //all,someone
+    @Column(name = "receiver_username")
     private String receiverUsername;
+    @Column(name = "context", nullable = false)
     private String context;
 
-    public Massage(String senderUsername, String context) {
+    public Massage(String senderUsername, String receiverUsername, String context) {
         this.senderUsername = senderUsername;
+        this.receiverUsername = receiverUsername;
         this.context = context;
     }
 
@@ -36,5 +54,13 @@ public class Massage {
 
     public void setReceiverUsername(String receiverUsername) {
         this.receiverUsername = receiverUsername;
+    }
+
+    public Chat getChat() {
+        return chat;
+    }
+
+    public void setChat(Chat chat) {
+        this.chat = chat;
     }
 }

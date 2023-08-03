@@ -8,29 +8,57 @@ import model.main_model.entity.player.Player;
 import model.main_model.gamestrucure.GameState;
 import model.main_model.chat.Chat;
 
+import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.List;
 
+@Entity
+@Table(name = "clients")
 public class Client {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "username", unique = true, nullable = false)
     private String username;
+
+    @Column(name = "password", nullable = false)
+    private String password;
+
+    @Column(name = "coin")
+    private int coin;
+
+    @Column(name = "score")
+    private int score;
+
+    @Column(name = "diamond")
+    private int diamond;
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private List<Chat> chats = new ArrayList<>();
+
+
     @JsonIgnore
+    @Transient
     private GameState currentGameState;
     @JsonIgnore
+    @Transient
     private GameStateDTO currentGameStateDTO;
     @JsonIgnore
+    @Transient
     private Player player;
     @JsonIgnore
+    @Transient
     private PlayerDTO playerDTO;
     @JsonIgnore
+    @Transient
+
     private ClientController clientController;
-    private String password;
     @JsonIgnore
+    @Transient
     private Chat roomChat;// or room
-    private ArrayList <Chat> chats;
 //    todo : maybe in feature going to add multiplie players
 //    private Player[] players;
-    private int coin;
-    private int score;
-    private int diamond;
 
     public Client() {
         chats = new ArrayList<>();
@@ -130,11 +158,11 @@ public class Client {
         this.diamond = diamond;
     }
 
-    public ArrayList<Chat> getChats() {
+    public List<Chat> getChats() {
         return chats;
     }
 
-    public void setChats(ArrayList<Chat> chats) {
+    public void setChats(List<Chat> chats) {
         this.chats = chats;
     }
 }
