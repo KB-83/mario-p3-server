@@ -16,7 +16,6 @@ import util.Constant;
 import util.Loop;
 
 import java.util.ArrayList;
-import java.util.List;
 //todo : enemy controllers and actually controllers are not clean. clean theme
 
 public class GameStateController extends Thread{
@@ -65,6 +64,7 @@ public class GameStateController extends Thread{
                 item.getItemController().update();
             }
         }
+        //todo : going to add power item too
 //        gameState.getSwardCollisionHandler().applyCollisionEffects();
 //        gameState.getBulletCollisionHandler().applyCollisionEffects();
 //
