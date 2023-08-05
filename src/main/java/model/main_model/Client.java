@@ -7,6 +7,8 @@ import model.dto.game.GameStateDTO;
 import model.main_model.entity.player.Player;
 import model.main_model.gamestrucure.GameState;
 import model.main_model.chat.Chat;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -34,7 +36,12 @@ public class Client {
 
     @Column(name = "diamond")
     private int diamond;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "fund_id")
+    @JsonIgnore///for now
+    private Fund fund;
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
     private List<Chat> chats = new ArrayList<>();
 
 
@@ -71,6 +78,7 @@ public class Client {
         this.password = password;
         //test
         chats = new ArrayList<>();
+        fund = new Fund();
     }
 
     public String getUsername() {
@@ -164,5 +172,13 @@ public class Client {
 
     public void setChats(List<Chat> chats) {
         this.chats = chats;
+    }
+
+    public Fund getFund() {
+        return fund;
+    }
+
+    public void setFund(Fund fund) {
+        this.fund = fund;
     }
 }
