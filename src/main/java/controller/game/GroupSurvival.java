@@ -25,6 +25,9 @@ public class GroupSurvival extends GameStateController {
             if (client.getPlayer().getPlayerController() != null) { //todo : think about it its going to improve now is just giving time to thread to make controller not null. game waiting room line 86
                 if (client.getPlayer().getPlayerController().isLoosed() == false) {
                     client.getPlayer().getPlayerController().update();
+                    if (client.getPlayer().getActivePowerItem() != null) {
+                        client.getPlayer().getActivePowerItem().getController().update();
+                    }
                 }
             }
         }

@@ -27,13 +27,13 @@ public class PowerItemCollisionHandler implements CollisionHandler{
         //todo : improve it
         //
         // blocks effects
-        checkBlocksCollision();
+//        checkBlocksCollision();
 
         //pipes
-        checkPipesCollision();
+//        checkPipesCollision();
 
 //        enemies
-        checkEnemiesCollision();
+//        checkEnemiesCollision();
 
         //background tiles todo: give a bound to background tiles
         checkBackgroundTilesCollision();
@@ -47,15 +47,7 @@ public class PowerItemCollisionHandler implements CollisionHandler{
         for (Block block : gameState.getCurrentSection().getBlocks()) {
             blockRect.updatePosition(block.getCol() * 48, block.getRow() * 48);
             if (collisionChecker.didCollide(itemRect, blockRect)) {
-                powerItem.setVX(-powerItem.getVX());
-            }
-            if (collisionChecker.returnSamePoints(itemRect,blockRect).equals("DOWN")) {
-                powerItem.setOnTopOfBlock(true);
-//                    // todo: improve it too
-                powerItem.setWorldY(blockRect.getTopY() - itemRect.getHeight());
-                if (powerItem.getVY() < 0) {
-                    powerItem.setVY(0);
-                }
+                powerItem.getController().execute();
             }
         }
 
@@ -69,23 +61,7 @@ public class PowerItemCollisionHandler implements CollisionHandler{
                 pipeRect.updatePosition(pipe.getCol() * 48, pipe.getRow() * 48);
 //                    //todo give thebiigger rect first
                 if (collisionChecker.didCollide(itemRect, pipeRect)) {
-                    if (powerItem.getVX() > 0){
-                        powerItem.setWorldX(pipe.getCol()*  48  - 50);
-                    }
-                    if (powerItem.getVX() < 0){
-                        powerItem.setWorldX(pipe.getCol()*48  + 98 );
-                    }
-                    powerItem.setVX(-powerItem.getVX());
-//                        handelCollision(pipe.getCol() * Constant.BACKGROUND_TILE_SIZE, pipe.getRow() *
-//                                Constant.BACKGROUND_TILE_SIZE, 2 * Constant.BACKGROUND_TILE_SIZE, 3 * Constant.BACKGROUND_TILE_SIZE);
-                }
-                if (collisionChecker.returnSamePoints(itemRect,pipeRect).equals("DOWN")) {
-                    powerItem.setOnTopOfBlock(true);
-//                    // todo: improve it too
-                    powerItem.setWorldY(pipeRect.getTopY()-itemRect.getHeight());
-                    if (powerItem.getVY() < 0) {
-                        powerItem.setVY(0);
-                    }
+                    powerItem.getController().execute();
                 }
             }
         }
@@ -99,17 +75,8 @@ public class PowerItemCollisionHandler implements CollisionHandler{
             for (Enemy enemy : gameState.getCurrentSection().getEnemies()) {
                 enemyRect.updatePosition(enemy.getWorldX(), enemy.getWorldY());
                 if (collisionChecker.didCollide(itemRect, enemyRect)) {
-                    enemy.setVX(-enemy.getVX());
-//                        handelCollision(enemy.getWorldX(), enemy.getWorldY(), Constant.BACKGROUND_TILE_SIZE, Constant.BACKGROUND_TILE_SIZE);
-//                        return;
-                }
-                if (collisionChecker.returnSamePoints(itemRect,enemyRect).equals("DOWN")) {
-                    powerItem.setOnTopOfBlock(true);
-//                    // todo: improve it too
-                    powerItem.setWorldY(enemyRect.getTopY()-itemRect.getHeight());
-                    if (powerItem.getVY() < 0) {
-                        powerItem.setVY(0);
-                    }
+                    powerItem.getController().execute();
+
                 }
             }
         }
@@ -124,16 +91,7 @@ public class PowerItemCollisionHandler implements CollisionHandler{
                 if (gameState.getCurrentSection().getBackgroundMap().getBackGroundTiles()[i][j].isSolid()){
                     backgrounTileRect.updatePosition(j*48,i*48);
                     if(collisionChecker.didCollide(itemRect, backgrounTileRect)){
-                        powerItem.setVX(-powerItem.getVX());
-//                            handelCollision(j*48,i*48,48,48);
-                    }
-                }
-                if (collisionChecker.returnSamePoints(itemRect,backgrounTileRect).equals("DOWN")) {
-                    powerItem.setOnTopOfBlock(true);
-//                    // todo: improve it too
-                    powerItem.setWorldY(backgrounTileRect.getTopY()-itemRect.getHeight());
-                    if (powerItem.getVY() < 0) {
-                        powerItem.setVY(0);
+                        powerItem.getController().execute();
                     }
                 }
             }

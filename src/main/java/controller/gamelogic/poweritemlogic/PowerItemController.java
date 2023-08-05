@@ -1,30 +1,38 @@
 package controller.gamelogic.poweritemlogic;
 
-import controller.gamelogic.collisionlogic.ItemCollisionHandler;
 import controller.gamelogic.collisionlogic.PowerItemCollisionHandler;
-import controller.gamelogic.itemlogic.ItemMovementHandler;
-import model.main_model.Client;
+import model.main_model.entity.player.Player;
 import model.main_model.entity.power_item.PowerItem;
 import model.main_model.gamestrucure.GameState;
+import util.Constant;
 
 public class PowerItemController {
-    private Client owner;
+    private Player owner;
     private PowerItemCollisionHandler powerItemCollisionHandler;
-    private PowerItemMovementHandler powerItemMovementHandler;
-    private ItemShooter itemShooter;
+//    private ItemShooter itemShooter;
     private PowerItem powerItem;
 
-    public PowerItemController(Client owner,PowerItem powerItem) {
+    public PowerItemController(PowerItem powerItem,Player owner,GameState gameState) {
         this.owner = owner;
         this.powerItem = powerItem;
+        powerItemCollisionHandler = new PowerItemCollisionHandler(gameState,powerItem);
+    }
+    public void update(){
+//        itemMovementHandler.updateItemsPosition();
+        powerItemCollisionHandler.applyCollisionEffects();
+        //test
+        powerItem.setWorldX((int) (powerItem.getWorldX()+(1.0/ Constant.FPS * powerItem.getVX())));
+        powerItem.setWorldY((int) (powerItem.getWorldY() - (1.0/Constant.FPS * powerItem.getVY())));
+
     }
     public void shoot() {
-        itemShooter.throwIt(powerItem,30,30);
+        powerItem.setDuringShoot(true);
+        powerItem.setWorldY(owner.getWorldY());
+        powerItem.setWorldX(owner.getWorldX());
+        ItemShooter.getInstance().throwIt(powerItem,200,200);
     }
-    public void execute(){}
-    public void initGameState(GameState gameState) {
-        powerItemCollisionHandler = new PowerItemCollisionHandler(gameState,powerItem);
-        powerItemMovementHandler = new PowerItemMovementHandler();
-
+    public void execute(){
+        owner.setActivePowerItem(null);
+        powerItem.setDuringShoot(false);
     }
 }

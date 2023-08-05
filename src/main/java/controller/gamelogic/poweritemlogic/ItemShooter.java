@@ -2,7 +2,7 @@ package controller.gamelogic.poweritemlogic;
 
 import controller.gamelogic.Throwable;
 import model.main_model.entity.Entity;
-import model.main_model.gamestrucure.GameState;
+import model.main_model.entity.player.JumpV0;
 import model.main_model.gamestrucure.gameworldoption.Gravity;
 import util.Constant;
 
@@ -12,7 +12,7 @@ import java.awt.event.ActionListener;
 
 public class ItemShooter implements Throwable {
     private long shootStartTime;
-    private GameState gameState;
+//    private GameState gameState;
     private Timer shootTimer;
     private ActionListener shootActionListener;
     private static ItemShooter itemShooter;
@@ -38,7 +38,7 @@ public class ItemShooter implements Throwable {
             public void actionPerformed(ActionEvent e) {
                 double deltaY = 0.1;
                 double t = 0;
-                if (!gameState.isPaused()){
+                if (entity.isDuringShoot()){
                     t = ( System.currentTimeMillis() - shootStartTime) / 1000;
                     entity.setVY ((-(Gravity.MARIO_GAME) * (t)) + v0Y);
                     entity.setVX(v0X);
@@ -50,6 +50,7 @@ public class ItemShooter implements Throwable {
                     t = 0;
                     // here means jump completed
                     shootTimer.stop();
+                    entity.setDuringShoot(false);
                 }
             }
         };

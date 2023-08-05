@@ -6,6 +6,7 @@ import model.dto.backgroundobject.pipe.PipeDTO;
 import model.dto.entity.EnemyDTO;
 import model.dto.entity.ItemDTO;
 import model.dto.entity.PlayerDTO;
+import model.dto.entity.PowerItemDTO;
 import model.dto.game.GameStateDTO;
 import model.dto.game.SectionDTO;
 import model.main_model.Client;
@@ -18,6 +19,7 @@ public class DTOCreator {
     private DTOCreator(){}
     public static PlayerDTO createPlayerDTO(Player player) {
         PlayerDTO dto = new PlayerDTO();
+        dto.setPowerItemDTO(new PowerItemDTO());
         return updatePlayerDTO(player,dto);
     }
     public static PlayerDTO updatePlayerDTO(Player player,PlayerDTO dto) {
@@ -31,6 +33,14 @@ public class DTOCreator {
         dto.setName(player.getClientName());
         dto.setRemainingLifePercent(player.getRemainingLifePercent());
         dto.setTeamColor(player.getTeamColor());
+        if (player.getActivePowerItem() == null) {
+            dto.getPowerItemDTO().setType(null);
+        }
+        else {
+            dto.getPowerItemDTO().setX(player.getActivePowerItem().getWorldX());
+            dto.getPowerItemDTO().setY(player.getActivePowerItem().getWorldY());
+            dto.getPowerItemDTO().setType(player.getActivePowerItem().getClass().getSimpleName());
+        }
         return dto;
     }
 

@@ -7,7 +7,6 @@ import model.main_model.gamestrucure.gameworldoption.Gravity;
 import util.Constant;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class GravityEffectsHandler {
 //    private GameState gameState;

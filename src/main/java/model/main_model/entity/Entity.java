@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public abstract class Entity {
     @JsonIgnore
     private String imageAddress;
+    @JsonIgnore
+    private boolean duringShoot;
     private int worldX,worldY;
     @JsonIgnore
     private double vX;
@@ -82,5 +84,13 @@ public abstract class Entity {
 
     public void setHeight(int height) {
         this.height = height;
+    }
+
+    public boolean isDuringShoot() {
+        return duringShoot;
+    }
+
+    public void setDuringShoot(boolean duringShoot) {
+        this.duringShoot = duringShoot;
     }
 }

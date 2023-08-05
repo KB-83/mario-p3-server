@@ -7,6 +7,7 @@ import model.main_model.entity.Sward;
 import model.main_model.entity.player.JumpV0;
 import model.main_model.entity.player.Player;
 import model.main_model.entity.player.V;
+import model.main_model.entity.power_item.*;
 import model.main_model.gamestrucure.GameState;
 import model.main_model.gamestrucure.gameworldoption.Gravity;
 import util.Constant;
@@ -106,7 +107,7 @@ public abstract class PlayerRequestHandler {
     public abstract void leftDoneRequest();
 
 
-    public void SeatRequest(){
+    public void seatRequest(){
         if(gameState.isPaused() || player.isDuringJump() || player.getPlayerController().isLoosed()){
             return;
         }
@@ -132,7 +133,7 @@ public abstract class PlayerRequestHandler {
         player.setWorldY(player.getWorldY()+10);
         player.setCameraY(player.getCameraY()+10);
     }
-    public void SwardRequest(){
+    public void swardRequest(){
         if(gameState.isPaused() || player.getPlayerController().isLoosed()){
             return;
         }
@@ -162,7 +163,7 @@ public abstract class PlayerRequestHandler {
 //            sound.play();
         }
     }
-    public void BulletRequest(){
+    public void bulletRequest(){
         if(gameState.isPaused() || player.getPlayerController().isLoosed()){
             return;
         }
@@ -180,6 +181,40 @@ public abstract class PlayerRequestHandler {
             bullet.getTimer().start();
 //            sound.setSound("BULLET");
 //            sound.play();
+        }
+    }
+    public void powerItemRequest(String type){
+        if (player.getActivePowerItem() == null) {
+            PowerItem powerItem = null;
+            switch (type) {
+                case "damageBomb" :
+                    powerItem = new DamageBomb(player,gameState);
+                    powerItem.getController().shoot();
+                    break;
+                case "speedBomb" :
+                    powerItem = new SpeedBomb(player,gameState);
+                    powerItem.getController().shoot();
+                    break;
+                case "hammer" :
+                    powerItem = new Hammer(player,gameState);
+                    powerItem.getController().shoot();
+                    break;
+                case "invisibilityPotion" :
+                    powerItem = new InvisibilityPotion(player,gameState);
+                    powerItem.getController().shoot();
+                    break;
+                case "speedPotion" :
+                    powerItem = new SpeedPotion(player,gameState);
+                    powerItem.getController().shoot();
+                    break;
+                case "healthPotion" :
+                    powerItem = new HealthPotion(player,gameState);
+                    powerItem.getController().shoot();
+                    break;
+            }
+            player.setActivePowerItem(powerItem);
+
+
         }
     }
     //todo : maybe pause request is for a user not a player

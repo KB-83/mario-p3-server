@@ -2,6 +2,7 @@ package controller.game;
 
 import controller.gamelogic.gamestatelogic.GameStateController;
 import model.main_model.Client;
+import model.main_model.entity.item.Item;
 import model.main_model.gamestrucure.GameState;
 import model.response.GameOverResponse;
 import util.Config;
@@ -40,6 +41,9 @@ public class Survival extends GameStateController {
             if (client.getPlayer().getPlayerController() != null) { //todo : think about it its going to improve now is just giving time to thread to make controller not null. game waiting room line 86
                 if (client.getPlayer().getPlayerController().isLoosed() == false) {
                     client.getPlayer().getPlayerController().update();
+                    if (client.getPlayer().getActivePowerItem() != null) {
+                        client.getPlayer().getActivePowerItem().getController().update();
+                    }
                 }
             }
         }

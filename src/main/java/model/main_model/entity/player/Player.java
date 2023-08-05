@@ -5,6 +5,7 @@ import controller.gamelogic.gamestatelogic.PlayerController;
 import model.main_model.entity.Bullet;
 import model.main_model.entity.Entity;
 import model.main_model.entity.Sward;
+import model.main_model.entity.power_item.PowerItem;
 import util.Constant;
 
 public abstract class Player extends Entity {
@@ -15,6 +16,8 @@ public abstract class Player extends Entity {
     private boolean isDuringJump;
     @JsonIgnore
     private final Bullet bullet;
+    @JsonIgnore
+    private PowerItem activePowerItem;
     @JsonIgnore
     private final Sward sward;
     private boolean isFire, isMega;
@@ -147,5 +150,13 @@ public abstract class Player extends Entity {
 
     public void setTeamColor(int teamColor) {
         this.teamColor = teamColor;
+    }
+
+    public PowerItem getActivePowerItem() {
+        return activePowerItem;
+    }
+
+    public void setActivePowerItem(PowerItem activePowerItem) {
+        this.activePowerItem = activePowerItem;
     }
 }

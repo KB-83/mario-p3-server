@@ -9,6 +9,7 @@ public class PlayerDTO {
     private int height;
     private int teamColor;
     private int remainingLifePercent;
+    private PowerItemDTO powerItemDTO;
 
     public PlayerDTO() {
         image = "MarioRight1";
@@ -92,5 +93,13 @@ public class PlayerDTO {
 
     public void setTeamColor(int teamColor) {
         this.teamColor = teamColor;
+    }
+
+    public PowerItemDTO getPowerItemDTO() {
+        return powerItemDTO;
+    }
+
+    public void setPowerItemDTO(PowerItemDTO powerItemDTO) {
+        this.powerItemDTO = powerItemDTO;
     }
 }
