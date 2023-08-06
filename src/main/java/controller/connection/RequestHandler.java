@@ -15,6 +15,7 @@ import model.main_model.chat.Chat;
 import model.main_model.room.Room;
 import model.request.*;
 import model.response.BuyResponse;
+import model.response.ClientUpdateResponse;
 import model.response.GameStateStatusResponse;
 import model.response.NewPMResponse;
 import util.Config;
@@ -86,6 +87,14 @@ public class RequestHandler implements RequestVisitor {
     @Override
     public void visit(EnterRoomRequest request, ClientController clientController) {
         RoomsManager.roomEnterRequest(clientController,request.getToken(),request.isPlayer());
+    }
+
+    @Override
+    public void visit(FinalBuyRequest request, ClientController clientController) {
+        System.out.println("final buy request");
+        ShopController.getInstance().finalBuyRequest(request,clientController);
+        Client client = clientController.getClient();
+        clientController.sendResponse(new ClientUpdateResponse(client.getCoin(),client.getDiamond()));
     }
 
     @Override

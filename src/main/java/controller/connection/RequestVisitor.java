@@ -19,6 +19,8 @@ public interface RequestVisitor {
     void visit(CreateRoomRequest request, ClientController clientController);
     void visit(RoomGameStartRequest request, ClientController clientController);
     void visit(EnterRoomRequest request, ClientController clientController);
+    void visit(FinalBuyRequest request, ClientController clientController);
+
 
 
 }

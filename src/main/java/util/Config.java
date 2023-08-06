@@ -20,7 +20,7 @@ public class Config extends Properties {
     private static final String CONFIGS_ADDRESS = "src/main/resources/config/address.properties";
     private static final Config DEFAULT_CONFIG = new Config(CONFIGS_ADDRESS);
     public final static HashMap<String, Double> CONSTANT = new HashMap<>();
-    public final static HashMap<String, Client> CLIENTS = new HashMap<>();
+    public final static HashMap<String, Client> CLIENTS = new HashMap<>(); // do it just as userName or you have to reload each time update a client
     public final static HashMap<String, Client> ONLINE_CLIENTS = new HashMap<>();
     public final static HashMap<String,Game> ONLINE_GAMES = new HashMap<>();
     public static ObjectMapper objectMapper = new ObjectMapper();
