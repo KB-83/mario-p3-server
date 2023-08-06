@@ -21,6 +21,6 @@ public interface RequestVisitor {
     void visit(EnterRoomRequest request, ClientController clientController);
     void visit(FinalBuyRequest request, ClientController clientController);
     void visit(ScoreBoardRequest request, ClientController clientController);
-
+    void visit(SearchTableRequest request, ClientController clientController);
 }
 

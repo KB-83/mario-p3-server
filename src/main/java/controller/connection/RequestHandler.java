@@ -97,7 +97,17 @@ public class RequestHandler implements RequestVisitor {
 
     @Override
     public void visit(ScoreBoardRequest request, ClientController clientController) {
-         clientController.sendResponse(new ScoreBoardResponse(ScoreBoard.getScoreBoard()));
+        clientController.sendResponse(new ScoreBoardResponse(ScoreBoard.getScoreBoard()));
+    }
+
+    @Override
+    public void visit(SearchTableRequest request, ClientController clientController) {
+        if(request.isUserName()) {
+            clientController.sendResponse(new ScoreBoardResponse(ScoreBoard.searchByUsername(request.getUsername())));
+        }
+        else {
+            clientController.sendResponse(new ScoreBoardResponse(ScoreBoard.searchByScoreRange(request.getMin(),request.getMax())));
+        }
     }
 
     @Override

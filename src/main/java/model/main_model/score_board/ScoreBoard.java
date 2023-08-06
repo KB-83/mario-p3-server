@@ -11,6 +11,8 @@ import util.Constant;
 import util.HibernateUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class ScoreBoard {
@@ -19,37 +21,44 @@ public class ScoreBoard {
     public static ScoreBoardDTO getScoreBoard() {
         try (Session session = HibernateUtil.getSession()) {
             List<Client> clientsByScore = session.createQuery("FROM Client ORDER BY score DESC", Client.class).list();
-            ScoreBoardDTO scoreBoardDTO = new ScoreBoardDTO();
-            List<ScoreDTO> scores = new ArrayList<>();
-            for (int i = 0;i < clientsByScore.size();i++) {
-                Client c = clientsByScore.get(i);
-                int grade = 0;
-                if (c.getScore() > 0) {
-                    //  سطح بازیکن برابر با جزء صحیح لگاریتم مبنای دو امتیازش * levelMultiplier است
-                    double log2 = Math.log(c.getScore()) / Math.log(2);
-                    grade = (int) (log2 * ShopController.levelMultiplier);
-                }
-                scores.add(new ScoreDTO(String.valueOf(i+1),c.getUsername(),
-                        String.valueOf(c.getScore()),String.valueOf(grade)));
-            }
-            scoreBoardDTO.setScoreDTOS(scores);
-            return scoreBoardDTO;
+            return scoreBoardDTOByClients(clientsByScore);
         }
     }
 
-    public static List<Client> searchPlayersByUsername(String username) {
+    public static ScoreBoardDTO searchByUsername(String username) {
         try (Session session = HibernateUtil.getSession()) {
-            return session.createCriteria(Client.class)
+            List<Client> clients = session.createCriteria(Client.class)
                     .add(Restrictions.ilike("username", "%" + username + "%"))
-                          .list();
+                    .list();
+            Collections.sort(clients, Comparator.comparingInt(Client::getScore).reversed());
+            return scoreBoardDTOByClients(clients);
         }
     }
 
-    public static List<Client> getPlayersByScoreRange(int minScore, int maxScore) {
+    public static ScoreBoardDTO searchByScoreRange(int minScore, int maxScore) {
         try (Session session = HibernateUtil.getSession()) {
-            return session.createCriteria(Client.class)
+            List<Client> clients =  session.createCriteria(Client.class)
                           .add(Restrictions.between("score", minScore, maxScore))
                           .list();
+            Collections.sort(clients, Comparator.comparingInt(Client::getScore).reversed());
+            return scoreBoardDTOByClients(clients);
         }
+    }
+    private static ScoreBoardDTO scoreBoardDTOByClients(List<Client> clients) {
+        ScoreBoardDTO scoreBoardDTO = new ScoreBoardDTO();
+        List<ScoreDTO> scores = new ArrayList<>();
+        for (int i = 0;i < clients.size();i++) {
+            Client c = clients.get(i);
+            int grade = 0;
+            if (c.getScore() > 0) {
+                //  سطح بازیکن برابر با جزء صحیح لگاریتم مبنای دو امتیازش * levelMultiplier است
+                double log2 = Math.log(c.getScore()) / Math.log(2);
+                grade = (int) (log2 * ShopController.levelMultiplier);
+            }
+            scores.add(new ScoreDTO(String.valueOf(i+1),c.getUsername(),
+                    String.valueOf(c.getScore()),String.valueOf(grade)));
+        }
+        scoreBoardDTO.setScoreDTOS(scores);
+        return scoreBoardDTO;
     }
 }
