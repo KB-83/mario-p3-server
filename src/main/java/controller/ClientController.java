@@ -87,5 +87,6 @@ public class ClientController extends Thread{
         //test
         client.setPlayerDTO(null);
         client.setPlayer(null);
+        client.setSelectedBag(null);
     }
 }

@@ -1,5 +1,6 @@
 package controller.connection;
 
+import controller.BagController;
 import controller.ClientController;
 import controller.gamelogic.playerlogic.PlayerRequestHandler;
 import controller.ShopController;
@@ -107,6 +108,16 @@ public class RequestHandler implements RequestVisitor {
         }
         else {
             clientController.sendResponse(new ScoreBoardResponse(ScoreBoard.searchByScoreRange(request.getMin(),request.getMax())));
+        }
+    }
+
+    @Override
+    public void visit(SelectBagRequest request, ClientController clientController) {
+        if (BagController.checkBag(request,clientController)) {
+            clientController.sendResponse(new DialogResponse("done successfully"));
+        }
+        else {
+            clientController.sendResponse(new DialogResponse("not enough item!"));
         }
     }
 

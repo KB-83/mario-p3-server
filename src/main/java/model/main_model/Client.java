@@ -66,6 +66,9 @@ public class Client {
     private Chat roomChat;// or room
 //    todo : maybe in feature going to add multiplie players
 //    private Player[] players;
+    @JsonIgnore
+    @Transient
+    private String[] selectedBag;
 
     public Client() {
         chats = new ArrayList<>();
@@ -180,5 +183,13 @@ public class Client {
 
     public void setFund(Fund fund) {
         this.fund = fund;
+    }
+
+    public String[] getSelectedBag() {
+        return selectedBag;
+    }
+
+    public void setSelectedBag(String[] selectedBag) {
+        this.selectedBag = selectedBag;
     }
 }
