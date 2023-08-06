@@ -20,8 +20,7 @@ public interface RequestVisitor {
     void visit(RoomGameStartRequest request, ClientController clientController);
     void visit(EnterRoomRequest request, ClientController clientController);
     void visit(FinalBuyRequest request, ClientController clientController);
-
-
+    void visit(ScoreBoardRequest request, ClientController clientController);
 
 }
 

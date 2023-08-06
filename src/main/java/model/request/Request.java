@@ -19,6 +19,7 @@ import controller.connection.RequestVisitor;
         @JsonSubTypes.Type(value = RoomGameStartRequest.class),
         @JsonSubTypes.Type(value = EnterRoomRequest.class),
         @JsonSubTypes.Type(value = FinalBuyRequest.class),
+        @JsonSubTypes.Type(value = ScoreBoardRequest.class),
         @JsonSubTypes.Type(value = GroupSurvivalRequest.class),
         @JsonSubTypes.Type(value = CreateRoomRequest.class)
 })

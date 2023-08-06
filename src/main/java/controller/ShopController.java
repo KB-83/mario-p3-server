@@ -12,6 +12,7 @@ import util.Saver;
 
 public class ShopController {
     private ShopLimitation limitation = Config.LIMITATIONS;
+    public static  double levelMultiplier = Config.CONSTANT.get("Shop.levelMultiplier");
     private static ShopController shopController;
     private ShopController(){}
     public static ShopController getInstance() {

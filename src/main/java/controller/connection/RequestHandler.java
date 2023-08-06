@@ -13,11 +13,9 @@ import model.main_model.Client;
 import model.main_model.chat.Massage;
 import model.main_model.chat.Chat;
 import model.main_model.room.Room;
+import model.main_model.score_board.ScoreBoard;
 import model.request.*;
-import model.response.BuyResponse;
-import model.response.ClientUpdateResponse;
-import model.response.GameStateStatusResponse;
-import model.response.NewPMResponse;
+import model.response.*;
 import util.Config;
 import util.Loader;
 import util.Saver;
@@ -95,6 +93,11 @@ public class RequestHandler implements RequestVisitor {
         ShopController.getInstance().finalBuyRequest(request,clientController);
         Client client = clientController.getClient();
         clientController.sendResponse(new ClientUpdateResponse(client.getCoin(),client.getDiamond()));
+    }
+
+    @Override
+    public void visit(ScoreBoardRequest request, ClientController clientController) {
+         clientController.sendResponse(new ScoreBoardResponse(ScoreBoard.getScoreBoard()));
     }
 
     @Override
