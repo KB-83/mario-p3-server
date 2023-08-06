@@ -54,7 +54,7 @@ public class GameStateManagerCreator {
     }
     private static void startAGame(ArrayList<Client> clients, GameStateDTO gameStateDTO, GameState gameState, String gameStateType) {
         for (Client client : clients) {
-            client.setPlayer(new Mario(client.getUsername()));
+            client.setPlayer(new Mario(client.getUsername(),client.getSelectedBag()));
             switch (gameState.getMarioStartState()) {
                 case 1 :
                     client.getPlayer().setMega(true);

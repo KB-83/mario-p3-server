@@ -55,4 +55,24 @@ public class BagController {
         clientController.getClient().setSelectedBag(request.getBag());
         return true;
     }
+    public static int returnNumOfItem(String[] bag, String item) {
+        int num = 0;
+        for (String s : bag) {
+            if (item.equalsIgnoreCase(s)) {
+                num++;
+            }
+        }
+        return num;
+    }
+    public static String[] getAnItem(String[] bag, String item){
+        int i = 0;
+        for (String s : bag) {
+            if (item.equalsIgnoreCase(s)) {
+                bag[i] = null;
+                return bag;
+            }
+            i++;
+        }
+        return bag;
+    }
 }

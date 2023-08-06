@@ -10,6 +10,7 @@ public class PlayerDTO {
     private int teamColor;
     private int remainingLifePercent;
     private PowerItemDTO powerItemDTO;
+    private String[] selectedBag;
 
     public PlayerDTO() {
         image = "MarioRight1";
@@ -101,5 +102,13 @@ public class PlayerDTO {
 
     public void setPowerItemDTO(PowerItemDTO powerItemDTO) {
         this.powerItemDTO = powerItemDTO;
+    }
+
+    public String[] getSelectedBag() {
+        return selectedBag;
+    }
+
+    public void setSelectedBag(String[] selectedBag) {
+        this.selectedBag = selectedBag;
     }
 }

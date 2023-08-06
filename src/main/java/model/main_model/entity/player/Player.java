@@ -26,13 +26,15 @@ public abstract class Player extends Entity {
     private int remainingLifePercent = -1;
     private int teamColor;
     private String clientName;
+    private String[] selectedBag;
     //todo: is it nessesart?
 //    @JsonIgnore
 //    private PlayerRequestHandler playerRequestHandler;
     @JsonIgnore
     private PlayerController playerController;
 
-    public Player(String name) {
+    public Player(String name,String[] selectedBag) {
+        this.selectedBag = selectedBag;
         clientName = name;
         setOnTopOfBlock(true);
         bullet = new Bullet();
@@ -158,5 +160,13 @@ public abstract class Player extends Entity {
 
     public void setActivePowerItem(PowerItem activePowerItem) {
         this.activePowerItem = activePowerItem;
+    }
+
+    public String[] getSelectedBag() {
+        return selectedBag;
+    }
+
+    public void setSelectedBag(String[] selectedBag) {
+        this.selectedBag = selectedBag;
     }
 }

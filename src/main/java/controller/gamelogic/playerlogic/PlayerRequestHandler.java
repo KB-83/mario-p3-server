@@ -1,6 +1,10 @@
 package controller.gamelogic.playerlogic;
 
 
+import controller.BagController;
+import controller.ClientController;
+import model.main_model.Client;
+import model.main_model.Fund;
 import model.main_model.backgroundobject.pipe.*;
 import model.main_model.entity.Bullet;
 import model.main_model.entity.Sward;
@@ -11,6 +15,7 @@ import model.main_model.entity.power_item.*;
 import model.main_model.gamestrucure.GameState;
 import model.main_model.gamestrucure.gameworldoption.Gravity;
 import util.Constant;
+import util.Saver;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -183,36 +188,51 @@ public abstract class PlayerRequestHandler {
 //            sound.play();
         }
     }
-    public void powerItemRequest(String type){
-        if (player.getActivePowerItem() == null) {
+    public void powerItemRequest(String type, ClientController clientController){
+        String[] bag = clientController.getClient().getSelectedBag();
+        if (player.getActivePowerItem() == null && bag!= null) {
             PowerItem powerItem = null;
+            int numInBag = BagController.returnNumOfItem(clientController.getClient().getSelectedBag(),type);
+            if (numInBag < 1) {
+                return;
+            }
+            Client client = clientController.getClient();
+            client.setSelectedBag(BagController.getAnItem(client.getSelectedBag(),type));
+            Fund fund = client.getFund();
             switch (type) {
                 case "damageBomb" :
+                    fund.setDamageBomb(fund.getDamageBomb() - 1);
                     powerItem = new DamageBomb(player,gameState);
                     powerItem.getController().shoot();
                     break;
                 case "speedBomb" :
+                    fund.setSpeedBomb(fund.getSpeedBomb() - 1);
                     powerItem = new SpeedBomb(player,gameState);
                     powerItem.getController().shoot();
                     break;
                 case "hammer" :
+                    fund.setHammer(fund.getHammer() - 1);
                     powerItem = new Hammer(player,gameState);
                     powerItem.getController().shoot();
                     break;
                 case "invisibilityPotion" :
+                    fund.setInvisibilityPotion(fund.getInvisibilityPotion() - 1);
                     powerItem = new InvisibilityPotion(player,gameState);
                     powerItem.getController().shoot();
                     break;
                 case "speedPotion" :
+                    fund.setSpeedPotion(fund.getSpeedPotion() - 1);
                     powerItem = new SpeedPotion(player,gameState);
                     powerItem.getController().shoot();
                     break;
                 case "healthPotion" :
+                    fund.setHealthPotion(fund.getHealthPotion() - 1);
                     powerItem = new HealthPotion(player,gameState);
                     powerItem.getController().shoot();
                     break;
             }
             player.setActivePowerItem(powerItem);
+            Saver.getSaver().updateClient(client);
 
 
         }

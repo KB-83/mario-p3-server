@@ -33,6 +33,7 @@ public class DTOCreator {
         dto.setName(player.getClientName());
         dto.setRemainingLifePercent(player.getRemainingLifePercent());
         dto.setTeamColor(player.getTeamColor());
+        dto.setSelectedBag(player.getSelectedBag());
         if (player.getActivePowerItem() == null) {
             dto.getPowerItemDTO().setType(null);
         }

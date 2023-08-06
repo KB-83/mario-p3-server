@@ -168,17 +168,23 @@ public class RequestHandler implements RequestVisitor {
                 handler.PauseRequest();
                 break;
             case "damageBomb":
-                handler.powerItemRequest("damageBomb");
+                handler.powerItemRequest("damageBomb", clientController);
+                break;
             case "speedBomb":
-                handler.powerItemRequest("speedBomb");
+                handler.powerItemRequest("speedBomb", clientController);
+                break;
             case "hammer":
-                handler.powerItemRequest("hammer");
+                handler.powerItemRequest("hammer", clientController);
+                break;
             case "healthPotion":
-                handler.powerItemRequest("healthPotion");
+                handler.powerItemRequest("healthPotion", clientController);
+                break;
             case "invisibilityPotion":
-                handler.powerItemRequest("invisibilityPotion");
+                handler.powerItemRequest("invisibilityPotion", clientController);
+                break;
             case "speedPotion":
-                handler.powerItemRequest("speedPotion");
+                handler.powerItemRequest("speedPotion", clientController);
+                break;
         }
 
 //        GameWaitingRoom.getInstance().marathonClient(clientController.getClient());
