@@ -190,15 +190,18 @@ public abstract class PlayerRequestHandler {
     }
     public void powerItemRequest(String type, ClientController clientController){
         String[] bag = clientController.getClient().getSelectedBag();
-        if (player.getActivePowerItem() == null && bag!= null) {
+        //todo : bug in hammer
+        if (player.getActivePowerItem() == null && (bag!= null)) {
             PowerItem powerItem = null;
+            Client client = clientController.getClient();
+            Fund fund = client.getFund();
             int numInBag = BagController.returnNumOfItem(clientController.getClient().getSelectedBag(),type);
             if (numInBag < 1) {
-                return;
+                if (!(type.equalsIgnoreCase("hammer") && fund.getHammer() > 0)) {
+                    return;
+                }
             }
-            Client client = clientController.getClient();
             client.setSelectedBag(BagController.getAnItem(client.getSelectedBag(),type));
-            Fund fund = client.getFund();
             switch (type) {
                 case "damageBomb" :
                     fund.setDamageBomb(fund.getDamageBomb() - 1);
@@ -232,6 +235,7 @@ public abstract class PlayerRequestHandler {
                     break;
             }
             player.setActivePowerItem(powerItem);
+            player.getPlayerGameLog().setPowerItems(player.getPlayerGameLog().getPowerItems());
             Saver.getSaver().updateClient(client);
 
 

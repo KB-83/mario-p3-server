@@ -55,9 +55,9 @@ public class Marathon extends GameStateController{
         }
     }
     private void endOfGame() {
-        Score[] scores = sortClientsByScore();
+        GroupSurvivalScore[] scores = sortClientsByScore();
         scores = addDiamond(scores);
-        for (Score score : scores) {
+        for (GroupSurvivalScore score : scores) {
             Client client = score.getClient();
             client.setScore(client.getScore()+score.getScore());
             client.setDiamond(client.getDiamond()+score.getDiamond());
@@ -71,17 +71,17 @@ public class Marathon extends GameStateController{
         getLoop().kill();
 
     }
-    private Score[] sortClientsByScore() {
-        Score[] sortedScores = new Score[getClients().size()];
+    private GroupSurvivalScore[] sortClientsByScore() {
+        GroupSurvivalScore[] sortedScores = new GroupSurvivalScore[getClients().size()];
         for (int i = 0; i < sortedScores.length ; i++) {
-            sortedScores[i] = new Score(getClients().get(i),score(getClients().get(i)));
+            sortedScores[i] = new GroupSurvivalScore(getClients().get(i),score(getClients().get(i)));
 
         }
 
         for (int i = 0; i < sortedScores.length - 1; i++) {
             for (int j = 0; j < sortedScores.length- i - 1; j++) {
                 if (sortedScores[j].getScore() < sortedScores[j+1].getScore()) {
-                    Score temp = sortedScores[j];
+                    GroupSurvivalScore temp = sortedScores[j];
                     sortedScores[j] = sortedScores[j+1];
                     sortedScores[j+1] = temp;
                 }
@@ -96,7 +96,7 @@ public class Marathon extends GameStateController{
         return  (int) (Math.max(lifeTime, minLifeTime) * lifeTimeMultiplier +
                         Math.max(distanceFromStart, minDistance) * distanceMultiplier);
     }
-    private Score[] addDiamond(Score[] scores) {
+    private GroupSurvivalScore[] addDiamond(GroupSurvivalScore[] scores) {
         int n = getClients().size();
         for (int i = 0; i < scores.length; i++) {
             scores[i].setDiamond((int) Math.floor(n/Math.pow(2,i+1)));

@@ -12,7 +12,7 @@ public class PlayerGSurvivalLifeChecker extends PlayerSurvivalLifeChecker{
     public PlayerGSurvivalLifeChecker(GameState gameState, Player player) {
         super(gameState, player);
         this.player = player;
-        player.setRemainingLifePercent(100);
+        player.getPlayerGameLog().setRemainingLifePercent(100);
 
     }
 
@@ -24,7 +24,7 @@ public class PlayerGSurvivalLifeChecker extends PlayerSurvivalLifeChecker{
     @Override
     public void handleEnemyCollide(Enemy enemy, String position) {
         if (System.currentTimeMillis() - lastKickTimeByEnemy > 2000) {
-            player.setRemainingLifePercent(player.getRemainingLifePercent() - 10);
+            player.getPlayerGameLog().setRemainingLifePercent(player.getPlayerGameLog().getRemainingLifePercent() - 10);
             lastKickTimeByEnemy = System.currentTimeMillis();
         }
     }

@@ -31,7 +31,7 @@ public class DTOCreator {
         dto.setImage(player.getImageAddress());
         dto.setHeight(player.getHeight());
         dto.setName(player.getClientName());
-        dto.setRemainingLifePercent(player.getRemainingLifePercent());
+        dto.setRemainingLifePercent(player.getPlayerGameLog().getRemainingLifePercent());
         dto.setTeamColor(player.getTeamColor());
         dto.setSelectedBag(player.getSelectedBag());
         if (player.getActivePowerItem() == null) {

@@ -23,7 +23,8 @@ public abstract class Player extends Entity {
     private boolean isFire, isMega;
     @JsonIgnore
     private boolean isUnHeat;
-    private int remainingLifePercent = -1;
+    @JsonIgnore
+    private  PlayerGameLog playerGameLog;
     private int teamColor;
     private String clientName;
     private String[] selectedBag;
@@ -34,6 +35,7 @@ public abstract class Player extends Entity {
     private PlayerController playerController;
 
     public Player(String name,String[] selectedBag) {
+        playerGameLog = new PlayerGameLog();
         this.selectedBag = selectedBag;
         clientName = name;
         setOnTopOfBlock(true);
@@ -138,14 +140,6 @@ public abstract class Player extends Entity {
         this.clientName = clientName;
     }
 
-    public int getRemainingLifePercent() {
-        return remainingLifePercent;
-    }
-
-    public void setRemainingLifePercent(int remainingLifePercent) {
-        this.remainingLifePercent = remainingLifePercent;
-    }
-
     public int getTeamColor() {
         return teamColor;
     }
@@ -168,5 +162,13 @@ public abstract class Player extends Entity {
 
     public void setSelectedBag(String[] selectedBag) {
         this.selectedBag = selectedBag;
+    }
+
+    public PlayerGameLog getPlayerGameLog() {
+        return playerGameLog;
+    }
+
+    public void setPlayerGameLog(PlayerGameLog playerGameLog) {
+        this.playerGameLog = playerGameLog;
     }
 }

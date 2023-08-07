@@ -2,11 +2,10 @@ package controller.game;
 
 import controller.gamelogic.gamestatelogic.GameStateController;
 import model.main_model.Client;
-import model.main_model.entity.item.Item;
+import model.main_model.entity.player.PlayerGameLog;
 import model.main_model.gamestrucure.GameState;
 import model.response.GameOverResponse;
 import util.Config;
-import util.Constant;
 import util.Saver;
 
 import java.util.ArrayList;
@@ -19,22 +18,22 @@ public class Survival extends GameStateController {
 
     public Survival(ArrayList<Client> clients) {
         super(clients);
+
     }
 
 
     private void checkIfEnd() {
-        if(gameState.getRemainingTime() <= 0) {
-            //dude
+        int numOfDeadClients = 0;
+        for (Client client : getClients()) {
+            if (client.getPlayer().getPlayerGameLog().getRemainingLifePercent() <= 0) { // or player is dead boolean
+                numOfDeadClients++;
+            }
+        }
+        if (numOfDeadClients >= getClients().size() - 1) {
+            endOfGame();
         }
     }
 
-    //    @Override
-//    public void run() {
-////        loop;
-//        System.out.println(40);
-////        gameloop =  new Loop(this,60);
-////        gameloop.start();
-//    }
     public void update() {
         super.update();
         for (Client client:getClients()) {
@@ -47,93 +46,97 @@ public class Survival extends GameStateController {
                 }
             }
         }
-        if (getGameState().getCurrentSection().getRemainingTime() <= 0) {
-            //todo : bug player client az aval shro nemikone
-//            endOfGame();
-        }
+        checkIfEnd();
     }
-//    private void endOfGame() {
-//        Score[] scores = sortClientsByScore();
-//        scores = addDiamond(scores);
-//        for (Score score : scores) {
-//            Client client = score.getClient();
-//            client.setScore(client.getScore()+score.getScore());
-//            client.setDiamond(client.getDiamond()+score.getDiamond());
-//            Saver.getSaver().saveUser(client);
-//            if (client.getClientController().isOnline()) {
-//                client.getClientController().sendResponse(new GameOverResponse(
-//                        score.getScore(),score.getDiamond(),"marathon is over"));// game over response
-//                client.getClientController().cleanClientFromGame();
-//            }
-//        }
-//        getLoop().kill();
-//
-//    }
-    private Score[] sortClientsByScore() {
-        Score[] sortedScores = new Score[getClients().size()];
-        for (int i = 0; i < sortedScores.length ; i++) {
-            sortedScores[i] = new Score(getClients().get(i),score(getClients().get(i)));
+    private void endOfGame() {
+        GroupSurvivalScore[] survivalScores = sortClientsByScore();
+        survivalScores = addDiamond(survivalScores);
+        for (GroupSurvivalScore survivalScore : survivalScores) {
+            Client client = survivalScore.getClient();
+            client.setScore(client.getScore()+ survivalScore.getScore());
+            client.setDiamond(client.getDiamond()+ survivalScore.getDiamond());
+            Saver.getSaver().updateClient(client);
+            if (client.getClientController().isOnline()) {
+                client.getClientController().sendResponse(new GameOverResponse(
+                        survivalScore.getScore(), survivalScore.getDiamond(),"survival is over"));// game over response
+                client.getClientController().cleanClientFromGame();
+            }
+        }
+        getLoop().kill();
+    }
+    private GroupSurvivalScore[] sortClientsByScore() {
+        GroupSurvivalScore[] sortedSurvivalScores = new GroupSurvivalScore[getClients().size()];
+        for (int i = 0; i < sortedSurvivalScores.length ; i++) {
+            sortedSurvivalScores[i] = new GroupSurvivalScore(getClients().get(i),score(getClients().get(i)));
 
         }
 
-        for (int i = 0; i < sortedScores.length - 1; i++) {
-            for (int j = 0; j < sortedScores.length- i - 1; j++) {
-                if (sortedScores[j].getScore() < sortedScores[j+1].getScore()) {
-                    Score temp = sortedScores[j];
-                    sortedScores[j] = sortedScores[j+1];
-                    sortedScores[j+1] = temp;
+        for (int i = 0; i < sortedSurvivalScores.length - 1; i++) {
+            for (int j = 0; j < sortedSurvivalScores.length- i - 1; j++) {
+                if (sortedSurvivalScores[j].getScore() < sortedSurvivalScores[j+1].getScore()) {
+                    GroupSurvivalScore temp = sortedSurvivalScores[j];
+                    sortedSurvivalScores[j] = sortedSurvivalScores[j+1];
+                    sortedSurvivalScores[j+1] = temp;
                 }
             }
         }
-        return sortedScores;
+        return sortedSurvivalScores;
     }
     private int score(Client client) {
-//        double distanceFromStart = client.getPlayer().getWorldX() / Constant.BACKGROUND_TILE_SIZE;
-//        // age mord sabt mishe
-//        double lifeTime = 0;
-//        return  (int) (Math.max(lifeTime, minLifeTime) * lifeTimeMultiplier +
-//                Math.max(distanceFromStart, minDistance) * distanceMultiplier);
-        return 0;
+
+        PlayerGameLog playerGameLog = client.getPlayer().getPlayerGameLog();
+        return (int) ((playerGameLog.getTotalDamageDelta() - (100 - playerGameLog.getRemainingLifePercent())) * damageMultiplier - (playerGameLog.getPowerItems()) * equipmentMultiplier) ; // bayad dar execute kardan ha begim
+
     }
-    private Score[] addDiamond(Score[] scores) {
-        int n = getClients().size();
-        for (int i = 0; i < scores.length; i++) {
-            scores[i].setDiamond((int) Math.floor(n/Math.pow(2,i+1)));
+    private GroupSurvivalScore[] addDiamond(GroupSurvivalScore[] survivalScores) {
+        double n = getClients().size();
+        for (int i = 0; i < survivalScores.length; i++) {
+            int delta = -1;
+            if ((i+1)/n <= 1.0/4) {
+                delta = 2;
+            }
+            else if ((i+1)/n <= 1.0/2){
+                delta = 1;
+            }
+            else if ((i+1)/n <= 3.0/4){
+                delta = 0;
+            }
+            survivalScores[i].setDiamond(delta);
         }
-        return scores;
+        return survivalScores;
     }
 }
-//class Score {
-//    private Client client;
-//    private int score;
-//    private int diamond;
-//
-//    public Score(Client client, int score) {
-//        this.client = client;
-//        this.score = score;
-//    }
-//
-//    public Client getClient() {
-//        return client;
-//    }
-//
-//    public void setClient(Client client) {
-//        this.client = client;
-//    }
-//
-//    public int getScore() {
-//        return score;
-//    }
-//
-//    public void setScore(int score) {
-//        this.score = score;
-//    }
-//
-//    public int getDiamond() {
-//        return diamond;
-//    }
-//
-//    public void setDiamond(int diamond) {
-//        this.diamond = diamond;
-//    }
-//}
+class SurvivalScore {
+    private Client client;
+    private int score;
+    private int diamond;
+
+    public SurvivalScore(Client client, int score) {
+        this.client = client;
+        this.score = score;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public int getDiamond() {
+        return diamond;
+    }
+
+    public void setDiamond(int diamond) {
+        this.diamond = diamond;
+    }
+}

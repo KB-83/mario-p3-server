@@ -55,6 +55,7 @@ public class ShopController {
         }
         return true;
     }
+
     private boolean checkBalance(Client client, Bill price) {
         if (client.getCoin() >= price.getCoinCost() && client.getDiamond() >= price.getCoinCost()) {
             return true;
