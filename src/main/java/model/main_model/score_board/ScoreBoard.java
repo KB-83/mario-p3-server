@@ -49,16 +49,20 @@ public class ScoreBoard {
         List<ScoreDTO> scores = new ArrayList<>();
         for (int i = 0;i < clients.size();i++) {
             Client c = clients.get(i);
-            int grade = 0;
-            if (c.getScore() > 0) {
-                //  سطح بازیکن برابر با جزء صحیح لگاریتم مبنای دو امتیازش * levelMultiplier است
-                double log2 = Math.log(c.getScore()) / Math.log(2);
-                grade = (int) (log2 * ShopController.levelMultiplier);
-            }
+            int grade = grade(c);
             scores.add(new ScoreDTO(String.valueOf(i+1),c.getUsername(),
                     String.valueOf(c.getScore()),String.valueOf(grade)));
         }
         scoreBoardDTO.setScoreDTOS(scores);
         return scoreBoardDTO;
+    }
+    public static int grade(Client c) {
+        //  سطح بازیکن برابر با جزء صحیح لگاریتم مبنای دو امتیازش * levelMultiplier است
+        int grade = 0;
+        if (c.getScore() > 0) {
+            double log2 = Math.log(c.getScore()) / Math.log(2);
+            grade = (int) (log2 * ShopController.levelMultiplier);
+        }
+        return grade;
     }
 }

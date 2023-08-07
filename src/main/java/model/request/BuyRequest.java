@@ -4,7 +4,7 @@ import controller.ClientController;
 import controller.connection.RequestVisitor;
 
 public class BuyRequest extends Request{
-    private int hammer,speedPotion,healthPotion, inVisibilityPotion,speedBomb,damageBomb,sward;
+    private int hammer,speedPotion,healthPotion, invisibilityPotion,speedBomb,damageBomb,sward;
 
     public BuyRequest() {
     }
@@ -33,12 +33,12 @@ public class BuyRequest extends Request{
         this.healthPotion = healthPotion;
     }
 
-    public int getInVisibilityPotion() {
-        return inVisibilityPotion;
+    public int getInvisibilityPotion() {
+        return invisibilityPotion;
     }
 
-    public void setInVisibilityPotion(int inVisibilityPotion) {
-        this.inVisibilityPotion = inVisibilityPotion;
+    public void setInvisibilityPotion(int invisibilityPotion) {
+        this.invisibilityPotion = invisibilityPotion;
     }
 
     public int getSpeedBomb() {

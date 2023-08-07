@@ -1,19 +1,18 @@
 package model.main_model;
 
-import java.util.Date;
 
 public class Limitation {
     private int number;
     private int numberPerPlayer;
-    private Date publishDate;
-    private Date endDate;
+    private long publishDate;
+    private long endDate;
     private String moneyUnit;
     private long grade;
 
     public Limitation() {
     }
 
-    public Limitation(int number, int numberPerPlayer, Date publishDate, Date endDate, String moneyUnit, long grade) {
+    public Limitation(int number, int numberPerPlayer, long publishDate, long endDate, String moneyUnit, long grade) {
         this.number = number;
         this.numberPerPlayer = numberPerPlayer;
         this.publishDate = publishDate;
@@ -38,19 +37,19 @@ public class Limitation {
         this.numberPerPlayer = numberPerPlayer;
     }
 
-    public Date getPublishDate() {
+    public long getPublishDate() {
         return publishDate;
     }
 
-    public void setPublishDate(Date publishDate) {
+    public void setPublishDate(long publishDate) {
         this.publishDate = publishDate;
     }
 
-    public Date getEndDate() {
+    public long getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(long endDate) {
         this.endDate = endDate;
     }
 
