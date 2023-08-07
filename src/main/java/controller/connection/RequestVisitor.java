@@ -23,5 +23,8 @@ public interface RequestVisitor {
     void visit(ScoreBoardRequest request, ClientController clientController);
     void visit(SearchTableRequest request, ClientController clientController);
     void visit(SelectBagRequest request, ClientController clientController);
+    void visit(NewPrivateChatRequest request, ClientController clientController);
+    void visit(SearchChatRequest request, ClientController clientController);
+
 }
 

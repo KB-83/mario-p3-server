@@ -58,7 +58,9 @@ public class Loader {
         }
 
         if (password.equals(client.getPassword())) {
-            clientController.sendResponse(new SignInLoginResponse(client, true, ""));
+            if (clientController != null) {//test
+                clientController.sendResponse(new SignInLoginResponse(client, true, ""));
+            }
             return client;
         } else {
             clientController.sendResponse(new SignInLoginResponse(client, false, "Password is wrong."));

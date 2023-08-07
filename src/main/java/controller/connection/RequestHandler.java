@@ -17,6 +17,8 @@ import model.main_model.room.Room;
 import model.main_model.score_board.ScoreBoard;
 import model.request.*;
 import model.response.*;
+import org.hibernate.PropertyValueException;
+import util.ChatDAO;
 import util.Config;
 import util.Loader;
 import util.Saver;
@@ -93,7 +95,7 @@ public class RequestHandler implements RequestVisitor {
     public void visit(FinalBuyRequest request, ClientController clientController) {
         ShopController.getInstance().finalBuyRequest(request,clientController);
         Client client = clientController.getClient();
-        clientController.sendResponse(new ClientUpdateResponse(client.getCoin(),client.getDiamond()));
+        clientController.sendResponse(new ClientUpdateResponse(client.getCoin(),client.getDiamond(),null));
     }
 
     @Override
@@ -119,6 +121,52 @@ public class RequestHandler implements RequestVisitor {
         else {
             clientController.sendResponse(new DialogResponse("not enough item!"));
         }
+    }
+
+    @Override
+    public void visit(NewPrivateChatRequest request, ClientController clientController) {
+        Chat chat = new Chat();
+        chat.setOpponentUsername(request.getOpponentName());
+        Client client = clientController.getClient();
+        ArrayList<Massage> massages = new ArrayList<>();
+        chat.setMassages(massages);
+        client.getChats().add(chat);
+        chat.setClient(client);
+        Saver.getSaver().updateClient(client);
+        clientController.sendResponse(
+                new ClientUpdateResponse(client.getCoin(),client.getDiamond(),client.getChats()));
+
+        boolean isOpponentOnline = false;
+        Client opponent = null;
+        if (Config.ONLINE_CLIENTS.containsKey(request.getOpponentName())) {
+            opponent = Config.ONLINE_CLIENTS.get(request.getOpponentName());
+            isOpponentOnline = true;
+        }
+        else {
+            opponent = Config.CLIENTS.get(request.getOpponentName());
+        }
+        chat = new Chat();
+        chat.setMassages(new ArrayList<>());
+        chat.setOpponentUsername(clientController.getClient().getUsername());
+        if (opponent.getChats() == null) {
+            opponent.setChats(new ArrayList<>());
+        }
+        opponent.getChats().add(chat);
+        //for db
+        chat.setClient(opponent);
+        //
+        Saver.getSaver().updateClient(opponent);
+        if (isOpponentOnline) {
+            opponent.getClientController().sendResponse(
+                    new ClientUpdateResponse(opponent.getCoin(),opponent.getDiamond(),opponent.getChats()));
+        }
+    }
+
+    @Override
+    public void visit(SearchChatRequest request, ClientController clientController) {
+        ArrayList<String> usernames = ChatDAO.userNamesList(
+                clientController.getClient().getUsername(),request.getUsername());
+        clientController.sendResponse(new ChatSearchResponse(usernames));
     }
 
     @Override
@@ -213,6 +261,12 @@ public class RequestHandler implements RequestVisitor {
             return;
         }
         Massage massage = new Massage(senderUsername,opponent.getUsername(),request.getMassage().getContext());
+        if (Config.ONLINE_CLIENTS.containsKey(opponent.getUsername())) {
+            opponent = Config.ONLINE_CLIENTS.get(opponent.getUsername());
+        }
+        else {
+            opponent = Loader.getLoader().loadClient(opponent.getUsername(), opponent.getPassword(), null);
+        }
         Chat opponentChat = null;
         if (didChatBefore) {
             clientChat.getMassages().add(massage);
@@ -241,7 +295,16 @@ public class RequestHandler implements RequestVisitor {
         //client ha save mishan
         System.out.println("send pm request");
         Saver.getSaver().addMassageToChat(clientChat,massage);
-        Saver.getSaver().addMassageToChat(opponentChat,massage);
+        try {
+            Saver.getSaver().addMassageToChat(opponentChat,massage);
+        }
+        catch (PropertyValueException e) {
+            System.out.println(massage);
+            System.out.println(opponentChat);;
+            System.out.println(opponent.getUsername());
+            e.printStackTrace();
+        }
+
 //        Saver.getSaver().updateClient(clientController.getClient());
 //        Saver.getSaver().updateClient(opponent);
 //        va dobare toyr oon response send mishan

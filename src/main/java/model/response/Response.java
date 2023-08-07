@@ -16,6 +16,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
         @JsonSubTypes.Type(value = DialogResponse.class),
         @JsonSubTypes.Type(value = RoomUpdateResponse.class),
         @JsonSubTypes.Type(value = RoomCloseResponse.class),
+        @JsonSubTypes.Type(value = ChatSearchResponse.class),
         @JsonSubTypes.Type(value = ClientUpdateResponse.class),
         @JsonSubTypes.Type(value = GameStartResponse.class)
 
