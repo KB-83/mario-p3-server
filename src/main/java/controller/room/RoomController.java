@@ -9,10 +9,7 @@ import model.main_model.chat.Massage;
 import model.main_model.room.Room;
 import model.main_model.room.Viewer;
 import model.request.SendPMRequest;
-import model.response.GameStartResponse;
-import model.response.NewPMResponse;
-import model.response.RoomChatUpdateResponse;
-import model.response.RoomUpdateResponse;
+import model.response.*;
 import util.Config;
 import util.Saver;
 
@@ -28,6 +25,7 @@ public class RoomController {
 
     public void addViewer (String username) {
         Client client = Config.findOnlineClientByUserName(username);
+        client.setCurrentRoom(room);
 //        Viewer viewer = new Viewer();
 //        viewer.setClientController(client.getClientController());
 //        viewer.setUsername(client.getUsername());
@@ -36,13 +34,20 @@ public class RoomController {
     }
     public void addPLayer(String username) {
         Client client = Config.findOnlineClientByUserName(username);
+        client.setCurrentRoom(room);
         room.getPlayers().add(client);
         room.getClients().add(client);
     }
     private void showChat() {}
-    private void closeRoom() {}
+    public void closeRoom(String massage) {
+        for (Client client : room.getClients()) {
+            client.getClientController().sendResponse(new RoomCloseResponse(massage));
+            client.setCurrentRoom(null);
+        }
+        RoomsManager.getRooms().remove(room);
+    }
     private void managerLeft() {
-        closeRoom();
+        closeRoom("room's manager left :(");
     }
     private void clientLeft() {}
     public Room getRoom() {
@@ -57,13 +62,14 @@ public class RoomController {
 //            gameState = GA
         }
         else {
-            room.setGameStateController(GameStateManagerCreator.createSurvival(room.getClients()));
+            room.setGameStateController(GameStateManagerCreator.createMarathon(room.getClients()));
 //            GameStateController gameStateController = new GroupSurvival(room.getClients(),); todo :do team one team two
         }
         room.getGameStateController().startGameState();
-        for (Client client : room.getClients()) {
-            client.getClientController().sendResponse(new GameStartResponse(client.getCurrentGameStateDTO(),client.getPlayerDTO()));
-        }
+        //bug
+//        for (Client client : room.getClients()) {
+//            client.getClientController().sendResponse(new GameStartResponse(client.getCurrentGameStateDTO(),client.getPlayerDTO()));
+//        }
     }
     public void updateClientsRoom() {
         RoomDTO roomDTO = new RoomDTO();

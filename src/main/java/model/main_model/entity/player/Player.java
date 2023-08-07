@@ -33,6 +33,8 @@ public abstract class Player extends Entity {
 //    private PlayerRequestHandler playerRequestHandler;
     @JsonIgnore
     private PlayerController playerController;
+    @JsonIgnore
+    private double vXMeasure = V.Mario.getV();
 
     public Player(String name,String[] selectedBag) {
         playerGameLog = new PlayerGameLog();
@@ -171,4 +173,13 @@ public abstract class Player extends Entity {
     public void setPlayerGameLog(PlayerGameLog playerGameLog) {
         this.playerGameLog = playerGameLog;
     }
+
+    public double getVXMeasure() {
+        return vXMeasure;
+    }
+
+    public void setVXMeasure(double vXMeasure) {
+        this.vXMeasure = vXMeasure;
+    }
+
 }

@@ -3,8 +3,10 @@ package controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import controller.connection.RequestHandler;
+import controller.room.RoomsManager;
 import model.main_model.Client;
 import model.main_model.entity.player.V;
+import model.main_model.room.Room;
 import model.request.Request;
 import model.response.Response;
 import util.Config;
@@ -68,9 +70,7 @@ public class ClientController extends Thread{
             System.out.println("json mapping problem");
             throw new RuntimeException(e);
         } catch (IOException | IllegalArgumentException e) {
-            isOnline = false;
-            Config.ONLINE_CLIENTS.remove(client.getUsername(),client);
-            System.out.println("client "+ socket.getInetAddress().toString()+" disconnected");
+            disconnectClient();
         }
     }
 
@@ -88,5 +88,23 @@ public class ClientController extends Thread{
         client.setPlayerDTO(null);
         client.setPlayer(null);
         client.setSelectedBag(null);
+    }
+    private void disconnectClient() {
+        isOnline = false;
+        if (client != null) {
+            Config.ONLINE_CLIENTS.remove(client.getUsername(), client);
+            if (client.getCurrentRoom() != null) {
+                if (client.equals(client.getCurrentRoom().getManager())) {
+                    client.getCurrentRoom().getRoomController().closeRoom("Room's Manager Left :(");
+                }
+                else {
+                    Room room = client.getCurrentRoom();
+                    room.getClients().remove(client);
+                    room.getRoomController().updateClientsRoom();
+                }
+
+            }
+        }
+        System.out.println("client "+ socket.getInetAddress().toString()+" disconnected");
     }
 }

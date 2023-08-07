@@ -5,6 +5,7 @@ import controller.connection.RequestVisitor;
 
 public class RoomGameStartRequest extends Request{
     private boolean isFromRoomManager;
+    private String token;
 
     public RoomGameStartRequest() {
     }
@@ -18,5 +19,13 @@ public class RoomGameStartRequest extends Request{
 
     public void setFromRoomManager(boolean fromRoomManager) {
         isFromRoomManager = fromRoomManager;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

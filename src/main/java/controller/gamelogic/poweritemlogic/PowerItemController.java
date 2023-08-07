@@ -32,7 +32,12 @@ public class PowerItemController {
         ItemShooter.getInstance().throwIt(powerItem,200,200);
     }
     public void execute(){
-        owner.setActivePowerItem(null);
-        powerItem.setDuringShoot(false);
+        if (powerItem.getItemExecutor() != null) {
+            powerItem.getItemExecutor().execute(owner);
+        }
+        else {
+            owner.setActivePowerItem(null);
+            powerItem.setDuringShoot(false);
+        }
     }
 }

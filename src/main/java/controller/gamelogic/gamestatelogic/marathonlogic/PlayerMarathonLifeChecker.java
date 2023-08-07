@@ -23,8 +23,8 @@ public class PlayerMarathonLifeChecker extends PlayerLifeChecker {
     public void update() {
         super.update();
         if (System.currentTimeMillis() - lastKickTime > Marathon.periodSlowDown * 1000 && lastKickTime != 0) {
-            player.getPlayerController().getPlayerRequestHandler().setV(V.Mario.getV());
-            player.setVX(V.Mario.getV());
+            player.setVXMeasure(V.Mario.getV());//todo : toye loop nabashe
+            player.setVX(player.getVXMeasure());
         }
     }
 
@@ -47,8 +47,8 @@ public class PlayerMarathonLifeChecker extends PlayerLifeChecker {
     @Override
     public void kickPlayer() {
         if (System.currentTimeMillis() - lastKickTime > Marathon.periodSlowDown * 1000) {
-            player.getPlayerController().getPlayerRequestHandler().setV((int) (V.Mario.getV()  * Marathon.multiplierSlowDown));
-            player.setVX(V.Mario.getV() * Marathon.multiplierSlowDown);
+            player.setVXMeasure((int) (V.Mario.getV()  * Marathon.multiplierSlowDown));
+            player.setVX(player.getVXMeasure());
             lastKickTime = System.currentTimeMillis();
         }
         if (!player.isFire() && !player.isMega()) {

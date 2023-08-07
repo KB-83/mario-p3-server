@@ -80,7 +80,8 @@ public class RequestHandler implements RequestVisitor {
     @Override
     public void visit(RoomGameStartRequest request, ClientController clientController) {
         //test har otaghi hasto start kon
-        RoomsManager.getRooms().get(0).getRoomController().startGame();
+        RoomsManager.getRoomByToken(request.getToken()).getRoomController().startGame();
+//        RoomsManager.getRooms().remove() age pause nadash pak mishe haminja
     }
 
     @Override
@@ -90,7 +91,6 @@ public class RequestHandler implements RequestVisitor {
 
     @Override
     public void visit(FinalBuyRequest request, ClientController clientController) {
-        System.out.println("final buy request");
         ShopController.getInstance().finalBuyRequest(request,clientController);
         Client client = clientController.getClient();
         clientController.sendResponse(new ClientUpdateResponse(client.getCoin(),client.getDiamond()));

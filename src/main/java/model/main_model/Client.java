@@ -7,6 +7,7 @@ import model.dto.game.GameStateDTO;
 import model.main_model.entity.player.Player;
 import model.main_model.gamestrucure.GameState;
 import model.main_model.chat.Chat;
+import model.main_model.room.Room;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -63,7 +64,8 @@ public class Client {
     private ClientController clientController;
     @JsonIgnore
     @Transient
-    private Chat roomChat;// or room
+    private Room currentRoom;
+
 //    todo : maybe in feature going to add multiplie players
 //    private Player[] players;
     @JsonIgnore
@@ -191,5 +193,13 @@ public class Client {
 
     public void setSelectedBag(String[] selectedBag) {
         this.selectedBag = selectedBag;
+    }
+
+    public Room getCurrentRoom() {
+        return currentRoom;
+    }
+
+    public void setCurrentRoom(Room currentRoom) {
+        this.currentRoom = currentRoom;
     }
 }

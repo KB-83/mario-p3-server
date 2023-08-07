@@ -1,8 +1,8 @@
 package controller.room;
 
 import controller.ClientController;
+import model.main_model.Client;
 import model.main_model.chat.Chat;
-import model.main_model.room.Manager;
 import model.main_model.room.Room;
 import model.main_model.room.TokenGenerator;
 import model.request.CreateRoomRequest;
@@ -23,8 +23,9 @@ public class RoomsManager {
 //    }
     private RoomsManager() {}
     public static void createRoom(CreateRoomRequest createRoomRequest, ClientController clientController){
-        Manager manager = new Manager();
-        manager.setClientController(clientController);
+//        Client manager = new Manager();
+//        manager.setClientController(clientController);
+        Client manager = clientController.getClient();
         Room room = new Room(manager, TokenGenerator.generateRandomToken()); // bayad check beshe yski nabashe
         Chat chat = new Chat();
         chat.setOpponentUsername(room.getToken());
@@ -32,8 +33,8 @@ public class RoomsManager {
         RoomController roomController = new RoomController(room);
         room.setRoomController(roomController);
         room.setChat(chat);
-        manager.setRoom(room);
-        manager.setManagerController(new ManagerController(manager));
+//        manager.setRoom(room);
+//        manager.setManagerController(new ManagerController(manager));
 //        room.seRoomController
         rooms.add(room);
         RoomResponse roomResponse = new RoomResponse(room.getToken());
@@ -62,5 +63,12 @@ public class RoomsManager {
     public static ArrayList<Room> getRooms() {
         return rooms;
     }
-
+    public static Room getRoomByToken(String token) {
+        for (Room room : rooms) {
+            if (room.getToken().equals(token)) {
+                return room;
+            }
+        }
+        return null;
+    }
 }

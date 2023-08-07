@@ -24,6 +24,7 @@ public class Room {
         this.token = token;
         /////// bug take it
         clients.add(manager);
+        manager.setCurrentRoom(this);
         chat = new Chat();
         chat.setOpponentUsername(token);
     }
