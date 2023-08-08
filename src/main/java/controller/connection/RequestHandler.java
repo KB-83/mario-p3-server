@@ -17,8 +17,7 @@ import model.main_model.room.Room;
 import model.main_model.score_board.ScoreBoard;
 import model.request.*;
 import model.response.*;
-import org.hibernate.PropertyValueException;
-import util.ChatDAO;
+import util.ChatsManager;
 import util.Config;
 import util.Loader;
 import util.Saver;
@@ -125,46 +124,12 @@ public class RequestHandler implements RequestVisitor {
 
     @Override
     public void visit(NewPrivateChatRequest request, ClientController clientController) {
-        Chat chat = new Chat();
-        chat.setOpponentUsername(request.getOpponentName());
-        Client client = clientController.getClient();
-        ArrayList<Massage> massages = new ArrayList<>();
-        chat.setMassages(massages);
-        client.getChats().add(chat);
-        chat.setClient(client);
-        Saver.getSaver().updateClient(client);
-        clientController.sendResponse(
-                new ClientUpdateResponse(client.getCoin(),client.getDiamond(),client.getChats()));
-
-        boolean isOpponentOnline = false;
-        Client opponent = null;
-        if (Config.ONLINE_CLIENTS.containsKey(request.getOpponentName())) {
-            opponent = Config.ONLINE_CLIENTS.get(request.getOpponentName());
-            isOpponentOnline = true;
-        }
-        else {
-            opponent = Config.CLIENTS.get(request.getOpponentName());
-        }
-        chat = new Chat();
-        chat.setMassages(new ArrayList<>());
-        chat.setOpponentUsername(clientController.getClient().getUsername());
-        if (opponent.getChats() == null) {
-            opponent.setChats(new ArrayList<>());
-        }
-        opponent.getChats().add(chat);
-        //for db
-        chat.setClient(opponent);
-        //
-        Saver.getSaver().updateClient(opponent);
-        if (isOpponentOnline) {
-            opponent.getClientController().sendResponse(
-                    new ClientUpdateResponse(opponent.getCoin(),opponent.getDiamond(),opponent.getChats()));
-        }
+        ChatsManager.visitNewPrivateChatRequest(request, clientController);
     }
 
     @Override
     public void visit(SearchChatRequest request, ClientController clientController) {
-        ArrayList<String> usernames = ChatDAO.userNamesList(
+        ArrayList<String> usernames = ChatsManager.userNamesList(
                 clientController.getClient().getUsername(),request.getUsername());
         clientController.sendResponse(new ChatSearchResponse(usernames));
     }
@@ -240,80 +205,7 @@ public class RequestHandler implements RequestVisitor {
 
     @Override
     public void visit(SendPMRequest request, ClientController clientController) {
-        String senderUsername = clientController.getClient().getUsername();
-        boolean didChatBefore = false;
-        Chat clientChat = null;
-        for (Chat chat : clientController.getClient().getChats()) {
-            if (chat.getOpponentUsername().equals(request.getMassage().getReceiverUsername())) {
-                didChatBefore = true;
-                clientChat = chat;
-                break;
-            }
-        }
-        Client opponent = Config.CLIENTS.get(request.getMassage().getReceiverUsername());
-        if (opponent == null) {
-            for (Room room : RoomsManager.getRooms()) {
-                if (room.getToken().equals(request.getMassage().getReceiverUsername())) {
-                    room.getRoomController().newPM(request);
-                    return;
-                }
-            }
-            return;
-        }
-        Massage massage = new Massage(senderUsername,opponent.getUsername(),request.getMassage().getContext());
-        if (Config.ONLINE_CLIENTS.containsKey(opponent.getUsername())) {
-            opponent = Config.ONLINE_CLIENTS.get(opponent.getUsername());
-        }
-        else {
-            opponent = Loader.getLoader().loadClient(opponent.getUsername(), opponent.getPassword(), null);
-        }
-        Chat opponentChat = null;
-        if (didChatBefore) {
-            clientChat.getMassages().add(massage);
-            for (Chat chat : opponent.getChats()) {
-                if (chat.getOpponentUsername().equals(clientController.getClient().getUsername())) {
-                   chat.getMassages().add(massage);
-                   opponentChat = chat;
-                   break;
-                }
-            }
-        }
-        else {
-            Chat chat = new Chat();
-            chat.setOpponentUsername(request.getMassage().getReceiverUsername());
-            ArrayList<Massage> massages = new ArrayList<>();
-            massages.add(new Massage(senderUsername,opponent.getUsername(),request.getMassage().getContext()));
-            chat.setMassages(massages);
-            clientController.getClient().getChats().add(chat);
-            chat.setOpponentUsername(clientController.getClient().getUsername());
-            massages.get(0).setSenderUsername(senderUsername);
-            //add room chat //todo
-            opponent.getChats().add(chat);
-        }
-        // bara dotashoon be private chathashoon add mishe
-        // in sakhte
-        //client ha save mishan
-        System.out.println("send pm request");
-        Saver.getSaver().addMassageToChat(clientChat,massage);
-        try {
-            Saver.getSaver().addMassageToChat(opponentChat,massage);
-        }
-        catch (PropertyValueException e) {
-            System.out.println(massage);
-            System.out.println(opponentChat);;
-            System.out.println(opponent.getUsername());
-            e.printStackTrace();
-        }
-
-//        Saver.getSaver().updateClient(clientController.getClient());
-//        Saver.getSaver().updateClient(opponent);
-//        va dobare toyr oon response send mishan
-        if (Config.ONLINE_CLIENTS.containsKey(opponent.getUsername())) {
-            Config.ONLINE_CLIENTS.get(opponent.getUsername()).setChats(opponent.getChats());
-            opponent = Config.ONLINE_CLIENTS.get(opponent.getUsername());
-            opponent.getClientController().sendResponse(new NewPMResponse(new Massage(senderUsername, opponent.getUsername(),request.getMassage().getContext()),clientController.getClient().getUsername(),opponent.getChats()));
-        }
-        clientController.sendResponse(new NewPMResponse(new Massage(senderUsername,opponent.getUsername(),request.getMassage().getContext()),"",clientController.getClient().getChats()));// bara khodesh
+        ChatsManager.visitNewPmRequest(request,clientController);
 
     }
 
