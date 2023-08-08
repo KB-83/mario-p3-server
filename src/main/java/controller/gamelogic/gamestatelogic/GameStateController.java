@@ -70,45 +70,6 @@ public class GameStateController extends Thread{
 //
 
     }
-    public void nextSection() {
-        if(gameState.getSectionNumber() < gameState.getLevels()[gameState.getLevelNumber()-1].getSections().length) {
-            gameState.setCurrentSection(gameState.getLevels()[gameState.getLevelNumber() - 1].getSections()[gameState.getSectionNumber() - 1 + 1]);
-            gameState.setSectionNumber(gameState.getSectionNumber() + 1);
-            gameState.setRemainingTime(gameState.getCurrentSection().getTime());
-//            gameState.getMario().setCameraX(0);
-//            gameState.getMario().setWorldX(0);
-            //todo : test
-//            clients.get(0).getPlayer().setCameraX(0);
-//            clients.get(0).getPlayer().setWorldX(0);
-            //todo : test
-
-        }
-        else {
-            changeLevel();
-        }
-    }
-    public void changeSection(Section section,int sectionNumber) {
-//        section.setStartTime(System.currentTimeMillis());
-        gameState.setCurrentSection(section);
-        gameState.setSectionNumber(sectionNumber);
-        gameState.setRemainingTime(gameState.getCurrentSection().getTime());
-        //todo : test
-//        clients.get(0).getPlayer().setCameraX(0);
-//        clients.get(0).getPlayer().setWorldX(0);
-        //todo : test
-
-//        gameState.getMario().setCameraX(0);
-//        gameState.getMario().setWorldX(0);
-    }
-    private void changeLevel() {
-        if(gameState.getLevelNumber() < gameState.getLevels().length) {
-            gameState.setCurrentLevel(gameState.getLevels()[gameState.getLevelNumber() - 1+1]);
-            gameState.setLevelNumber(gameState.getLevelNumber()+1);
-            changeSection(gameState.getCurrentLevel().getSections()[0],1 );
-
-        }
-        System.out.println("you won");
-    }
     public GameState createGameState(Game game) {
         Game game1 = GameCloner.cloneGame(game);
         GameState gameState = new GameState(this);
@@ -151,7 +112,6 @@ public class GameStateController extends Thread{
         gameState.setMarioStartState(game.getMarioState());
         // buged line
         gameState.getCurrentSection().setRemainingTime(gameState.getCurrentSection().getTime());
-        gameState.setRemainingTime(gameState.getCurrentSection().getTime());
     }
     private void setControllersGameState(GameState gameState,Section section){
         if (section.getEnemies() != null) {

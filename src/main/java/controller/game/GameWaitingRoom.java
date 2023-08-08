@@ -25,9 +25,12 @@ public class GameWaitingRoom {
     private ArrayList<Client> marathonClients = new ArrayList<>();
     private ArrayList<Client> groupSurvivalClients = new ArrayList<>();
     private ArrayList<Client> survivalClients = new ArrayList<>();
+    private ArrayList<Client> groupGameClients = new ArrayList<>();
     private Timer marathonTimer;
     private Timer survivalTimer;
     private Timer groupSurvivalTimer;
+    private Timer groupGameTimer;
+
     private static GameWaitingRoom gameWaitingRoom;
     private List<Marathon> marathons;
     private List<Survival> survivals;
@@ -37,6 +40,7 @@ public class GameWaitingRoom {
         setMarathonTimer();
         setSurvivalTimer();
         setGroupSurvivalTimer();
+        setGroupGameTimer();
     }
     public static GameWaitingRoom getInstance() {
         if (gameWaitingRoom == null) {
@@ -134,6 +138,48 @@ public class GameWaitingRoom {
             groupSurvivalTimer.start();
         }
     }
+    public void groupGameClient(Client client) {
+        if (groupGameClients.size() < 8) {
+            groupGameClients.add(client);
+        }
+        else {
+            //todo : do it better it is just a test
+//            Game game = Config.ONLINE_GAMES.get("survival");
+//            int num = groupSurvivalClients.size() / 2;
+//
+//            ArrayList<Client> team1 = new ArrayList<>();
+//            ArrayList<Client> team2 = new ArrayList<>();
+//            for (int i = 0;i<num;i++){
+//                team1.add(groupSurvivalClients.get(2 * i));
+//                team2.add(groupSurvivalClients.get((2 * i) + 1 ));
+//            }
+//            //            todo : reject extra
+//
+//            if (groupSurvivalClients.size() % 2 == 1) {
+//                groupSurvivalClients.remove(groupSurvivalClients.size() - 1);
+//            }
+//
+//            GroupSurvival groupSurvival = new GroupSurvival(groupSurvivalClients,team1,team2);
+//            GameState gameState = groupSurvival.createGameState(game);
+//            //todo : test too
+//            client.getPlayer().setPlayerController(new PlayerController(gameState, client.getPlayer(),"groupSurvival"));
+//
+//            groupSurvivals.add(groupSurvival);
+//
+//
+//
+//            startAGame(survivalClients,DTOCreator.createGameStateDTO(gameState),gameState,"groupSurvival");
+//            groupSurvival.start();
+//            //todo : clone it
+//            groupSurvivalClients = new ArrayList<>();
+//            groupSurvivalTimer.stop();
+//            // start game
+        }
+        if (groupGameClients.size() == 1) {
+            groupGameTimer.start();
+        }
+    }
+
 
 
     public void setMarathonTimer() {
@@ -189,6 +235,26 @@ public class GameWaitingRoom {
                     //send no online user to the client
                 }
                 groupSurvivalTimer.stop();
+            }
+        });
+    }
+    public void setGroupGameTimer() {
+        groupGameTimer = new Timer(5000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(groupGameClients.size() >= 1) {
+                    //start game
+
+                    GroupGame groupGame = GameStateManagerCreator.createGroupGame(groupGameClients);
+
+                    groupGame.startGameState();
+                    //todo : clone it
+                    groupGameClients = new ArrayList<>();
+                }
+                else if (groupGameClients.size() == 1) {
+                    //send no online user to the client
+                }
+                groupGameTimer.stop();
             }
         });
     }

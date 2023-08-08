@@ -17,13 +17,13 @@ public class PlayerMovementHandler {
     public void updatePlayerPosition() {
         if (player.getWorldX() >= (gameState.getCurrentSection().getLength() * Constant.BACKGROUND_TILE_SIZE)
                 - player.getWidth() - Constant.BACKGROUND_TILE_SIZE){
-            if (gameState.getCurrentSection().getClass().getSimpleName().equals("TeleSection")) {
+            if (gameState.getCurrentSection().getClass().getSimpleName().equals("TeleSection") || player.getVX() < 0) {
                 if (player.getVX() > 0){
                     player.setVX(0);
                 }
             }
             else {
-                gameState.getGameStateController().nextSection();
+                player.getPlayerController().getPlayerRequestHandler().nextSection();
                 return;
             }
         }

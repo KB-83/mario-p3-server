@@ -40,7 +40,6 @@ public class GameState {
     private int coins;
     private int score;
     private int remainingHeart;
-    private int remainingTime;
     @JsonIgnore
     private boolean isPaused;
     @JsonIgnore
@@ -132,14 +131,6 @@ public class GameState {
 
     public void setRemainingHeart(int remainingHeart) {
         this.remainingHeart = remainingHeart;
-    }
-
-    public int getRemainingTime() {
-        return remainingTime;
-    }
-
-    public void setRemainingTime(int remainingTime) {
-        this.remainingTime = remainingTime;
     }
 
     public boolean isPaused() {

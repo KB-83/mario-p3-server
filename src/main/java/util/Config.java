@@ -58,6 +58,7 @@ public class Config extends Properties {
         ONLINE_GAMES.put("marathon",Loader.getLoader().loadGame("Marathon"));
         ONLINE_GAMES.put("survival",Loader.getLoader().loadGame("Survival"));
         ONLINE_GAMES.put("group_survival",Loader.getLoader().loadGame("group_survival"));
+        ONLINE_GAMES.put("group_game",Loader.getLoader().loadGame("default"));
     }
     private static void loadClients() {
         try (Session session = HibernateUtil.getSession()) {

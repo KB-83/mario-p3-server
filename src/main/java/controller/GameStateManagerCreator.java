@@ -1,5 +1,6 @@
 package controller;
 
+import controller.game.GroupGame;
 import controller.game.GroupSurvival;
 import controller.game.Marathon;
 import controller.game.Survival;
@@ -33,6 +34,13 @@ public class GameStateManagerCreator {
         startAGame(survivalClients, DTOCreator.createGameStateDTO(gameState),gameState,"survival");
         return survival;
     }
+    public static GroupGame createGroupGame(ArrayList<Client> groupGameClients) {
+        Game game = Config.ONLINE_GAMES.get("group_game");//todo : it can be a hash map by game names.
+        GroupGame groupGame = new GroupGame(groupGameClients);
+        GameState gameState = groupGame.createGameState(game);
+        startAGame(groupGameClients, DTOCreator.createGameStateDTO(gameState),gameState,"groupGame");
+        return groupGame;
+    }
     public static GroupSurvival createGroupSurvival(ArrayList<Client> groupSurvivalClients) {
         int num = groupSurvivalClients.size()/2;
         ArrayList<Client> team1 = new ArrayList<>();
@@ -63,7 +71,7 @@ public class GameStateManagerCreator {
                     client.getPlayer().setFire(true);
                     break;
             }
-            client.getPlayer().setPlayerController(new PlayerController(gameState, client.getPlayer(),gameStateType));
+            client.getPlayer().setPlayerController(new PlayerController(client,gameState, client.getPlayer(),gameStateType));
             client.setCurrentGameStateDTO(gameStateDTO);
             client.setCurrentGameState(gameState);
             PlayerDTO playerDTO = DTOCreator.createPlayerDTO(client.getPlayer());

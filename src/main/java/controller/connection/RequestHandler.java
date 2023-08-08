@@ -72,6 +72,10 @@ public class RequestHandler implements RequestVisitor {
     public void visit(GroupSurvivalRequest request, ClientController clientController) {
         GameWaitingRoom.getInstance().groupSurvivalClient(clientController.getClient());
     }
+    @Override
+    public void visit(GroupGameRequest request, ClientController clientController) {
+        GameWaitingRoom.getInstance().groupGameClient(clientController.getClient());
+    }
 
     @Override
     public void visit(CreateRoomRequest request, ClientController clientController) {

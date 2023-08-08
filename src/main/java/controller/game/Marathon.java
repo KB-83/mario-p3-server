@@ -25,7 +25,7 @@ public class Marathon extends GameStateController{
         super(clients);
     }
     private void checkIfEnd() {
-        if(gameState.getRemainingTime() <= 0) {
+        if(gameState.getCurrentSection().getRemainingTime() <= 0) {
             //dude
         }
     }
@@ -55,9 +55,9 @@ public class Marathon extends GameStateController{
         }
     }
     private void endOfGame() {
-        GroupSurvivalScore[] scores = sortClientsByScore();
+        Score[] scores = sortClientsByScore();
         scores = addDiamond(scores);
-        for (GroupSurvivalScore score : scores) {
+        for (Score score : scores) {
             Client client = score.getClient();
             client.setScore(client.getScore()+score.getScore());
             client.setDiamond(client.getDiamond()+score.getDiamond());
@@ -71,17 +71,17 @@ public class Marathon extends GameStateController{
         getLoop().kill();
 
     }
-    private GroupSurvivalScore[] sortClientsByScore() {
-        GroupSurvivalScore[] sortedScores = new GroupSurvivalScore[getClients().size()];
+    private Score[] sortClientsByScore() {
+        Score[] sortedScores = new Score[getClients().size()];
         for (int i = 0; i < sortedScores.length ; i++) {
-            sortedScores[i] = new GroupSurvivalScore(getClients().get(i),score(getClients().get(i)));
+            sortedScores[i] = new Score(getClients().get(i),score(getClients().get(i)));
 
         }
 
         for (int i = 0; i < sortedScores.length - 1; i++) {
             for (int j = 0; j < sortedScores.length- i - 1; j++) {
                 if (sortedScores[j].getScore() < sortedScores[j+1].getScore()) {
-                    GroupSurvivalScore temp = sortedScores[j];
+                    Score temp = sortedScores[j];
                     sortedScores[j] = sortedScores[j+1];
                     sortedScores[j+1] = temp;
                 }
@@ -96,7 +96,7 @@ public class Marathon extends GameStateController{
         return  (int) (Math.max(lifeTime, minLifeTime) * lifeTimeMultiplier +
                         Math.max(distanceFromStart, minDistance) * distanceMultiplier);
     }
-    private GroupSurvivalScore[] addDiamond(GroupSurvivalScore[] scores) {
+    private Score[] addDiamond(Score[] scores) {
         int n = getClients().size();
         for (int i = 0; i < scores.length; i++) {
             scores[i].setDiamond((int) Math.floor(n/Math.pow(2,i+1)));

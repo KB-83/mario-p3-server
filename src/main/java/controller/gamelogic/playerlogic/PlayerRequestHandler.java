@@ -14,6 +14,8 @@ import model.main_model.entity.player.V;
 import model.main_model.entity.power_item.*;
 import model.main_model.gamestrucure.GameState;
 import model.main_model.gamestrucure.gameworldoption.Gravity;
+import model.main_model.levelstructure.Section;
+import model.response.GameOverResponse;
 import util.Constant;
 import util.Saver;
 
@@ -22,6 +24,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public abstract class PlayerRequestHandler {
+    private Client client;
     private Player player;
     private GameState gameState;
     private int counter;
@@ -33,7 +36,8 @@ public abstract class PlayerRequestHandler {
     private int jumpStartY;
     //todo: behtareh inaro be logic game pass bede
 
-    public PlayerRequestHandler(GameState gameState,Player player) {
+    public PlayerRequestHandler(GameState gameState,Player player,Client client) {
+        this.client = client;
         this.player = player;
 //        player.setPlayerRequestHandler(this);
         this.gameState = gameState;
@@ -122,16 +126,16 @@ public abstract class PlayerRequestHandler {
 //            sound.setSound("TELE_PIPE");
 //            sound.play();
             if (s.equals("TelePlantPipe")) {
-                gameState.getGameStateController().changeSection(((TelePlantPipe) pipe).getTeleSection(),gameState.getSectionNumber());
+                changeSection(((TelePlantPipe) pipe).getTeleSection(),gameState.getSectionNumber());
             }
             else if(s.equals("SimpleTelePipe")) {
-                gameState.getGameStateController().changeSection(((SimpleTelePipe) pipe).getTeleSection(),gameState.getSectionNumber());
+                changeSection(((SimpleTelePipe) pipe).getTeleSection(),gameState.getSectionNumber());
             }
             else if(s.equals("SimpleSpawnPipe")) {
-                gameState.getGameStateController().changeSection(((SimpleSpawnPipe) pipe).getSection(),gameState.getSectionNumber());
+                changeSection(((SimpleSpawnPipe) pipe).getSection(),gameState.getSectionNumber());
             }
             else if(s.equals("SpawnPlantPipe")) {
-                gameState.getGameStateController().changeSection(((SpawnPlantPipe) pipe).getSection(),gameState.getSectionNumber());
+                changeSection(((SpawnPlantPipe) pipe).getSection(),gameState.getSectionNumber());
             }
         }
         player.setWorldY(player.getWorldY()+10);
@@ -288,6 +292,36 @@ public abstract class PlayerRequestHandler {
         else {
             player.setImageAddress("mario"+s);
         }
+    }
+
+    public void nextSection() {
+        if(gameState.getSectionNumber() < gameState.getLevels()[gameState.getLevelNumber()-1].getSections().length) {
+            gameState.setCurrentSection(gameState.getLevels()[gameState.getLevelNumber() - 1].getSections()[gameState.getSectionNumber() - 1 + 1]);
+            gameState.setSectionNumber(gameState.getSectionNumber() + 1);
+            gameState.getCurrentSection().setRemainingTime(gameState.getCurrentSection().getTime());
+            player.setWorldX(0);
+            player.setCameraX(0);
+
+        }
+        else {
+            changeLevel();
+        }
+    }
+    public void changeLevel() {
+        if(gameState.getLevelNumber() < gameState.getLevels().length) {
+            gameState.setCurrentLevel(gameState.getLevels()[gameState.getLevelNumber() - 1+1]);
+            gameState.setLevelNumber(gameState.getLevelNumber()+1);
+            changeSection(gameState.getCurrentLevel().getSections()[0],1 );
+
+        }
+    }
+    public void changeSection(Section section, int sectionNumber) {
+//        section.setStartTime(System.currentTimeMillis());
+        gameState.setCurrentSection(section);
+        gameState.setSectionNumber(sectionNumber);
+        gameState.getCurrentSection().setRemainingTime(gameState.getCurrentSection().getTime());
+        player.setCameraX(0);
+        player.setWorldX(0);
     }
 
 

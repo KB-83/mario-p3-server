@@ -24,7 +24,7 @@ public abstract class PlayerLifeChecker {
         if (player.getWorldY() > Constant.PANEL_ROWS * Constant.BACKGROUND_TILE_SIZE) {
             handleFalling();
         }
-        if (gameState.getRemainingTime() < 0){
+        if (gameState.getCurrentSection().getRemainingTime() < 0){
             handleOutOfTime();
         }
 
@@ -79,7 +79,7 @@ public abstract class PlayerLifeChecker {
 ////        sound.play();
 //    }
     public abstract void kickPlayer();
-    private void decreaseHeart(){
+    public void decreaseHeart(){
 //        if (gameState.getRemainingHeart() <=1) {
 //            killPlayer();
 //            return;
@@ -121,7 +121,7 @@ public abstract class PlayerLifeChecker {
         gameState.setCoins(gameState.getCoins()-Dn);
 
         if (checkPoint != null) {
-            gameState.getGameStateController().changeSection(checkPointSection,sectionNum);
+            player.getPlayerController().getPlayerRequestHandler().changeSection(checkPointSection,sectionNum);
             player.setWorldX(checkPoint.getCol() * Constant.BACKGROUND_TILE_SIZE);
             player.setWorldY(checkPoint.getRow() * Constant.BACKGROUND_TILE_SIZE);
             if(gameState.getCurrentSection().getLength() - checkPoint.getCol() - 3 >= Constant.PANEL_WIDTH/Constant.BACKGROUND_TILE_SIZE) {
@@ -136,7 +136,7 @@ public abstract class PlayerLifeChecker {
             player.setWorldX(0);
             player.setWorldY(7 * Constant.BACKGROUND_TILE_SIZE);
             player.setCameraX(0);
-            gameState.getGameStateController().changeSection(gameState.getCurrentLevel().getSections()[0],1);
+            player.getPlayerController().getPlayerRequestHandler().changeSection(gameState.getCurrentLevel().getSections()[0],1);
         }
     }
     private void killPlayer(){}

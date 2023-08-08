@@ -70,7 +70,7 @@ public class PlayerCollisionHandler implements CollisionHandler{
 //        //background tiles todo: give a bound to background tiles
         checkBackgroundTilesCollision();
         checkItemEating();
-        checkCheckPointTouch();
+//        checkCheckPointTouch();
 
 
     }
@@ -115,7 +115,8 @@ public class PlayerCollisionHandler implements CollisionHandler{
                 handelCollision(block.getCol() * Constant.BACKGROUND_TILE_SIZE, block.getRow() *
                         Constant.BACKGROUND_TILE_SIZE, Constant.BACKGROUND_TILE_SIZE, Constant.BACKGROUND_TILE_SIZE);
             }
-            if (collisionChecker.returnSamePoints(playerRect,blockRect).equals("DOWN")) {
+            String s = collisionChecker.returnSamePoints(playerRect,blockRect);
+            if (s.equals("DOWN")) {
                 player.setOnTopOfBlock(true);
 //                    // todo: improve it too
                 player.setWorldY(blockRect.getTopY()-player.getHeight());
@@ -124,6 +125,12 @@ public class PlayerCollisionHandler implements CollisionHandler{
                     player.setVY(0);
                     player.setDuringJump(false);
                 }
+            }
+            if (s.equals("RIGHT") && player.getVX() > 0) {
+                player.setVX(0);
+            }
+            if (s.equals("LEFT") && player.getVX() < 0) {
+                player.setVX(0);
             }
         }
     }
@@ -186,8 +193,8 @@ public class PlayerCollisionHandler implements CollisionHandler{
                         handelCollision(j*48,i*48,48,48);
                     }
                 }
-//                System.out.println("111 player collision handler  "+collisionChecker.returnSamePoints(playerRect,backgrounTileRect));
-                if (collisionChecker.returnSamePoints(playerRect,backgrounTileRect).equals("DOWN")) {
+                String s = collisionChecker.returnSamePoints(playerRect,backgrounTileRect);
+                if (s.equals("DOWN")) {
                     player.setOnTopOfBlock(true);
 //                    // todo: improve it too
                     player.setWorldY(backgrounTileRect.getTopY()-player.getHeight());
@@ -196,6 +203,12 @@ public class PlayerCollisionHandler implements CollisionHandler{
                         player.setVY(0);
                         player.setDuringJump(false);
                     }
+                }
+                if (s.equals("RIGHT") && player.getVX() > 0) {
+                    player.setVX(0);
+                }
+                if (s.equals("LEFT") && player.getVX() < 0) {
+                    player.setVX(0);
                 }
             }
         }}

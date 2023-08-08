@@ -53,7 +53,7 @@ public class PlayerMarathonLifeChecker extends PlayerLifeChecker {
         }
         if (!player.isFire() && !player.isMega()) {
             player.getPlayerController().setLoosed(true);
-            player.getPlayerController().setLifeTime(gameState.getRemainingTime());
+            player.getPlayerController().setLifeTime(gameState.getCurrentSection().getRemainingTime());
             return;
         }
 //        sound.setSound("KICK");

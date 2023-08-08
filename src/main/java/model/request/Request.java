@@ -22,6 +22,7 @@ import controller.connection.RequestVisitor;
         @JsonSubTypes.Type(value = ScoreBoardRequest.class),
         @JsonSubTypes.Type(value = SearchTableRequest.class),
         @JsonSubTypes.Type(value = SelectBagRequest.class),
+        @JsonSubTypes.Type(value = GroupGameRequest.class),
         @JsonSubTypes.Type(value = SearchChatRequest.class),
         @JsonSubTypes.Type(value = GroupSurvivalRequest.class),
         @JsonSubTypes.Type(value = NewPrivateChatRequest.class),

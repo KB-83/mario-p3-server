@@ -1,6 +1,7 @@
 package controller.connection;
 
 import controller.ClientController;
+import controller.game.GameWaitingRoom;
 import model.request.*;
 
 // Visitor interface
@@ -25,6 +26,7 @@ public interface RequestVisitor {
     void visit(SelectBagRequest request, ClientController clientController);
     void visit(NewPrivateChatRequest request, ClientController clientController);
     void visit(SearchChatRequest request, ClientController clientController);
+    void visit(GroupGameRequest request, ClientController clientController);
 
 }
 
