@@ -1,9 +1,9 @@
 package controller.connection;
 
-import controller.BagController;
+import controller.shop.BagController;
 import controller.ClientController;
 import controller.gamelogic.playerlogic.PlayerRequestHandler;
-import controller.ShopController;
+import controller.shop.ShopController;
 import controller.game.GameWaitingRoom;
 import controller.mapper.DTOCreator;
 import controller.room.RoomsManager;
@@ -11,9 +11,6 @@ import model.dto.entity.PlayerDTO;
 import model.dto.game.GameStateDTO;
 import model.main_model.Bill;
 import model.main_model.Client;
-import model.main_model.chat.Massage;
-import model.main_model.chat.Chat;
-import model.main_model.room.Room;
 import model.main_model.score_board.ScoreBoard;
 import model.request.*;
 import model.response.*;

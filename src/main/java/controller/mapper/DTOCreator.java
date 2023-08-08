@@ -32,6 +32,7 @@ public class DTOCreator {
         dto.setHeight(player.getHeight());
         dto.setName(player.getClientName());
         dto.setRemainingLifePercent(player.getPlayerGameLog().getRemainingLifePercent());
+        dto.setInvisible(player.isInvisible());
         dto.setTeamColor(player.getTeamColor());
         dto.setSelectedBag(player.getSelectedBag());
         if (player.getActivePowerItem() == null) {
@@ -204,6 +205,7 @@ public class DTOCreator {
                 playerDTOS.get(i).setType(playerdto.getType());
                 playerDTOS.get(i).setName(playerdto.getName());
                 playerDTOS.get(i).setRemainingLifePercent(playerdto.getRemainingLifePercent());
+                playerDTOS.get(i).setInvisible(playerdto.isInvisible());
                 playerDTOS.get(i).setTeamColor(playerdto.getTeamColor());
             }catch (NullPointerException e){}
         }

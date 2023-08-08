@@ -1,7 +1,7 @@
 package controller.gamelogic.playerlogic;
 
 
-import controller.BagController;
+import controller.shop.BagController;
 import controller.ClientController;
 import model.main_model.Client;
 import model.main_model.Fund;
@@ -10,12 +10,10 @@ import model.main_model.entity.Bullet;
 import model.main_model.entity.Sward;
 import model.main_model.entity.player.JumpV0;
 import model.main_model.entity.player.Player;
-import model.main_model.entity.player.V;
 import model.main_model.entity.power_item.*;
 import model.main_model.gamestrucure.GameState;
 import model.main_model.gamestrucure.gameworldoption.Gravity;
 import model.main_model.levelstructure.Section;
-import model.response.GameOverResponse;
 import util.Constant;
 import util.Saver;
 

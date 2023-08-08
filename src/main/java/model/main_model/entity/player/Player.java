@@ -28,6 +28,8 @@ public abstract class Player extends Entity {
     private int teamColor;
     private String clientName;
     private String[] selectedBag;
+
+    private boolean isInvisible;
     //todo: is it nessesart?
 //    @JsonIgnore
 //    private PlayerRequestHandler playerRequestHandler;
@@ -182,4 +184,11 @@ public abstract class Player extends Entity {
         this.vXMeasure = vXMeasure;
     }
 
+    public boolean isInvisible() {
+        return isInvisible;
+    }
+
+    public void setInvisible(boolean invisible) {
+        isInvisible = invisible;
+    }
 }

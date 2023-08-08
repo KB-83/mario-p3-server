@@ -1,5 +1,6 @@
-package controller;
+package controller.shop;
 
+import controller.ClientController;
 import model.main_model.Client;
 import model.main_model.Fund;
 import model.request.SelectBagRequest;

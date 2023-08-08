@@ -1,13 +1,11 @@
 package model.main_model.score_board;
 
-import controller.ShopController;
+import controller.shop.ShopController;
 import model.dto.score.ScoreBoardDTO;
 import model.dto.score.ScoreDTO;
 import model.main_model.Client;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
-import util.Config;
-import util.Constant;
 import util.HibernateUtil;
 
 import java.util.ArrayList;

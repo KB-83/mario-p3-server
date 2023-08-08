@@ -10,13 +10,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 
-public class SpeedPotionExecutorPower extends PowerItemExecutor {
+public class SpeedPotionExecutor extends PowerItemExecutor {
     private Timer timer;
     private long startTime;
     private Player player;
     private PowerItem powerItem;
 
-    public SpeedPotionExecutorPower(PowerItem powerItem) {
+    public SpeedPotionExecutor(PowerItem powerItem) {
         this.powerItem = powerItem;
         timer = new Timer(100, new ActionListener() {
             @Override
@@ -24,7 +24,6 @@ public class SpeedPotionExecutorPower extends PowerItemExecutor {
                 if (System.currentTimeMillis() - startTime >= SpeedPotion.period * 1000) {
                     player.setVXMeasure(V.Mario.getV());
                     timer.stop();
-                    player.setActivePowerItem(null);
                     powerItem.setDuringShoot(false);
                 }
             }
@@ -33,6 +32,7 @@ public class SpeedPotionExecutorPower extends PowerItemExecutor {
 
     @Override
     public void execute(Player player) {
+        powerItem.setItemExecutor(null);
         this.player = player;
         startTime = System.currentTimeMillis();
         player.setVXMeasure(player.getVXMeasure() * SpeedPotion.multiplier);

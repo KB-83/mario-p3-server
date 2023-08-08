@@ -1,6 +1,6 @@
 package model.main_model.entity.power_item;
 
-import controller.gamelogic.poweritemlogic.SpeedPotionExecutorPower;
+import controller.gamelogic.poweritemlogic.SpeedPotionExecutor;
 import model.main_model.entity.player.Player;
 import model.main_model.gamestrucure.GameState;
 import util.Config;
@@ -11,6 +11,6 @@ public class SpeedPotion extends PowerItem{
 
     public SpeedPotion(Player owner, GameState gameState) {
         super(owner, gameState);
-        setItemExecutor(new SpeedPotionExecutorPower(this));
+        setItemExecutor(new SpeedPotionExecutor(this));
     }
 }

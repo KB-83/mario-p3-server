@@ -1,5 +1,6 @@
-package controller;
+package controller.shop;
 
+import controller.ClientController;
 import model.main_model.*;
 import model.main_model.entity.Sward;
 import model.main_model.entity.power_item.*;
