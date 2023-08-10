@@ -13,14 +13,65 @@
       }, {
         "type" : "SIMPLE",
         "x" : 0,
-        "y" : 0,
-        "item" : "COIN"
+        "y" : 0
       },{
         "type" : "SIMPLE",
         "x" : 0,
-        "y" : 1,
-        "item" : "COIN"
-      },{
+        "y" : 1
+      },
+        {
+          "type" : "SIMPLE",
+          "x" : 0,
+          "y" : 2
+        },{
+          "type" : "SIMPLE",
+          "x" : 0,
+          "y" : 3
+        },{
+          "type" : "SIMPLE",
+          "x" : 0,
+          "y" : 4
+        },{
+          "type" : "SIMPLE",
+          "x" : 0,
+          "y" : 5
+        },{
+          "type" : "SIMPLE",
+          "x" : 0,
+          "y" : 6
+        },{
+          "type" : "SIMPLE",
+          "x" : 0,
+          "y" : 7
+        },{
+          "type" : "SIMPLE",
+          "x" : 0,
+          "y" : 8
+        },{
+          "type" : "SIMPLE",
+          "x" : 0,
+          "y" : 9
+        },{
+          "type" : "SIMPLE",
+          "x" : 0,
+          "y" : 10
+        },{
+          "type" : "SIMPLE",
+          "x" : 0,
+          "y" : 11
+        },{
+          "type" : "SIMPLE",
+          "x" : 0,
+          "y" : 12
+        },{
+          "type" : "SIMPLE",
+          "x" : 0,
+          "y" : 13
+        },{
+          "type" : "SIMPLE",
+          "x" : 0,
+          "y" : 14
+        },{
         "type" : "SIMPLE",
         "x" : 22,
         "y" : 0,

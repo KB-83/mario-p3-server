@@ -20,19 +20,24 @@ public class PlayerSurvivalLifeChecker extends PlayerLifeChecker {
 
     @Override
     public void handleFalling() {
-
+        kickPlayer();
+        player.setWorldY(0);
+        player.setCameraY(0);
+        player.setWorldX(0);
+        player.setCameraX(0);
     }
 
     @Override
     public void handleEnemyCollide(Enemy enemy, String position) {
-        if (System.currentTimeMillis() - lastKickTimeByEnemy > 2000) {
-            player.getPlayerGameLog().setRemainingLifePercent(player.getPlayerGameLog().getRemainingLifePercent() - 10);
-            lastKickTimeByEnemy = System.currentTimeMillis();
-        }
+        kickPlayer();
     }
 
     @Override
     public void kickPlayer() {
+        if (System.currentTimeMillis() - lastKickTimeByEnemy > 2000) {
+            lastKickTimeByEnemy = System.currentTimeMillis();
+            player.getPlayerGameLog().setRemainingLifePercent(player.getPlayerGameLog().getRemainingLifePercent() - 10);
+        }
 
     }
     public void handleDamageBomb(){}

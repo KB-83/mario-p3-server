@@ -4,7 +4,7 @@
   "levels" : [ {
     "sections" : [ {
       "length" : 230,
-      "time" : 6,
+      "time" : 25,
       "blocks" : [ {
         "type" : "QUESTION",
         "x" : 10,
